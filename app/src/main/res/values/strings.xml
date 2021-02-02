@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Studio X Ottawa</string>
+    <string name="send">Send</string>
+    <string name="type_message_here">Type Message Here</string>
+    <string name="your_message_question">Your Message/Question</string>
+    <string name="subject">Subject</string>
+    <string name="email">Email:</string>
+    <string name="your_email_required">Your Email (Required)</string>
+    <string name="name">Name:</string>
+    <string name="your_name_required">Your Name (Required)</string>
+    <string name="header_info">Studio X Ottawa Inc.<br/>Studioxottawa@gmail.com<br/>122&#8211;250 City Centre Avenue<br/>Ottawa, Ontario Canada<br/>K1R 1C7</string>
+
 </resources>
