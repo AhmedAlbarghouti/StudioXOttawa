@@ -3,64 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-
-    >
-    <!--
-    #700346-Header
-    #78104b-Button
-
-
-    -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/information"
-        android:background="#700346"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        android:text="@string/header_info"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/nameLabel"
-        android:layout_below="@+id/information"
-        android:text="@string/your_name_required"/>
-
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:id="@+id/name_editText"
-        android:layout_below="@+id/nameLabel"
-        android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/emailLabel"
-        android:layout_below="@+id/name_editText"
-        android:text="@string/your_email_required"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:id="@+id/emailEditText"
-        android:layout_below="@+id/emailLabel"
-        android:inputType="textEmailAddress"
-        android:hint="@string/email"
-        android:layout_height="wrap_content"/>
-
-
+    android:orientation="horizontal">
     <TextView
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
         android:id="@+id/subjectLabel"
-        android:layout_below="@+id/emailEditText"
         android:text="@string/subject"/>
     <EditText
         android:layout_width="match_parent"
@@ -79,16 +27,15 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_below="@id/messageLabel"
+        android:id="@+id/message_editText"
         android:hint="@string/type_message_here"
-        android:inputType="textLongMessage"
-        android:textAlignment="viewStart"
-        android:layout_above="@id/sendButton"/>
+        android:inputType="textMultiLine" />
 
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send"
         android:id="@+id/sendButton"
@@ -96,3 +43,51 @@
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
+    <!--
+    #700346-Header
+    #78104b-Button
+
+
+    -->
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/information"-->
+<!--        android:background="#700346"-->
+<!--        android:textSize="12sp"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:text="@string/header_info"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:id="@+id/nameLabel"-->
+<!--        android:layout_below="@+id/information"-->
+<!--        android:text="@string/your_name_required"/>-->
+
+
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:id="@+id/name_editText"-->
+<!--        android:layout_below="@+id/nameLabel"-->
+<!--        android:hint="@string/name"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/emailLabel"-->
+<!--        android:layout_below="@+id/name_editText"-->
+<!--        android:text="@string/your_email_required"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:id="@+id/emailEditText"-->
+<!--        android:layout_below="@+id/emailLabel"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        android:hint="@string/email"-->
+<!--        android:layout_height="wrap_content"/>-->
+<!--android:layout_below="@+id/emailEditText"-->
