@@ -1,3 +1,102 @@
 <resources>
     <string name="app_name">Studio X Ottawa</string>
+
+    <string name="Aboutus1">
+        "Welcome to Studio X Ottawa Inc. YOUR “one stop” eclectic dance, fitness and space "
+        "rental Centre!\n\n"
+
+        "Studio X Ottawa is a unique hub of experienced local dance and fitness professionals "
+        "comprise of the Studio’s team as well as independent instructors who rent the space to"
+        "teach various classes.\n"
+        "We offer Latin Dance classes (like Salsa, Bachata) And Fitness classes "
+        "(Zumba, Zumba Sentao, Zumba Toning, Strong by Zumba, Pound Fitness, etc.). "
+        "And, our renters teach a variety of dance and fitness classes. \n "
+        "We also rent the studios/rooms to teach or for practices, rehearsals, "
+        "parties (baby shower, bridal shower, sweet sixteen, etc.), meetings, photoshoots, "
+        "exhibitions, social gathering, etc. as well as Corporate events."
+
+    </string>
+    <string name="Aboutus2">
+        "STUDIO X MAIN INSTRUCTORS QUALIFICATIONS:"
+    </string>
+    <string name="Aboutus3">
+        "We have completed private classes and trainings with the following professional dancers and coaches:"
+    </string>
+    <string name="Aboutus4">
+        "– Adriano Ieropoli and Samantha Scali (Salsa On2 World Champions)\n"
+        "– Corinne Tardieu and Victor Alexis (Canadian Salsa, Bachata and Hustle Champions)\n"
+        "– David Zapeda and Paulina Posadas (6x World Salsa Champions)\n"
+        "– Anya Katsevman (World Salsa Champion and Judge)\n"
+        "– Katie Marlow (Director of World Salsa Summit, World Cabaret Exhibition Champion, Judge)\n"
+        "– Edson Vallon (Owner and director of SaltiMambo Dance School in Montreal Canada)\n"
+        "– Caroline Paré (Owner and director of Caroline Paré Danse Latine)\n"
+        "– Carla Voconii (Glam Mambo Company)\n"
+        "– Santo Rico"
+    </string>
+    <string name="Aboutus5">
+        "Bootcamps and workshops:"
+    </string>
+    <string name="Aboutus6">
+        "– 2019 Master Class (Salsa On2 – Mambo) with Eddie and Maria Torres \n"
+        "– 2019 Master Class (Dominican Bachata) with Alex Morel at World Salsa Summit \n"
+        "– 2018 Bachata Intensive with MG Latin Dance from Los Angeles \n"
+        "– 2018 Master class with Adolfo in Montreal \n"
+        "– 2018 Master class with Rodrigo Cortazar \n"
+        "– 2018 Weekend training with Yvonne Gutierez in Montreal \n"
+        "– 2017 Weekend training in Montreal with Eddie Torres and Yvonne Gutierez \n"
+        "– 2016 Karel Flores Weekend Bootcamp Challenge in Montreal \n"
+        "– 2013 Brazilian Zouk Training with K-Yo from Brazil \n"
+        "– 2013 Cultural Weekend in New York (Spanish Harlem) with Eddy Torres, Maria Torres, Mambo D, Yvonne Gutierez, etc. \n"
+        "– 2010 Styling weekend in Boston with Karel Flores, Ana Masacote, Burju, Julissa Cruz and Shani Talmor \n"
+        "– 2009 and 2011 Masacote Retreat"
+    </string>
+    <string name="Aboutus7">
+        "Dance Certifications:"
+    </string>
+
+    <string name="Aboutus8">
+        "World Mastery Certifications (Adolfo, Alex and Desiree, Anita, Korke and Judith), My Salsa Online, Salsa Bachata Online"
+       "Fitness Certifications:\n"
+       "YMCA, Canfitpro, CPR, Zumba (Gold, Kids, Junior, Sentao, Toning, Strong), Zumbini, Pound"
+        "Fitness, Piyo, YogaFit, Qidance, Insanity, Piloxing"
+    </string>
+
+    <string name="Aboutus9">
+        "Work Experience:"
+    </string>
+
+    <string name="Aboutus10">
+        "2017-present\n"
+        "Fitness instructors for Bell Canada (corporate)\n"
+        "2013-present\n"
+        "Directors and Instructors at Studio X Ottawa\n"
+        "2011-Présent\n"
+        "Wedding dance choreographies\n"
+        "June 2019\n"
+        "Teaching Bachata and Salsa Intro workshops for Latin Sparks Festival\n"
+        "May 2019\n"
+        "Teaching Dominical Bachata Workshop at Montreal Salsa Convention\n"
+        "February 2019\n"
+        "Teaching Dominican Bachata Workshop at Ottawa Bachata Festival\n"
+        "November 2018\n"
+        "Teaching On2 Workshop at Montreal Salsa Convention\n"
+        "Summer 2018\n"
+        "Montreal Tour (shows at Moka, Baila Con Gusto and Bachata Fusion (Marina de Repentigny))\n"
+        "Summer 2017\n"
+        "Teaching Cha Cha Cha workshop at Ottawa Salsa Convention\n"
+        "2012-2014\n"
+        "YMCA fitness instructor\n"
+        "City of Gatineau fitness instructor\n"
+        "Old Town House Fitness instructor\n"
+        "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n"
+        "2010-2014\n"
+        "Blackanese Mambo Team Directors"
+    </string>
+
+    <string name="SoulNadege">"Our Main instructors!"
+                              "Soul and Nadège (Dancing since 1999)\n"</string>
+    <string name="title_activity_aboutus">AboutusActivity</string>
+
+
+
 </resources>
