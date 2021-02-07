@@ -4,11 +4,11 @@ public class News {
 
     private String title;
     private String description;
-    private String author;
+//    private String author;
     private String link;
     private String date;
-    private String category;
-    private String comment;
+//    private String category;
+//    private String comment;
 
     /**
      * @param title - title of the news

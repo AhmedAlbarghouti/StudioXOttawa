@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,15 +31,26 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
-public class NewsActivity extends AppCompatActivity{
+import static android.os.SystemClock.sleep;
+
+public class NewsActivity extends AppCompatActivity {
 
 
     private ArrayList<News> elements = new ArrayList<>();
@@ -52,7 +65,7 @@ public class NewsActivity extends AppCompatActivity{
     private String link;
     private String date;
     SQLiteDatabase db;
-//    MyOpener dbOpener;
+    //    MyOpener dbOpener;
     //fragment
     public static final String NEWS_TITLE = "TITLE";
     public static final String NEWS_DESCRIPTION = "DESCRIPTION";
@@ -60,7 +73,9 @@ public class NewsActivity extends AppCompatActivity{
     public static final String NEWS_DATE = "DATE";
     public static final String NEWS_POSITION = "POSITION";
     public static final String NEWS_ID = "ID";
-//    DetailsFragment dFragment;
+    DetailsFragment dFragment;
+    private static final String TAG = "GetData";
+
 
     /**
      * @param savedInstanceState - the Bundle object that is passed into the onCreate method
@@ -70,22 +85,66 @@ public class NewsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        Thread thread = new TestThread();
+        thread.start();
+        try {
+            thread.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         //Load data from BBC News into ArrayList
-        progressBar = (ProgressBar)findViewById(R.id.bbcProgressBar);
+        progressBar = (ProgressBar) findViewById(R.id.bbcProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
 //        dbOpener = new MyOpener(this);
 //        db = dbOpener.getWritableDatabase();
 
-        String [] urlArray = {"http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"};
-        BbcQuery req1 = new BbcQuery();
-        req1.execute(urlArray);
-
+//        String [] urlArray = {"http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"};
+//        String [] urlArray = {"https://www.studioxottawa.com/news/"};
+//        BbcQuery req1 = new BbcQuery();
+//        req1.execute(urlArray);
+        String size = elements.size()+"";
+        Log.i(TAG, "gycsizeBefore " + size);
+        
+        size = elements.size()+"";
+        Log.i(TAG, "gycsizeAfter " + size);
         //Create list view
         myList = findViewById(R.id.newsListView);
-        myList.setAdapter( myAdapter = new MyListAdapter());
+        myList.setAdapter(myAdapter = new MyListAdapter());
+        boolean isTablet = findViewById(R.id.frameLayout) != null;
 
-//        boolean isTablet = findViewById(R.id.frameLayout) != null;
+        //create the fragment of news
+        myList.setOnItemClickListener((list, item, position, id) -> {
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(NEWS_TITLE, elements.get(position).getTitle() );
+            dataToPass.putString(NEWS_DESCRIPTION, elements.get(position).getDescription() );
+            dataToPass.putString(NEWS_LINK, elements.get(position).getLink() );
+            dataToPass.putString(NEWS_DATE, elements.get(position).getDate() );
+
+            dataToPass.putInt(NEWS_POSITION, position);
+            dataToPass.putLong(NEWS_ID, id);
+
+            if(isTablet)
+            {
+                dFragment = new DetailsFragment();
+                dFragment.setArguments( dataToPass );
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, dFragment)
+                        .commit();
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(NewsActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+        });
+
 
 
 
@@ -143,94 +202,46 @@ public class NewsActivity extends AppCompatActivity{
     /**
      * inner class that deals with thread synchronization
      */
-    private class BbcQuery extends AsyncTask<String, Integer, String>
-    {
-        /**
-         * @param args - the argument that passed by the BbcQuery.execute(urlArray) method
-         * @return result object
-         */
-        public String doInBackground(String ... args)
-        {
-            try {
-                URL url = new URL(args[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream response = urlConnection.getInputStream();
+    private class TestThread extends Thread{
 
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                factory.setNamespaceAware(false);
-                XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput( response  , "UTF-8");
-                int eventType = xpp.getEventType();
-                //The boolean variable is used to check if all elements of a news have been catched
-                boolean titleCount= false;
-                boolean desCount = false;
-                boolean linkCount = false;
-                boolean dateCount = false;
-                while(eventType != XmlPullParser.END_DOCUMENT)
-                {
-                    if(eventType == XmlPullParser.START_TAG)
-                    {
-                        if(xpp.getName().equals("title")||xpp.getName().equals("description")||xpp.getName().equals("link")||xpp.getName().equals("pubDate"))
-                        {
-                            if(xpp.getName().equals("title"))
-                            {
-                                xpp.next();
-                                title = xpp.getText();
-                                titleCount=true;
-                                publishProgress(25);
-                            }
-                            else if(xpp.getName().equals("description")) {
-                                xpp.next();
-                                description = xpp.getText();
-                                desCount=true;
-                                publishProgress(50);
-                            }
-                            else if(xpp.getName().equals("link")) {
-                                xpp.next();
-                                link = xpp.getText();
-                                linkCount=true;
-                                publishProgress(75);
-                            }
-                            else if(xpp.getName().equals("pubDate")) {
-                                xpp.next();
-                                date = xpp.getText();
-                                dateCount=true;
-                            }
-                            //If all elements of a news have been catched, then create the news,
-                            //add to the Arraylist and reset all boolean variables to check next news.
-                            if(titleCount==true&&desCount==true&&linkCount==true&&dateCount==true) {
-                                elements.add(new News(title, description, link, date));
-                                titleCount = false;desCount = false;linkCount = false;dateCount = false;
-                            }
-                        }
-                    }
-                    eventType = xpp.next(); //move to the next xml event and store it in a variable
-                }
+        public void run(){
+//            String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/");
+            String html;
+            for(int i=1; i<4; i++){
+                String url = "https://www.studioxottawa.com/news/page/"+i+"/";
+                html = OkHttpUtils.OkGetArt(url);
+                elements.addAll(GetData.spiderArticle(html));
             }
-            catch (Exception e) {
-                Log.e("Error", e.getMessage());
-            }
-            return "Done";
-        }
+//            String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/page/1/");
+//            elements.addAll(GetData.spiderArticle(html));
+//            html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/page/2/");
+//            elements.addAll(GetData.spiderArticle(html));
 
-        /**
-         * @param args - the argument that used to update the progressBar
-         */
-        public void onProgressUpdate(Integer ... args)
-        {
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(args[0]);
-        }
-
-        /**
-         * @param fromDoInBackground - the result object passed from doInBackground()
-         */
-        public void onPostExecute(String fromDoInBackground)
-        {
-            Log.i("HTTP", fromDoInBackground);
-            progressBar.setVisibility(View.INVISIBLE );
+            String size = elements.size()+"";
+            Log.i(TAG, "gycsize " + size);
+            Log.i(TAG, "gyctitle " + elements.get(0).getTitle());
+            Log.i(TAG, "gycdes " + elements.get(0).getDescription());
+            Log.i(TAG, "gyclink " + elements.get(0).getLink());
+            Log.i(TAG, "gycdate " + elements.get(0).getDate());
         }
     }
+//    private void Test() {
+//
+//        new Thread() {
+//            public void run() {
+//                String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/");
+////                System.out.print("234"+html);
+//                elements.addAll(GetData.spiderArticle(html));
+//                String size = elements.size()+"";
+//                Log.i(TAG, "gycsize " + size);
+//                Log.i(TAG, "gyctitle " + elements.get(0).getTitle());
+//                Log.i(TAG, "gycdes " + elements.get(0).getDescription());
+//                Log.i(TAG, "gyclink " + elements.get(0).getLink());
+//                Log.i(TAG, "gycdate " + elements.get(0).getDate());
+//            }
+//        }.start();
+//    }
+
 
     /**
      * the adapter inner class that provide data for the listView
@@ -240,33 +251,41 @@ public class NewsActivity extends AppCompatActivity{
         /**
          * @return the number of items
          */
-        public int getCount() { return elements.size();}
+        public int getCount() {
+            return elements.size();
+        }
 
         /**
          * @param position - the row position of a listView content
          * @return the object to show at row position
          */
-        public Object getItem(int position) { return  elements.get(position).getTitle() ; }
+        public Object getItem(int position) {
+            return elements.get(position);
+        }
 
         /**
          * @param position - the row position of a listView content
          * @return database id of the item at the position
          */
-        public long getItemId(int position) { return (long) position; }
+        public long getItemId(int position) {
+            return (long) position;
+        }
 
         /**
          * @param position - the row position of a listView content
-         * @param old - the previous view at the position
-         * @param parent - contains other views, describes the layout of the Views in the group
+         * @param old      - the previous view at the position
+         * @param parent   - contains other views, describes the layout of the Views in the group
          * @return a View object to go in a row of the ListView
          */
-        public View getView(int position, View old, ViewGroup parent)
-        {
+        public View getView(int position, View old, ViewGroup parent) {
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.row_layout, parent, false);
+            News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
-            tView.setText(getItem(position).toString());
+            tView.setText("  "+n.getTitle());
+            TextView tViewDate = newView.findViewById(R.id.newsDate);
+            tViewDate.setText(n.getDate());
             return newView;
         }
     }

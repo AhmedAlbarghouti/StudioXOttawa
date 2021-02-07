@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Studio X Ottawa</string>
 
+    <string name="News">News</string>
+
     <string name="BBC_version_number">Version number is saved</string>
     <string name="EditText1">Type here</string>
     <string name="TextView1">Version:</string>
@@ -8,7 +10,7 @@
 
     <string name="BBC_Title">BBC News</string>
     <string name="GoToBBC">BBC News</string>
-    <string name="BBC_ButtonClick">Button is clicked</string>
+    <string name="News_ButtonClick">Button is clicked</string>
     <string name="BBC_CheckBox">SUBSCRIBE</string>
     <string name="BBC_CheckBoxYes">SUBSCRIBED</string>
     <string name="BBC_CheckBoxNo">UNSUBSCRIBED</string>
