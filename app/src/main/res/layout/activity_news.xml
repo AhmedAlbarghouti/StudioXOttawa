@@ -41,10 +41,10 @@
 
         </GridLayout>
 
-        <Button android:id="@+id/GoToFavourite"
+        <Button android:id="@+id/More"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/BBC_GoToFavourite" />
+            android:text="More..." />
 
     </LinearLayout>
 

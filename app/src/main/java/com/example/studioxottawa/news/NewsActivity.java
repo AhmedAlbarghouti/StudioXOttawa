@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.studioxottawa.MainActivity;
 import com.example.studioxottawa.R;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -76,6 +78,8 @@ public class NewsActivity extends AppCompatActivity {
     DetailsFragment dFragment;
     private static final String TAG = "GetData";
 
+    //Initially load 2 pages
+    private int pageCount = 2;
 
     /**
      * @param savedInstanceState - the Bundle object that is passed into the onCreate method
@@ -95,22 +99,13 @@ public class NewsActivity extends AppCompatActivity {
         }
 
 
-        //Load data from BBC News into ArrayList
         progressBar = (ProgressBar) findViewById(R.id.bbcProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
 //        dbOpener = new MyOpener(this);
 //        db = dbOpener.getWritableDatabase();
 
-//        String [] urlArray = {"http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"};
-//        String [] urlArray = {"https://www.studioxottawa.com/news/"};
-//        BbcQuery req1 = new BbcQuery();
-//        req1.execute(urlArray);
-        String size = elements.size()+"";
-        Log.i(TAG, "gycsizeBefore " + size);
-        
-        size = elements.size()+"";
-        Log.i(TAG, "gycsizeAfter " + size);
+
         //Create list view
         myList = findViewById(R.id.newsListView);
         myList.setAdapter(myAdapter = new MyListAdapter());
@@ -144,6 +139,29 @@ public class NewsActivity extends AppCompatActivity {
                 startActivity(nextActivity); //make the transition
             }
         });
+
+        Button favouriteButton = (Button)findViewById(R.id.More);
+        favouriteButton.setOnClickListener( new View.OnClickListener()
+        {  public void onClick(View v){
+            if(pageCount<=15){
+                pageCount +=1;
+                Thread thread = new LoadMore();
+                thread.start();
+                try {
+                    thread.join();
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //refresh listview
+                myList = findViewById(R.id.newsListView);
+                myList.setAdapter(myAdapter = new MyListAdapter());
+            }else{
+                Toast.makeText(NewsActivity.this, "No more", Toast.LENGTH_LONG ).show();
+            }
+
+        } });
+
 
 
 
@@ -205,24 +223,22 @@ public class NewsActivity extends AppCompatActivity {
     private class TestThread extends Thread{
 
         public void run(){
-//            String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/");
             String html;
-            for(int i=1; i<4; i++){
+            for(int i=1; i<pageCount+1; i++){
                 String url = "https://www.studioxottawa.com/news/page/"+i+"/";
                 html = OkHttpUtils.OkGetArt(url);
                 elements.addAll(GetData.spiderArticle(html));
             }
-//            String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/page/1/");
-//            elements.addAll(GetData.spiderArticle(html));
-//            html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/page/2/");
-//            elements.addAll(GetData.spiderArticle(html));
+        }
+    }
 
-            String size = elements.size()+"";
-            Log.i(TAG, "gycsize " + size);
-            Log.i(TAG, "gyctitle " + elements.get(0).getTitle());
-            Log.i(TAG, "gycdes " + elements.get(0).getDescription());
-            Log.i(TAG, "gyclink " + elements.get(0).getLink());
-            Log.i(TAG, "gycdate " + elements.get(0).getDate());
+    private class LoadMore extends Thread{
+
+        public void run(){
+            String html;
+                String url = "https://www.studioxottawa.com/news/page/"+pageCount+"/";
+                html = OkHttpUtils.OkGetArt(url);
+                elements.addAll(GetData.spiderArticle(html));
         }
     }
 //    private void Test() {
