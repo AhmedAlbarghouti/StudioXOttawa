@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="#5b5b5b"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".AboutusActivity"
     tools:deviceIds="wear">
@@ -26,10 +26,10 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="15dp"
-                    android:text="@string/Aboutus1" />
+                    android:text="@string/Aboutus1"
+                    />
 
 
                 <ImageView
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/SoulNadege" />
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#00ccff"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus2" />
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus3" />
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus4" />
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#00ccff"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus5" />
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus6" />
@@ -106,8 +106,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
-                    android:textSize="20dp"
+                    android:textColor="#00ccff"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus7" />
 
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus8" />
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#00ccff"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus9" />
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#1f3360"
+                    android:textColor="#fafafa"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus10" />

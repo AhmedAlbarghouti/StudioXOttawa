@@ -22,21 +22,19 @@ public class MainActivity extends AppCompatActivity {
         aboutusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //load First Fragment
-//                loadFragment(new FragmentAboutus());
+                //load aboutus activity by calling local method
                 loadAboutusActivity();
             }
-
-
         });  //xiaoxi }
     }
 
     //xiaoxi {
     private void loadAboutusActivity() {
-
+        //create new intent and start about us activity
         Intent myIntent = new Intent(MainActivity.this, AboutusActivity.class);
         MainActivity.this.startActivity(myIntent);
 
     }   //xiaoxi }
 
-    }
+
+}
