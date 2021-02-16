@@ -8,6 +8,8 @@
     <string name="your_email_required">Your Email (Required)</string>
     <string name="name">Name:</string>
     <string name="your_name_required">Your Name (Required)</string>
+    <string name="Open">open</string>
+    <string name="Close">close</string>
 
 
 </resources>
