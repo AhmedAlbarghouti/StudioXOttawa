@@ -97,6 +97,8 @@
                               "Soul and Nadège (Dancing since 1999)\n"</string>
     <string name="title_activity_aboutus">AboutusActivity</string>
 
-
+    <string name="previous_button">Previous Page</string>
+    <string name="next_button">Next Page</string>
+    <string name="thumbnail_preview">Video Thumbnail</string>
 
 </resources>
