@@ -27,6 +27,7 @@ public class DetailsFragment extends Fragment {
     private Bundle dataFromActivity;
     private long id;
     private AppCompatActivity parentActivity;
+    private String getText;
 
     /**
      * @param inflater - instantiates layout XML file into its corresponding view object
@@ -42,6 +43,18 @@ public class DetailsFragment extends Fragment {
         id = dataFromActivity.getLong(NewsActivity.NEWS_ID );
 
         View result =  inflater.inflate(R.layout.fragment_details, container, false);
+
+        Thread thread = new TestThread();
+        thread.start();
+        try {
+            thread.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        TextView text = (TextView)result.findViewById(R.id.FragmentText);
+        text.setText(getText);
 
         TextView title = (TextView)result.findViewById(R.id.FragmentTitle);
         title.setText("TITLE: " +dataFromActivity.getString(NewsActivity.NEWS_TITLE));
@@ -64,6 +77,22 @@ public class DetailsFragment extends Fragment {
         });
 
         return result;
+    }
+
+    /**
+     * inner class that deals with thread synchronization
+     */
+    private class TestThread extends Thread{
+
+        public void run(){
+            String html;
+
+            String url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
+            html = OkHttpUtils.OkGetArt(url);
+
+            getText = GetText.spiderArticle(html);
+
+        }
     }
 
     /**
