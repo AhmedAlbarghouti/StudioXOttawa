@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:id="@+id/subjectLabel"
+        android:text="@string/subject"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/subjectEditText"
+        android:layout_below="@+id/subjectLabel"
+        android:inputType="textEmailSubject"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/messageLabel"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/subjectEditText"
+        android:text="@string/your_message_question"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/messageLabel"
+        android:id="@+id/message_editText"
+        android:hint="@string/type_message_here"
+        android:inputType="textMultiLine" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:id="@+id/sendButton"
+        android:backgroundTint="@color/StudioXPink"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
+    <!--
+    #700346-Header
+    #78104b-Button
+
+
+    -->
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/information"-->
+    <!--        android:background="#700346"-->
+    <!--        android:textSize="12sp"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:text="@string/header_info"/>-->
+
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:id="@+id/nameLabel"-->
+    <!--        android:layout_below="@+id/information"-->
+    <!--        android:text="@string/your_name_required"/>-->
+
+
+
+    <!--    <EditText-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:id="@+id/name_editText"-->
+    <!--        android:layout_below="@+id/nameLabel"-->
+    <!--        android:hint="@string/name"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:layout_height="wrap_content"/>-->
+
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/emailLabel"-->
+    <!--        android:layout_below="@+id/name_editText"-->
+    <!--        android:text="@string/your_email_required"/>-->
+    <!--    <EditText-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:id="@+id/emailEditText"-->
+    <!--        android:layout_below="@+id/emailLabel"-->
+    <!--        android:inputType="textEmailAddress"-->
+    <!--        android:hint="@string/email"-->
+    <!--        android:layout_height="wrap_content"/>-->
+    <!--android:layout_below="@+id/emailEditText"-->
