@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,19 +18,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button contactbtn=findViewById(R.id.contactButton);
-        contactbtn.setOnClickListener(btn->{
-            Intent contact=new Intent(this,contact.class);
-            startActivity(contact);
-
-            Button generateReport=findViewById(R.id.generateReport);
-
-            generateReport.setOnClickListener(btn->{
+        contactbtn.setOnClickListener(btn-> {
+                    Intent contact = new Intent(this, contact.class);
+                    startActivity(contact);
 
 
-                Intent nextActivity = new Intent(MainActivity.this, Report.class);
-                startActivity(nextActivity); //make the transitio
+        });
 
-            });
+        Button generateReport=findViewById(R.id.generateReport);
+
+        generateReport.setVisibility(View.INVISIBLE);
+        String username = getIntent().getExtras().getString("USER_NAME");
+        Log.e("FIX THIS FUCKING CODE", "USER_NAME IS " + username);
+        if (username.equalsIgnoreCase("admin"))
+            generateReport.setVisibility(View.VISIBLE);
+
+        generateReport.setOnClickListener(btn->{
+
+
+            Intent nextActivity = new Intent(MainActivity.this, Report.class);
+            startActivity(nextActivity); //make the transitio
+
         });
 
         Button loginBtn2 = (Button)findViewById(R.id.newsButton);

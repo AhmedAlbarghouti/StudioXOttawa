@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
         signButton.setOnClickListener(click-> {
             Intent main = new Intent(this,MainActivity.class);
-            String username = usernameET.toString();
+            String username = usernameET.getText().toString();
             main.putExtra("USER_NAME",username);
             startActivity(main);
         });

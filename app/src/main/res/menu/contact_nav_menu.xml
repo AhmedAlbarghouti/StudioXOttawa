@@ -18,19 +18,19 @@
 
 
     <item android:id="@+id/contact_nav_latin_dance"
-        android:title="Latin dance services"
+        android:title="Services"
         app:showAsAction="always"
         android:orderInCategory="2"/> <!-- This uses showAsAction=never, so look at title= parameter -->
 
     <item android:id="@+id/contatc_nav_fitness"
         app:showAsAction="always"
         android:orderInCategory="3"
-        android:title="Fitness services"/>
+        android:title="Schedule"/>
 
     <item android:id="@+id/contatc_nav_rental"
         app:showAsAction="always"
         android:orderInCategory="4"
-        android:title="Rental services"/>
+        android:title="Video On Demand"/>
 
     <item android:id="@+id/contatc_nav_photos"
         app:showAsAction="always"

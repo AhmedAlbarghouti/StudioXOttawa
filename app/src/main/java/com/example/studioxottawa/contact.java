@@ -74,25 +74,25 @@ public class contact extends AppCompatActivity  implements NavigationView.OnNavi
 
                 break;
                 case R.id.contact_nav_latin_dance:
-                    Toast.makeText(this, "Latin Dance", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Services", Toast.LENGTH_SHORT).show();
                 break;
 
                 case R.id.contatc_nav_fitness:
-                    Toast.makeText(this, "Fitness Lesson", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Schedule", Toast.LENGTH_SHORT).show();
                 break;
 
                 case R.id.contatc_nav_rental:
-                    Toast.makeText(this, "Rental Service", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Video On Demand", Toast.LENGTH_SHORT).show();
 
                 break;
 
                 case R.id.contatc_nav_news:
-                    Toast.makeText(this, "NEWS", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Photos", Toast.LENGTH_SHORT).show();
 
                 break;
 
                 case R.id.contatc_nav_photos:
-                    Toast.makeText(this, "PHOTOS", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "NEWS", Toast.LENGTH_SHORT).show();
 
                 break;
 
