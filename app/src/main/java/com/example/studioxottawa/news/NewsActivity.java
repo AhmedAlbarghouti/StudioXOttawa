@@ -1,27 +1,13 @@
 package com.example.studioxottawa.news;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.studioxottawa.MainActivity;
 import com.example.studioxottawa.R;
-import android.app.AlertDialog;
-import android.content.ContentValues;
+
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,26 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.os.SystemClock.sleep;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -296,7 +263,7 @@ public class NewsActivity extends AppCompatActivity {
         public View getView(int position, View old, ViewGroup parent) {
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
-            newView = inflater.inflate(R.layout.row_layout, parent, false);
+            newView = inflater.inflate(R.layout.row_layout_news, parent, false);
             News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
             tView.setText("  "+n.getTitle());

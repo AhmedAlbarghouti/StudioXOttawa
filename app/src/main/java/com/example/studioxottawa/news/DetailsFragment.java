@@ -42,7 +42,7 @@ public class DetailsFragment extends Fragment {
         dataFromActivity = getArguments();
         id = dataFromActivity.getLong(NewsActivity.NEWS_ID );
 
-        View result =  inflater.inflate(R.layout.fragment_details, container, false);
+        View result =  inflater.inflate(R.layout.fragment_details_news, container, false);
 
         Thread thread = new TestThread();
         thread.start();
