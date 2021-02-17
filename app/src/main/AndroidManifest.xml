@@ -13,6 +13,7 @@
         <activity android:name=".contact"></activity>
         <activity android:name=".news.NewsActivity"/>
         <activity android:name=".news.EmptyActivity" />
+        <activity android:name=".AboutusActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

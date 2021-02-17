@@ -26,5 +26,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
+        Button loginBtn3 = (Button)findViewById(R.id.aboutusButton);
+        loginBtn3.setOnClickListener(click -> {
+            Intent goToProfile = new Intent(MainActivity.this, AboutusActivity.class);
+            startActivity(goToProfile);
+        });
+
     }
 }
