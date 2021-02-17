@@ -11,5 +11,9 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
 
-
+    <string name="News_FragmentTitle">Title: </string>
+    <string name="News_FragmentDescription">Description: </string>
+    <string name="News_FragmentLink">Link: </string>
+    <string name="News_FragmentDate">Date: </string>
+    <string name="News_close">Close</string>
 </resources>
