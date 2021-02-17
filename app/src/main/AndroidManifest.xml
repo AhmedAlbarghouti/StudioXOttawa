@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.studioxottawa">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+
+    <uses-feature android:name="android.hardware.type.watch" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -15,6 +20,15 @@
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".AboutusActivity" />
         <activity android:name=".BookAppointments"></activity>
+        <activity
+            android:name=".notifActivity"
+            android:label="@string/title_activity_notif">
+        </activity>
+        <activity
+            android:name=".ServicesActivity"
+            android:label="@string/title_activity_services"/>
+        <activity android:name=".VODLibraryActivity" />
+        <activity android:name=".VODActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
