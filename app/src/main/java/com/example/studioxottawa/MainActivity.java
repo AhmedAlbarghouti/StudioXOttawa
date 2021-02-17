@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
     Button aboutusBtn;
+    ImageButton notifBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         // get the reference of Button's
         aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
+        notifBtn = (ImageButton) findViewById(R.id.bellImageButton);  //xiaoxi
 
 // perform setOnClickListener event on aboutus btn //xiaoxi  {
         aboutusBtn.setOnClickListener(new View.OnClickListener() {
@@ -26,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
                 loadAboutusActivity();
             }
         });  //xiaoxi }
+
+        notifBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //load aboutus activity by calling local method
+                loadnotifActivity();
+            }
+        });  //xiaoxi }
+
     }
 
     //xiaoxi {
@@ -33,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         //create new intent and start about us activity
         Intent myIntent = new Intent(MainActivity.this, AboutusActivity.class);
         MainActivity.this.startActivity(myIntent);
+
+    }   //xiaoxi }
+
+    //xiaoxi {
+    private void loadnotifActivity() {
+        //create new intent and start about us activity
+        Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
+        MainActivity.this.startActivity(notifIntent);
 
     }   //xiaoxi }
 
