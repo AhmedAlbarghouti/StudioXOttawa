@@ -31,6 +31,10 @@ public class GetText {
 
         for (Element element : elements) {
 
+            List para = element
+                    .select("p")
+                    .eachText();
+
             List description = element
                     .select("a")
                     .eachText();
@@ -46,6 +50,11 @@ public class GetText {
                 }
             }
             Log.i(TAG, "gyc " + link);
+
+            for(int j=0; j<para.size(); j++){
+                text = text + para.get(j).toString() + "\n";
+                Log.i(TAG, "gyctext " + text);
+            }
 
             for(int j=0; j<description.size(); j++){
                 text = text + description.get(j).toString() + "\n" + link.get(j) + "\n";
