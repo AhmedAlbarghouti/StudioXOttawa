@@ -20,6 +20,16 @@ public class MainActivity extends AppCompatActivity {
         contactbtn.setOnClickListener(btn->{
             Intent contact=new Intent(this,contact.class);
             startActivity(contact);
+
+            Button generateReport=findViewById(R.id.generateReport);
+
+            generateReport.setOnClickListener(btn->{
+
+
+                Intent nextActivity = new Intent(MainActivity.this, Report.class);
+                startActivity(nextActivity); //make the transitio
+
+            });
         });
 
         Button loginBtn2 = (Button)findViewById(R.id.newsButton);

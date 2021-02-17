@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentLocation">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Client Weekly Report"
+        android:id="@+id/title"
+        android:textAlignment="center"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Students:50"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Attendance Percentage:88%"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Hours:47.5"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Video Replays:20"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Earnings: 1500$"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="New Clients: 2"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/ListyView"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
