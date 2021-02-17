@@ -4,22 +4,18 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
 
     <uses-feature android:name="android.hardware.type.watch" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StudioXOttawa">
-        <activity android:name=".VODLibraryActivity" />
-        <activity android:name=".VODActivity" />
-
+        android:theme="@style/Theme.StudioXOttawa"
+        android:usesCleartextTraffic="true">
         <uses-library
             android:name="com.google.android.wearable"
             android:required="false" />
@@ -32,12 +28,12 @@
         <activity
             android:name=".notifActivity"
             android:label="@string/title_activity_notif">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity
+            android:name=".ServicesActivity"
+            android:label="@string/title_activity_services"/>
+        <activity android:name=".VODLibraryActivity" />
+        <activity android:name=".VODActivity" />
         <activity
             android:name=".AboutusActivity"
             android:parentActivityName=".MainActivity">

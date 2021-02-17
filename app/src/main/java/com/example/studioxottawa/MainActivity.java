@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+
 public class MainActivity extends AppCompatActivity {
     Button aboutusBtn;
     ImageButton notifBtn;
@@ -20,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
         Button vodButton = findViewById(R.id.vodsButton);
         vodButton.setOnClickListener(v-> {
             loadVodLibrary();
+        });
+
+        Button serviceButton = findViewById(R.id.servicesButton);
+        serviceButton.setOnClickListener(v-> {
+            loadServices();
         });
         // get the reference of Button's
         aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
@@ -51,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         //Use the included loadVodDebug below if testing Vod playback.
         startActivity(vodLibrary);
         //loadVodDebug();
+    }
+
+    private void loadServices() {
+        Intent services = new Intent(MainActivity.this, ServicesActivity.class);
+        startActivity(services);
     }
 
     private void loadVodDebug() {
