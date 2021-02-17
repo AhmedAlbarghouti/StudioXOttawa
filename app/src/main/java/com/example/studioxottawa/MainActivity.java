@@ -32,5 +32,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
+        Button schedulebtn = findViewById(R.id.scheduleButton);
+        schedulebtn.setOnClickListener(click -> {
+
+            Intent schedule = new Intent(this,Schedule.class);
+            startActivity(schedule);
+        });
+
     }
 }

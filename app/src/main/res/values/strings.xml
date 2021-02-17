@@ -17,6 +17,13 @@
     <string name="News_FragmentDate">Date: </string>
     <string name="News_close">Close</string>
 
+    <string name="lost_your_password"><u>Lost your Password?</u></string>
+    <string name="don_t_have_an_account_sign_up_here">Don\'t have an account? <u>Sign up here!</u></string>
+    <string name="sign_in">Sign in</string>
+    <string name="password">Password</string>
+    <string name="username_email">Username/Email</string>
+    <string name="login">Login</string>
+
     <string name="Aboutus1">
         "Welcome to Studio X Ottawa Inc. YOUR “one stop” eclectic dance, fitness and space "
         "rental Centre!\n\n"
