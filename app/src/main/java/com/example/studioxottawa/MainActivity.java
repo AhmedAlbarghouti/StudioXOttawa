@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.studioxottawa.news.NewsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
         contactbtn.setOnClickListener(btn->{
             Intent contact=new Intent(this,contact.class);
             startActivity(contact);
+        });
+
+        Button loginBtn2 = (Button)findViewById(R.id.newsButton);
+        loginBtn2.setOnClickListener(click -> {
+            Intent goToProfile = new Intent(MainActivity.this, NewsActivity.class);
+            startActivity(goToProfile);
         });
 
     }
