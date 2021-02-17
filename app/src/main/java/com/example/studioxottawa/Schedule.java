@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -56,6 +57,16 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
 
         loadEvents();
 
+        eventList.setOnItemClickListener((list,item,position,id) -> {
+            Bundle eventToPass = new Bundle();
+            eventToPass.putString("EVENT_NAME",events.get(position).getName());
+            eventToPass.putString("EVENT_DATE",DateFormat.getDateInstance(DateFormat.FULL).format(events.get(position).getDate().getTime()));
+            eventToPass.putString("EVENT_TIME",events.get(position).getTime());
+            eventToPass.putString("EVENT_STAFF",events.get(position).getStaff());
+            Intent bookingIntent = new Intent(Schedule.this,BookAppointments.class);
+            bookingIntent.putExtras(eventToPass);
+            startActivity(bookingIntent);
+        });
     }
 
     private void loadEvents() {

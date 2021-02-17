@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookAppointments"
+    >
+
+    <TextView
+        android:id="@+id/bookEventName"
+        android:textSize="25sp"
+        android:text="Event Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <TextView
+        android:id="@+id/bookEventDate"
+        android:textSize="25sp"
+        android:text="Event Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/bookEventName"
+        />
+
+    <TextView
+        android:id="@+id/bookEventTime"
+        android:textSize="25sp"
+        android:text="Event Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/bookEventDate"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/bookEventStaff"
+        android:textSize="25sp"
+        android:text="Event Staff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/bookEventTime"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        android:text="Book Event"
+        android:id="@+id/bookEventButton"
+        android:layout_below="@id/bookEventStaff"
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
+        android:textSize="25sp"
+        />
+</RelativeLayout>
