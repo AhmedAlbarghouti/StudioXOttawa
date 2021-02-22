@@ -14,41 +14,42 @@
         android:id="@+id/toolbar"/>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/newsListView"
             android:layout_width="match_parent"
-            android:layout_height="545dp" />
+            android:layout_height="wrap_content" />
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:rowCount="1"
+            android:layout_gravity="fill"
             android:columnCount="5"
-            android:layout_gravity="fill">
+            android:rowCount="1">
 
-            <ProgressBar android:id="@+id/bbcProgressBar"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:visibility="invisible"
+            <ProgressBar
+                android:id="@+id/bbcProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:textSize="24dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:visibility="invisible" />
 
         </GridLayout>
 
-        <Button android:id="@+id/More"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="More..." />
-
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/More"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0"
+        android:text="More..." />
 
 
 </LinearLayout>

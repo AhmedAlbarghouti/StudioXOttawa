@@ -69,6 +69,10 @@ public class VODActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         hideSystemUi();
+        if ((Util.SDK_INT < 24 || player == null)) {
+            initializePlayer();
+        }
+
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         

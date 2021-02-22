@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         generateReport.setVisibility(View.INVISIBLE);
         String username = getIntent().getExtras().getString("USER_NAME");
-        Log.e("FIX THIS FUCKING CODE", "USER_NAME IS " + username);
         if (username.equalsIgnoreCase("admin"))
             generateReport.setVisibility(View.VISIBLE);
 
