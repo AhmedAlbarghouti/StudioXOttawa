@@ -23,5 +23,14 @@ public class MainActivity extends AppCompatActivity {
             Intent goToProfile = new Intent(MainActivity.this, NewsActivity.class);
             startActivity(goToProfile);
         });
+
+        Button db = (Button)findViewById(R.id.db_Button);
+        db.setOnClickListener(click -> {
+                new Thread(new Runnable(){
+                    public void run(){
+                        DBConnection.linkMysql();
+                    }
+                }).start();
+        });
     }
 }
