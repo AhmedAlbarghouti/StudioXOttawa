@@ -32,13 +32,13 @@
         android:orientation="vertical"
         >
 
-        <ImageButton
-            android:id="@+id/bellImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="false"
-            android:src="@drawable/bell_icon" />
+<!--   xiaoxi     <ImageButton-->
+<!--            android:id="@+id/bellImageButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentRight="false"-->
+<!--            android:src="@drawable/bell_icon" />-->
 
     </LinearLayout>
 

@@ -4,26 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5b5b5b"
+    android:background="#ffffff"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".notifActivity"
     tools:deviceIds="wear">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:id="@+id/layout"
-        android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#fafafa"
-            android:text="@string/notifText" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/logo_studioxottawa"
 
-    </ScrollView>
-    </LinearLayout>
+                />
+
+
+            <TextView
+                android:id="@+id/notif1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="#000000"
+
+                />
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/tabaptmnt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:orientation="vertical">
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/notif3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="#000000"
+
+                        />
+
+                    <Button
+                        android:id="@+id/buttonCall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="call Studio X Ottawa" />
+
+                <TextView
+                    android:id="@+id/notif2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#000000"
+
+                    />
+
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+
+
+        </LinearLayout>
 </androidx.wear.widget.BoxInsetLayout>

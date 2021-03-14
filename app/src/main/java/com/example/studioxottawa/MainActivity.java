@@ -1,15 +1,23 @@
 package com.example.studioxottawa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.example.studioxottawa.news.NewsActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         contactbtn.setOnClickListener(btn-> {
                     Intent contact = new Intent(this, contact.class);
                     startActivity(contact);
-
-
         });
 
         Button generateReport=findViewById(R.id.generateReport);
@@ -33,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
             generateReport.setVisibility(View.VISIBLE);
 
         generateReport.setOnClickListener(btn->{
-
 
             Intent nextActivity = new Intent(MainActivity.this, Report.class);
             startActivity(nextActivity); //make the transitio
@@ -46,19 +51,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
-        Button loginBtn3 = (Button)findViewById(R.id.aboutusButton);
-        loginBtn3.setOnClickListener(click -> {
-            Intent goToProfile = new Intent(MainActivity.this, AboutusActivity.class);
-            startActivity(goToProfile);
-        });
-
         Button schedulebtn = findViewById(R.id.scheduleButton);
         schedulebtn.setOnClickListener(click -> {
 
             Intent schedule = new Intent(this,Schedule.class);
             startActivity(schedule);
         });
-
 
         Button vodButton = findViewById(R.id.vodsButton);
         vodButton.setOnClickListener(v-> {
@@ -69,30 +67,23 @@ public class MainActivity extends AppCompatActivity {
         serviceButton.setOnClickListener(v-> {
             loadServices();
         });
+
+
+        //xiaoxi {
+        loadnotifActivity(); //loads notification...
         // get the reference of Button's
         Button aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
-        ImageButton notifBtn = (ImageButton) findViewById(R.id.bellImageButton);  //xiaoxi
 
-// perform setOnClickListener event on aboutus btn //xiaoxi  {
         aboutusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //load aboutus activity by calling local method
+                //loads aboutus activity by calling local method
                 loadAboutusActivity();
             }
-        });  //xiaoxi }
+        });
 
-        notifBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //load aboutus activity by calling local method
-                loadnotifActivity();
-            }
-        });  //xiaoxi }
+        //xiaoxi }
     }
-
-
-
 
     private void loadVodLibrary() {
         Intent vodLibrary = new Intent(MainActivity.this, VODLibraryActivity.class);
@@ -117,18 +108,123 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //xiaoxi {
+
     private void loadAboutusActivity() {
         //create new intent and start about us activity
         Intent myIntent = new Intent(MainActivity.this, AboutusActivity.class);
         MainActivity.this.startActivity(myIntent);
 
+    }
+
+    private void loadnotifActivity() {   //xiaoxi
+
+        //create new intent and start notif activity
+//we need to check if there are any notification data exists first before we create the notif icon
+        String uname = "Q1"; //for this user Q1 we will not show any notification
+        //get user name from login
+        String loggedusername = getIntent().getExtras().getString("USER_NAME");
+        if (!(loggedusername.equals(uname))) {
+
+            createmocdata();  //using sqllite within android, which stores data as file on the phone
+//all built in android classes to create notification icon on the top of the screen
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.bell5)
+                            .setContentTitle("Studio X Ottawa Notifications")
+                            .setContentText("Select for details")
+                            .setAutoCancel(true) // makes auto cancel of notification
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT); //set priority of notification
+
+//should get data from database for events/appointments if they are within 3 days comparing with
+            //currrent date...grab data and show the notification to user
+
+            Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
+//        notifIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TnotifIntent.putExtra("date1", "March 5, 2021");
+////            notifIntent.putExtra("time1", "10:30 AM");OP);
+//passing on logged on user name to notifActivity class
+            notifIntent.putExtra("username", loggedusername);
+            // MainActivity.this.startActivity(notifIntent);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+//        PendingIntent dismissIntent = PendingIntent.getActivity(this, 0, notifIntent,
+//                PendingIntent.FLAG_CANCEL_CURRENT);
+//        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, "DISMISS", dismissIntent);
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+            //finally build the notification
+            manager.notify(0, builder.build());
+        } //endif username = Q1
+
     }   //xiaoxi }
 
     //xiaoxi {
-    private void loadnotifActivity() {
-        //create new intent and start about us activity
-        Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-        MainActivity.this.startActivity(notifIntent);
+    private void createmocdata() {
+        //we are saving appoints for user Q2 (3 appoints, using for loop to create moc appointment data
+        //Q1 user will not have notification
+        //any other user will have lessons data (3 lessons--we are using for loop to create moc data
+        DBHelper mydb; //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        mydb = new DBHelper(this);
+        ArrayList<String> mynotifs = new ArrayList<String>();
+        //get logged in user name
+        String loggedusername = getIntent().getExtras().getString("USER_NAME");
+        mydb.deleteNotif(loggedusername);
+        mynotifs = mydb.getData(loggedusername); //check if logging on user have any data (appointments or lessons schedule for them)
+        // mynotifs = mydb.getAllnotifs();
+        if (mynotifs.size()==0) { //if logging on user, does not have anydata, create 3 records for them
+            //if already have data, do not create more data
 
-    }   //xiaoxi }
+            //user Q2 is used  for appointments only,
+            String unameQ2 = "Q2";
+//creating some time and date for appointments and lessons mocup data
+            Calendar calendar = Calendar.getInstance(Locale.getDefault());
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            Date dt = new Date();
+            //Calendar c = Calendar.getInstance();
+            calendar.setTime(dt);
+//            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+
+            String date1 = "";
+            String time1 = "";
+//for loop to create three records, 3 appointments for Q2 and three lessons for rest of the users
+            for(int i=0; i<=1; i++){
+                hour = hour + i;
+                minute = minute + i;
+                calendar.add(Calendar.DATE, i);
+                time1 = String.valueOf(hour) +":"+ String.valueOf(minute);
+
+                dt = calendar.getTime();
+                date1 = df.format(dt);
+
+                if(loggedusername.equals(unameQ2)) {
+                    mydb.insertNotif(loggedusername, "", "Yes", date1, time1);
+                }
+                else  {
+                    switch (i) {
+                        case 0:
+//                            str = "Latin Dance Class on" + " " + date1 + " " + time1;
+                            mydb.insertNotif(loggedusername, "Latin Dance ", "", date1, time1);
+                            break;
+                        case 1:
+//                            str = "Fitness Class on" + " " + date1 + " " + time1;
+                            mydb.insertNotif(loggedusername, "Fitness", "", date1, time1);
+                            break;
+                        case 2:
+//                            str = "VOD Class on" + " " + date1 + " " + time1;
+                            mydb.insertNotif(loggedusername, "VOD Class", "", date1, time1);
+                            break;
+                        default:
+                    } //end of switch
+                } //end of else
+            } //end of for loop
+        } //end of if user has data
+    }//end of createmocdata
+
+    //xiaoxi }
+
+
 }

@@ -127,9 +127,6 @@
     -->
     <string name="notifText">
         "This is a reminder that you have an appointment on: \n "
-        "Feb 31st, 2021.\n"
-        "\n"
-        "You have 5 classes left till May\n"
         "\n"
         "Studio X Ottawa\n"
     </string>
