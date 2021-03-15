@@ -66,6 +66,12 @@
             android:layout_centerHorizontal="true"
             />
 
+        <Button android:id="@+id/db_Button"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lostpassTV"
+            android:text="db" />
 
 />
     </RelativeLayout>

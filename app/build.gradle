@@ -31,6 +31,7 @@ android {
 dependencies {
     // jsoup HTML parser library @ https://jsoup.org/
     implementation 'org.jsoup:jsoup:1.13.1'
+    implementation files('libs\\mysql-connector-java-5.1.30-bin.jar')
     compile 'androidx.wear:wear:1.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
     
