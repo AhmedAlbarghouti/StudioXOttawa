@@ -16,6 +16,7 @@
         <activity android:name=".contact"></activity>
         <activity android:name=".news.NewsActivity"/>
         <activity android:name=".news.EmptyActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".AboutusActivity" />
         <activity android:name=".BookAppointments"></activity>
         <activity

@@ -11,6 +11,14 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
 
+    <string name="Register">Register</string>
+    <string name="Cancel">Cancel</string>
+    <string name="username">Username</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="emailAdd">Email</string>
+
     <string name="News_FragmentTitle">Title: </string>
     <string name="News_FragmentDescription">Description: </string>
     <string name="News_FragmentLink">Link: </string>

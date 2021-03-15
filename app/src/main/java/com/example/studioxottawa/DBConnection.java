@@ -70,7 +70,58 @@ public class DBConnection {
         }
     }
 
-    public static boolean insertMysql() {
+    public static User checkMysql(String usern) {
+        Log.i("gyc", "in DB");
+        Connection conn=null;
+        PreparedStatement stmt=null;
+        User user = null;
+        try {
+//            Class.forName(DBDRIVER).newInstance();
+            Class.forName(DBDRIVER);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        try{
+            Log.i("gyc", "try connection");
+            conn = DriverManager.getConnection(DBURL,DBUSER,DBPASSWORD);
+            Log.i("gyc", "connection done");
+            String sql = "SELECT * from userrecord where USER_NAME = '" + usern + "';";
+            stmt= conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Log.i("gyc", "trying find next");
+                String username = rs.getString("USER_NAME");
+                String password = rs.getString("PASSWORD");
+                String firstName = rs.getString("FIRST_NAME");
+                String lastName = rs.getString("LAST_NAME");
+                String phoneNumber = rs.getString("PHONE_NUM");
+                String email = rs.getString("EMAIL");
+                String permission = rs.getString("ADMIN_PERMISSION");
+                user = new User(username, password, firstName, lastName, phoneNumber, email, permission);
+                Log.i("gyc", username+" "+password+" "+permission);
+            }
+            rs.close();
+            stmt.close();;
+            conn.close();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            if(conn!=null){
+                try {
+                    conn.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static boolean insertMysql(String usern, String pass, String firstn, String lastn, String phonen, String emai, int permi) {
         Log.i("gyc", "in DB");
         Connection conn=null;
         PreparedStatement stmt=null;
@@ -86,7 +137,8 @@ public class DBConnection {
             Log.i("gyc", "try connection");
             conn = DriverManager.getConnection(DBURL,DBUSER,DBPASSWORD);
             Log.i("gyc", "connection done");
-            String sql = "INSERT INTO `studioxottawa`.`userrecord` (`USER_NAME`,`PASSWORD`,`FIRST_NAME`,`LAST_NAME`,`PHONE_NUM`,`EMAIL`,`ADMIN_PERMISSION`) VALUES ('user1', 'password1', 'Adam', 'test', '6131112222', 'user1@gmail.com', 0);";
+            String sql = "INSERT INTO `studioxottawa`.`userrecord` (`USER_NAME`,`PASSWORD`,`FIRST_NAME`,`LAST_NAME`,`PHONE_NUM`,`EMAIL`,`ADMIN_PERMISSION`) VALUES " +
+                    "('" + usern + "', '" + pass +"', '" + firstn + "', '" + lastn + "', '" + phonen + "', '" + emai + "', 0);";
             stmt= conn.prepareStatement(sql);
 
             boolean rs = stmt.execute();

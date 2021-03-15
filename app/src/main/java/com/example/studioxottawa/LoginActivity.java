@@ -10,9 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText usernameET;
@@ -52,17 +49,10 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
             }else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 Intent main = new Intent(this, MainActivity.class);
-                main.putExtra("USER_NAME", username);
+                main.putExtra("PERMISSION", user.getPermission());
                 startActivity(main);
                 return;
             }
-
-
-//            Intent main = new Intent(this,MainActivity.class);
-//            String username = usernameET.getText().toString();
-//            String password = passwordET.getText().toString();
-//            main.putExtra("USER_NAME",username);
-//            startActivity(main);
         });
 
         lostPassword.setOnClickListener(click-> {
@@ -70,19 +60,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         signupTV.setOnClickListener(click ->{
-            Toast.makeText(getApplicationContext(),"Successfully Registered!",Toast.LENGTH_SHORT).show();
+            Intent register = new Intent(this, RegisterActivity.class);
+            startActivity(register);
         });
-
-
-//        Button db = (Button)findViewById(R.id.db_Button);
-//        db.setOnClickListener(click -> {
-//            Log.i("gyc", "start");
-//            new Thread(new Runnable(){
-//                public void run(){
-//                    DBConnection.selectMysql();
-//                }
-//            }).start();
-//        });
     }
 
     /**
@@ -105,9 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             this.phoneNumber = phoneNumber;
             this.email = email;
             this.permission = permission;
-
         }
-
         public void run(){
             user = DBConnection.selectMysql(this.username, this.password);
         }

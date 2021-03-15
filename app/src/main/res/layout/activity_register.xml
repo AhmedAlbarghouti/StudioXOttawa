@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@color/teal_200">
+
+    <RelativeLayout
+        android:id="@+id/loginBox"
+        android:layout_centerVertical="true"
+
+        android:background="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="550dp"
+        >
+
+        <TextView
+            android:id="@+id/RegisterTitle"
+            android:layout_marginLeft="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Register"
+            android:textSize="30sp"
+            />
+
+        <EditText
+            android:id="@+id/usernameET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/RegisterTitle"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/username"
+            android:textSize="20sp"
+            android:inputType="text"
+            />
+
+        <EditText
+            android:id="@+id/passET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/usernameET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/password"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/firstNameET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/passET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/firstName"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/lastNameET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/firstNameET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/lastName"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/phoneET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/lastNameET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/phone"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/emailET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/phoneET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/emailAdd"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+        <Button
+            android:text="@string/Register"
+            android:background="@color/teal_200"
+            android:id="@+id/registerButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="20dp"
+            />
+
+        <Button
+            android:text="@string/Cancel"
+            android:background="@color/teal_200"
+            android:id="@+id/cancelButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="20dp"
+            />
+
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

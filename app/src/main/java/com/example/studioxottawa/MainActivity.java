@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Button generateReport=findViewById(R.id.generateReport);
 
         generateReport.setVisibility(View.INVISIBLE);
-        String username = getIntent().getExtras().getString("USER_NAME");
-        if (username.equalsIgnoreCase("admin"))
+        String username = getIntent().getExtras().getString("PERMISSION");
+        if (username.equalsIgnoreCase("1"))
             generateReport.setVisibility(View.VISIBLE);
 
         generateReport.setOnClickListener(btn->{
