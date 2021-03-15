@@ -78,7 +78,7 @@ public class notifActivity extends AppCompatActivity {
         Cursor res = mydb.getcursor(loggedusername);
 
         tabaptlayout=(TableLayout)findViewById(R.id.tabaptmnt);
-
+//creating column headings
         View tableRowapt = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
         TextView col11  = (TextView) tableRowapt.findViewById(R.id.c1);
         TextView col21  = (TextView) tableRowapt.findViewById(R.id.c2);

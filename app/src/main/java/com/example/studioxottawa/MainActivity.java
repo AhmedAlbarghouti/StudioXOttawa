@@ -119,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
     private void loadnotifActivity() {   //xiaoxi
 
         //create new intent and start notif activity
-//we need to check if there are any notification data exists first before we create the notif icon
+        //we need to check if there are any notification data exists first before we create the notif icon
         String uname = "Q1"; //for this user Q1 we will not show any notification
         //get user name from login
         String loggedusername = getIntent().getExtras().getString("USER_NAME");
         if (!(loggedusername.equals(uname))) {
 
             createmocdata();  //using sqllite within android, which stores data as file on the phone
-//all built in android classes to create notification icon on the top of the screen
+            //all built in android classes to create notification icon on the top of the screen
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.bell5)
@@ -135,22 +135,19 @@ public class MainActivity extends AppCompatActivity {
                             .setAutoCancel(true) // makes auto cancel of notification
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT); //set priority of notification
 
-//should get data from database for events/appointments if they are within 3 days comparing with
+            //should get data from database for events/appointments
             //currrent date...grab data and show the notification to user
 
             Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-//        notifIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TnotifIntent.putExtra("date1", "March 5, 2021");
-////            notifIntent.putExtra("time1", "10:30 AM");OP);
-//passing on logged on user name to notifActivity class
+
+            //passing on logged on user name to notifActivity class
             notifIntent.putExtra("username", loggedusername);
-            // MainActivity.this.startActivity(notifIntent);
+
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(contentIntent);
 
-//        PendingIntent dismissIntent = PendingIntent.getActivity(this, 0, notifIntent,
-//                PendingIntent.FLAG_CANCEL_CURRENT);
-//        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, "DISMISS", dismissIntent);
+
 
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
@@ -170,27 +167,29 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> mynotifs = new ArrayList<String>();
         //get logged in user name
         String loggedusername = getIntent().getExtras().getString("USER_NAME");
-        mydb.deleteNotif(loggedusername);
+        //mydb.deleteNotif(loggedusername);
         mynotifs = mydb.getData(loggedusername); //check if logging on user have any data (appointments or lessons schedule for them)
         // mynotifs = mydb.getAllnotifs();
         if (mynotifs.size()==0) { //if logging on user, does not have anydata, create 3 records for them
             //if already have data, do not create more data
-
             //user Q2 is used  for appointments only,
             String unameQ2 = "Q2";
-//creating some time and date for appointments and lessons mocup data
+
+            //creating some time and date for appointments and lessons mocup data
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
             Date dt = new Date();
             //Calendar c = Calendar.getInstance();
             calendar.setTime(dt);
-//            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+            //SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 
             String date1 = "";
             String time1 = "";
-//for loop to create three records, 3 appointments for Q2 and three lessons for rest of the users
+
+            //for loop to create three records, 2 appointments for Q2 and 2 lessons for rest of the users except Q1. which does not have any notifs
             for(int i=0; i<=1; i++){
                 hour = hour + i;
                 minute = minute + i;
@@ -206,15 +205,17 @@ public class MainActivity extends AppCompatActivity {
                 else  {
                     switch (i) {
                         case 0:
-//                            str = "Latin Dance Class on" + " " + date1 + " " + time1;
+                            //str = "Latin Dance Class on" + " " + date1 + " " + time1;
                             mydb.insertNotif(loggedusername, "Latin Dance ", "", date1, time1);
                             break;
                         case 1:
-//                            str = "Fitness Class on" + " " + date1 + " " + time1;
+
+                            //str = "Fitness Class on" + " " + date1 + " " + time1;
                             mydb.insertNotif(loggedusername, "Fitness", "", date1, time1);
                             break;
                         case 2:
-//                            str = "VOD Class on" + " " + date1 + " " + time1;
+
+                            //str = "VOD Class on" + " " + date1 + " " + time1;
                             mydb.insertNotif(loggedusername, "VOD Class", "", date1, time1);
                             break;
                         default:
