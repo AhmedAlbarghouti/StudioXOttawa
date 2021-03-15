@@ -1,12 +1,10 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.studioxottawa.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
     private ListView eventList;
     EventListAdapter listAdapter = new EventListAdapter();
     Calendar c;
+    private DatabaseReference reference;
 
 
     @Override
@@ -43,6 +46,7 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
         pickedDate = findViewById(R.id.pickedDate);
         dateButton = findViewById(R.id.dateButton);
         c = Calendar.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference();
 
         pickedDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
         dateButton.setOnClickListener(new View.OnClickListener(){
@@ -63,7 +67,7 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
             eventToPass.putString("EVENT_DATE",DateFormat.getDateInstance(DateFormat.FULL).format(events.get(position).getDate().getTime()));
             eventToPass.putString("EVENT_TIME",events.get(position).getTime());
             eventToPass.putString("EVENT_STAFF",events.get(position).getStaff());
-            Intent bookingIntent = new Intent(Schedule.this,BookAppointments.class);
+            Intent bookingIntent = new Intent(Schedule.this, BookAppointments.class);
             bookingIntent.putExtras(eventToPass);
             startActivity(bookingIntent);
         });
@@ -74,8 +78,10 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
         o.set(Calendar.YEAR,2021);
         o.set(Calendar.MONTH,1);
         o.set(Calendar.DAY_OF_MONTH,17);
+        Event testEvent = new Event("Virtual Yoga class",o,"6:00PM - 6:55PM","Soul & Nadege");
         allEvents.add(new Event("Virtual Yoga class",o,"6:00PM - 6:55PM","Soul & Nadege"));
         allEvents.add(new Event("Virtual Backata Technique & Footworks",o,"8:10PM - 9:10PM","Soul & Nadege"));
+        reference.child("Events").child(testEvent.getName()).setValue(testEvent);
 
         Calendar e = Calendar.getInstance();
         e.set(Calendar.YEAR,2021);
@@ -139,52 +145,5 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
 
-    public class Event{
-        private String name;
-        private Calendar date;
-        private String time;
-        private String staff;
 
-
-        public Event(String name, Calendar date, String time, String staff) {
-            this.name = name;
-            this.date = date;
-            this.time = time;
-            this.staff = staff;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Calendar getDate() {
-            return date;
-        }
-
-        public void setDate(Calendar date) {
-            this.date = date;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public String getStaff() {
-            return staff;
-        }
-
-        public void setStaff(String staff) {
-            this.staff = staff;
-        }
-
-
-    }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".ServicesActivity" >
+    tools:context=".services.ServicesActivity" >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/serviceContainer"

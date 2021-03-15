@@ -1,10 +1,11 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.notification;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 
+import com.example.studioxottawa.R;
 
 import java.util.Arrays;
 

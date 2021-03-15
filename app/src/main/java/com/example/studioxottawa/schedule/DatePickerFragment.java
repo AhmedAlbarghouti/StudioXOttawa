@@ -1,4 +1,4 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.schedule;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

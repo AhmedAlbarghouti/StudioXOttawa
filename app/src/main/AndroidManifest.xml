@@ -11,32 +11,33 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.StudioXOttawa">
-        <activity android:name=".contact"></activity>
-        <activity android:name=".news.NewsActivity"/>
+        android:theme="@style/Theme.StudioXOttawa"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".welcome.ForgotPassword"></activity>
+        <activity android:name=".welcome.RegisterActivity" />
+        <activity android:name=".contact.contact" />
+        <activity android:name=".news.NewsActivity" />
         <activity android:name=".news.EmptyActivity" />
-        <activity android:name=".AboutusActivity" />
-        <activity android:name=".BookAppointments"></activity>
+        <activity android:name=".aboutus.AboutusActivity" />
+        <activity android:name=".schedule.BookAppointments" />
         <activity
-            android:name=".notifActivity"
-            android:label="@string/title_activity_notif">
-        </activity>
+            android:name=".notification.notifActivity"
+            android:label="@string/title_activity_notif" />
         <activity
-            android:name=".ServicesActivity"
-            android:label="@string/title_activity_services"/>
-        <activity android:name=".VODLibraryActivity" />
-        <activity android:name=".VODActivity" />
-        <activity android:name=".LoginActivity">
+            android:name=".services.ServicesActivity"
+            android:label="@string/title_activity_services" />
+        <activity android:name=".vod.VODLibraryActivity" />
+        <activity android:name=".vod.VODActivity" />
+        <activity android:name=".welcome.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schedule" />
-        <activity android:name=".Report"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".schedule.Schedule" />
+        <activity android:name=".staff.Report" />
+        <activity android:name=".welcome.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,39 +1,88 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.welcome;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.studioxottawa.R;
+import com.example.studioxottawa.staff.Report;
+import com.example.studioxottawa.services.ServicesActivity;
+import com.example.studioxottawa.vod.VODActivity;
+import com.example.studioxottawa.vod.VODLibraryActivity;
+import com.example.studioxottawa.aboutus.AboutusActivity;
+import com.example.studioxottawa.notification.notifActivity;
+import com.example.studioxottawa.schedule.Schedule;
 import com.example.studioxottawa.news.NewsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseUser user;
+    private DatabaseReference reference;
+
+    private String userID;
+    private TextView userTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button contactbtn=findViewById(R.id.contactButton);
-        contactbtn.setOnClickListener(btn-> {
-                    Intent contact = new Intent(this, contact.class);
+        Button contactBtn=findViewById(R.id.contactButton);
+        Button logoutBtn=findViewById(R.id.logoutButton);
+
+        Button generateReport=findViewById(R.id.generateReport);
+        generateReport.setVisibility(View.INVISIBLE);
+
+        userTV = findViewById(R.id.userTV);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User signInUser = snapshot.getValue(User.class);
+                String name = signInUser.email;
+                userTV.setText(name);
+                Boolean isStaff = signInUser.staff;
+                if (isStaff) {
+                    generateReport.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        contactBtn.setOnClickListener(btn-> {
+                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
                     startActivity(contact);
 
 
         });
 
-        Button generateReport=findViewById(R.id.generateReport);
 
-        generateReport.setVisibility(View.INVISIBLE);
-        String username = getIntent().getExtras().getString("USER_NAME");
-        if (username.equalsIgnoreCase("admin"))
-            generateReport.setVisibility(View.VISIBLE);
+
+        logoutBtn.setOnClickListener(click->{
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        });
 
         generateReport.setOnClickListener(btn->{
-
 
             Intent nextActivity = new Intent(MainActivity.this, Report.class);
             startActivity(nextActivity); //make the transitio
@@ -52,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
-        Button schedulebtn = findViewById(R.id.scheduleButton);
-        schedulebtn.setOnClickListener(click -> {
+        Button scheduleBtn = findViewById(R.id.scheduleButton);
+        scheduleBtn.setOnClickListener(click -> {
 
-            Intent schedule = new Intent(this,Schedule.class);
+            Intent schedule = new Intent(this, Schedule.class);
             startActivity(schedule);
         });
 
@@ -89,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
                 loadnotifActivity();
             }
         });  //xiaoxi }
-    }
 
+    }
 
 
 

@@ -1,4 +1,4 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.staff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.studioxottawa.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

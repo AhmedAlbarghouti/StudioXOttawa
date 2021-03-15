@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#5b5b5b"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".notifActivity"
+    tools:context=".notification.notifActivity"
     tools:deviceIds="wear">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

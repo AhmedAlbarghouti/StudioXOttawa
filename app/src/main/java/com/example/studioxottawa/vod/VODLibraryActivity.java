@@ -1,7 +1,6 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.vod;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.studioxottawa.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
