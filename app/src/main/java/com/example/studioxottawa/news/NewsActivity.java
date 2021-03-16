@@ -3,6 +3,7 @@ package com.example.studioxottawa.news;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.welcome.MainActivity;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,14 +55,15 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        Thread thread = new TestThread();
-        thread.start();
-        try {
-            thread.join();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        Thread thread = new TestThread();
+//        thread.start();
+//        try {
+//            thread.join();
+//        }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        elements.addAll(MainActivity.elements);
 
         progressBar = (ProgressBar) findViewById(R.id.bbcProgressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -100,26 +102,27 @@ public class NewsActivity extends AppCompatActivity {
             }
         });
 
-        Button favouriteButton = (Button)findViewById(R.id.More);
-        favouriteButton.setOnClickListener( new View.OnClickListener()
+        Button returnButton = (Button)findViewById(R.id.goBack);
+        returnButton.setOnClickListener( new View.OnClickListener()
         {  public void onClick(View v){
-            if(pageCount<=15){
-                pageCount +=1;
-                Thread thread = new LoadMore();
-                thread.start();
-                try {
-                    thread.join();
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //refresh listview
-                myList = findViewById(R.id.newsListView);
-                myList.setAdapter(myAdapter = new MyListAdapter());
-            }else{
-                Toast.makeText(NewsActivity.this, "No more", Toast.LENGTH_LONG ).show();
-            }
-
+//            if(pageCount<=15){
+//                pageCount +=1;
+//                Thread thread = new LoadMore();
+//                thread.start();
+//                try {
+//                    thread.join();
+//                }
+//                catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                //refresh listview
+//                myList = findViewById(R.id.newsListView);
+//                myList.setAdapter(myAdapter = new MyListAdapter());
+//            }else{
+//                Toast.makeText(NewsActivity.this, "No more", Toast.LENGTH_LONG ).show();
+//            }
+            Intent nextActivity = new Intent(NewsActivity.this, MainActivity.class);
+            startActivity(nextActivity);
         } });
 
     }
