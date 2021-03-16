@@ -49,16 +49,16 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-//        loadEventsToCloud();
+//       loadEventsToCloud();
         eventList = findViewById(R.id.eventList);
         eventList.setAdapter(listAdapter);
         pickedDate = findViewById(R.id.pickedDate);
         dateButton = findViewById(R.id.dateButton);
 
-
-        loadEvents();
         c = Calendar.getInstance();
-        currentDayTitleSetup();
+        loadEvents();
+
+
         pickedDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
 
         dateButton.setOnClickListener(new View.OnClickListener(){
@@ -119,23 +119,14 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
 
     }
 
-    private void currentDayTitleSetup() {
+
+
+    private void loadEvents() {
+        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         String currentDateString = (day+"/"+(month+1)+"/"+year);
-        for (Event e : allEvents){
-            String x = e.getDate();
-
-            if(currentDateString.contentEquals(x)) {
-                events.add(e);
-            }
-        }
-        listAdapter.notifyDataSetChanged();
-    }
-
-    private void loadEvents() {
-        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
 
         referenceEvents.addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,8 +138,20 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
                     String time = String.valueOf(ds.child("time").getValue());
                     String staff = String.valueOf(ds.child("staff").getValue());
                     String uid = String.valueOf(ds.child("uid").getValue());
+
                     allEvents.add(new Event(name,date,time,staff,uid));
+
+
+
+
                     Log.i("value", name);
+                }
+                for (Event e : allEvents){
+                    String x = e.getDate();
+
+                    if(currentDateString.contentEquals(x)) {
+                        events.add(e);
+                    }
                 }
             }
 
