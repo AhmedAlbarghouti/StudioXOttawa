@@ -72,6 +72,7 @@ public class VODLibraryActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private String userID;
 
+    //Checks User Authorization via Firebase to enable/disable video types as necessary
     private void authorize(Button premButton) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -92,34 +93,43 @@ public class VODLibraryActivity extends AppCompatActivity {
         });
     }
 
+    //Method to load the Premium video library tab
     private void loadPremiumLibrary() {
+       //Does nothing if already on the premium library tab
         if (currLibrary != PREMIUM_LIBRARY) {
+
             currLibrary = PREMIUM_LIBRARY;
             TextView pageNum = findViewById(R.id.pageNum);
+            //If the current video library page contains videos, wipe the data in preparation for new data
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
             }
-            if (premiumLibrary.size() == 0) {
+
+            if (premiumLibrary.size() == 0) { //Test Section, adds videos if no videos are present, adds them to the premiumLibrary
                 Video meditationVid = new Video("Deep Breathing Meditation", "breathing_meditation.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.meditation), Video.PREMIUM_MODIFIER);
                 Video lionsVid = new Video("Hearts & Colors: Lions", "hearts_and_colors_lions.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.lions), Video.PREMIUM_MODIFIER);
                 premiumLibrary.add(meditationVid);
                 premiumLibrary.add(lionsVid);
             }
-            videoLibrary.clear();
+
+            //Adds the contents of premiumLibrary to videoLibrary, and populates the data from page 1
             videoLibrary.addAll(premiumLibrary);
-            currentPage.clear();
             populate(1);
 
+            //Updates the on-screen page number
             setPageNum(1);
             pageNum.setText(String.valueOf(getPageNum()));
 
+            //Disables the next and previous page buttons. These are run here as test-methods, when populated with further videos it should handle this automatically based on library size
             disableNextPage();
             disablePrevPage();
         }
     }
 
+    //Method to Load free videos
     private void loadFreeLibrary() {
+        //Does nothing if already on Free Video tab
         if (currLibrary != FREE_LIBRARY) {
             currLibrary = FREE_LIBRARY;
             TextView pageNum = findViewById(R.id.pageNum);
@@ -128,39 +138,44 @@ public class VODLibraryActivity extends AppCompatActivity {
                 currentPage.clear();
             }
             if (freeLibrary.size() == 0) {
-                Video stretchingVid = new Video("Stretching Demo", "video.mp4", null, Video.FREE_MODIFIER);
+                Video stretchingVid = new Video("Stretching Demo", "stretching.mp4", null, Video.FREE_MODIFIER);
                 freeLibrary.add(stretchingVid);
             }
-            videoLibrary.clear();
-            videoLibrary.addAll(freeLibrary);
-            currentPage.clear();
-            populate(1);
 
+            //Adds all free videos to current library, populates page, and updates page number on-screen
+            videoLibrary.addAll(freeLibrary);
+            populate(1);
             setPageNum(1);
             pageNum.setText(String.valueOf(getPageNum()));
 
+            //Test Methods to disable page controls.
             disableNextPage();
             disablePrevPage();
         }
     }
 
+    //Pulls youtube API data, and loads it into the on-screen library
     private void loadYoutubeLibrary() {
+        //Does nothing if youtube library is already selected
         if (currLibrary != YOUTUBE_LIBRARY) {
+            //Sets current library to youtube Library
             currLibrary = YOUTUBE_LIBRARY;
             TextView pageNum = findViewById(R.id.pageNum);
             ImageButton nextPage = findViewById(R.id.nextPage);
             ImageButton prevPage = findViewById(R.id.prevPage);
 
+            //Clears current Library in preparation for new data to prevent merging
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
             }
 
+            //Creates the connection to the API, and begins pulling data if the youtube library is empty.
             if (youtubeLibrary.size() == 0) {
                 connection = new YoutubeAPIConnector();
                 connection.execute();
             }
-            else {
+            else {//Youtube library is not empty. Pull data from it and populate the page.
 
                 videoLibrary.addAll(youtubeLibrary);
                 currentPage.clear();
@@ -169,9 +184,9 @@ public class VODLibraryActivity extends AppCompatActivity {
                 pageNum.setText(String.valueOf(getPageNum()));
             }
 
-            enableNextPage();
+            enableNextPage();//Ensures next button is enabled after loading data
 
-            prevPage.setOnClickListener(v -> {
+            prevPage.setOnClickListener(v -> {//Handler for retrieving previous pages of youtube videos.
                 if (getPageNum() != 1) {
                     if ((((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) && connection.getNextPageToken().isEmpty()) {
                         enableNextPage();
@@ -187,7 +202,7 @@ public class VODLibraryActivity extends AppCompatActivity {
                 }
             });
 
-            nextPage.setOnClickListener(v -> {
+            nextPage.setOnClickListener(v -> { //Handler for retrieving next pages of youtube videos.
                 if (((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) {
                     if (connection.getStatus() != AsyncTask.Status.RUNNING) {
                         connection = new YoutubeAPIConnector();
@@ -215,6 +230,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         }
     }
 
+    //Start point of activity. Sets up listeners for the menu, and loads the free videos to start.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,6 +258,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         pageNum.setText(String.valueOf(getPageNum()));
     }
 
+    //Method to dynamically enable the next page button
     private void enableNextPage() {
         ImageButton nextPage = findViewById(R.id.nextPage);
 
@@ -250,6 +267,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         nextPage.setEnabled(true);
     }
 
+    //Method to dynamically enable the previous page button
     private void enablePrevPage() {
         ImageButton prevPage =  findViewById(R.id.prevPage);
 
@@ -258,6 +276,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         prevPage.setEnabled(true);
     }
 
+    //Method to dynamically disable the next page button
     private void disableNextPage() {
         ImageButton nextPage = findViewById(R.id.nextPage);
 
@@ -265,7 +284,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         nextPage.setClickable(false);
         nextPage.setEnabled(false);
     }
-
+    //Method to dynamically disable the previous page button
     private void disablePrevPage() {
         ImageButton prevPage =  findViewById(R.id.prevPage);
 
@@ -274,24 +293,30 @@ public class VODLibraryActivity extends AppCompatActivity {
         prevPage.setAlpha((float)0.3);
     }
 
+    //method to update page number
     private void setPageNum(int i) {
         pageNumCounter = i;
     }
 
+    //method to retrieve page number
     private int getPageNum() {
         return pageNumCounter;
     }
 
+    //Video class containing header and modifier values to identify how it handles individual kinds of videos, to enable video filtering.
     public class Video {
-        public static final String PREMIUM_HEADER = "http://76.10.173.120:2355/videos/"; //This is a WIP needs file server setup
+        //This is a placeholder File server, to be replaced by a production file repository.
+        //Further services can be set up by modifying headers below. Youtube Header is utilized to pull video data currently.
+        public static final String PREMIUM_HEADER = "http://76.10.173.120:2355/videos/";
         public static final int PREMIUM_MODIFIER = 4;
         private int type;
         private String URL, title;
         private Bitmap thumbnail;
         private static final int YOUTUBE_MODIFIER = 1;
         private static final String YOUTUBE_HEADER = "https://www.youtube.com/watch?v=";
+        private static final String ZOOM_HEADER = ""; //Change to header of file repository containing zoom clips
         private static final int ZOOM_MODIFIER = 2; //Zoom currently unsupported, needs web repository of videos. No special loading instructions required
-        private static final String FREE_HEADER = "https://www.wellnessliving.com/a/drive-download/V2xcVmlkZW9cVmlkZW9GaWxlOjo4NTQ4OTo6M2J2Q0Uzcg%3D%3D/";
+        private static final String FREE_HEADER = "http://76.10.173.120:2355/free/";
         private static final int FREE_MODIFIER = 3;
 
         public Video(String title, String vidID, Bitmap image, int origin) {
@@ -301,6 +326,7 @@ public class VODLibraryActivity extends AppCompatActivity {
             setURL(vidID);
         }
 
+        //Series of getters/setters to retreive and set values of a video
         public void setTitle(String title) { this.title = title; }
 
         public String getTitle() { return title; }
@@ -329,6 +355,8 @@ public class VODLibraryActivity extends AppCompatActivity {
         public Bitmap getThumbnail() { return thumbnail; }
     }
 
+    //Handles youtube API calls to retreive video data.
+    //TODO: Refactor and move to an administrative task to populate database with video IDs, preventing api quota from being used up by regular users
     public class YoutubeAPIConnector extends AsyncTask<String, Integer, String> {
         private final ReentrantLock lock = new ReentrantLock();
         private final Condition tryAgain = lock.newCondition();
@@ -369,6 +397,7 @@ public class VODLibraryActivity extends AppCompatActivity {
                 runAgain();
         }
 
+        //Handles the actual calls to the API in the background thread.
         @Override
         protected String doInBackground(String... args) {
             try {
@@ -376,14 +405,14 @@ public class VODLibraryActivity extends AppCompatActivity {
                 do {
                     String urlString;
 
-                    if (getNextPageToken().isEmpty() && args.length != 0) {
+                    if (getNextPageToken().isEmpty() && args.length != 0) {//Retreives the next token and generates a new URL for the API call.
                         nextPageToken = args[0];
                         urlString = generateNextURL();
                     }
                     else if (getNextPageToken().isEmpty())
-                        urlString = generateURL();
+                        urlString = generateURL(); //Generates the default URL for first call
                     else
-                        urlString = generateNextURL();
+                        urlString = generateNextURL(); //Default case for resuming
 
                     URL url = new URL(urlString);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -406,7 +435,7 @@ public class VODLibraryActivity extends AppCompatActivity {
 
                     JSONArray videos = jObject.getJSONArray("items");
 
-                    for (int i = 0; i < videos.length(); i++) {
+                    for (int i = 0; i < videos.length(); i++) {//Retrieves the current token's video IDs, titles and thumbnails
                         JSONObject currVid = videos.getJSONObject(i);
                         vidId = currVid.getJSONObject("id").getString("videoId");
                         title = currVid.getJSONObject("snippet").getString("title");
@@ -510,6 +539,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         public String getNextPageToken() { return nextPageToken; }
     }
 
+    //Class to keep track of currently loaded videos, and to pass video data to the player
     private class videoAdapter extends BaseAdapter {
         /**
          * Returns how many videos are currently in the list
@@ -561,8 +591,8 @@ public class VODLibraryActivity extends AppCompatActivity {
             if (currVideo.getThumbnail() != null) {
                 iv.setImageBitmap(currVideo.getThumbnail());
             }
-            newView.setOnClickListener(v -> {
-                if (currVideo.getType()==Video.YOUTUBE_MODIFIER) {
+            newView.setOnClickListener(v -> {//Handler for when a video is clicked on
+                if (currVideo.getType()==Video.YOUTUBE_MODIFIER) { //Runs the code to pull youtube video data, pass it through the encryption api and loads it to player
                     Log.d(ACTIVITY_NAME, "Starting extraction of youtube video URL");
                     Log.d(ACTIVITY_NAME, "URL to be extracted is: "+currVideo.getURL());
                     connection.terminate();
@@ -588,10 +618,10 @@ public class VODLibraryActivity extends AppCompatActivity {
                     }.extract(currVideo.getURL(), false, false);
 
                 }
-                else if (currVideo.getType() == Video.FREE_MODIFIER) {
+                else if (currVideo.getType() == Video.FREE_MODIFIER) {//Handler for Free videos. No special handling required.
                     launchVOD(currVideo.getURL());
                 }
-                else if (currVideo.getType() == Video.PREMIUM_MODIFIER) {
+                else if (currVideo.getType() == Video.PREMIUM_MODIFIER) {//Handler for premium videos. No special handling required.
                     launchVOD(currVideo.getURL());
                 }
 
@@ -609,6 +639,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         Log.e(ACTIVITY_NAME, "A video playback error has occurred");
     }
 
+    //Launches the video player with the desired video URI
     private void launchVOD(String url) {
         Log.d(ACTIVITY_NAME, "Launching VOD");
         Intent vodPlayback = new Intent(VODLibraryActivity.this, VODActivity.class);
@@ -616,6 +647,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         startActivity(vodPlayback);
     }
 
+    //Method to add videos to the current page from the library.
     public void populate(int pageNum) {
         if (videoLibrary.size() >= pageNum*10) {
             for (int i = 0; i < 10; i++) {
@@ -630,11 +662,13 @@ public class VODLibraryActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    //Clears the current page of data.
     public void resetList() {
         currentPage.clear();
         adapter.notifyDataSetChanged();
     }
 
+    //Populates the current page on returning to the activity
     @Override
     protected void onResume() {
         super.onResume();
