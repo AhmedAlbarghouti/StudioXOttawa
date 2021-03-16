@@ -7,10 +7,79 @@
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".services.ServicesActivity" >
 
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/shopping_cart_empty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="6dp"
+        android:scaleType="fitXY"
+        android:id="@+id/cartButton"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/serviceContainer"
         android:layout_width="match_parent"
+        android:layout_below="@id/cartButton"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2" />
 </RelativeLayout>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.cardview.widget.CardView-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="20dp"-->
+<!--    android:layout_marginStart="15dp"-->
+<!--    android:layout_marginEnd="15dp"-->
+<!--    app:cardElevation="15dp"-->
+<!--    tools:context=".services.ServicesActivity" >-->
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Product Name"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/productName"-->
+<!--            />-->
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_below="@+id/productName"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:id="@+id/productImage"-->
+<!--            android:layout_marginTop="2dp"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Product Description"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_below="@+id/productImage"-->
+<!--            android:textSize="16dp"-->
+<!--            android:id="@+id/productDesc"-->
+<!--            />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height=""-->
+<!--    </RelativeLayout>-->
+
+<!--&lt;!&ndash;    <androidx.recyclerview.widget.RecyclerView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/serviceContainer"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:spanCount="2" />&ndash;&gt;-->
+
+
+<!--</androidx.cardview.widget.CardView>-->
