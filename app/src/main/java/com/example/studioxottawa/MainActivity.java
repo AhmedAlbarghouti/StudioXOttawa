@@ -9,8 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
+import com.example.studioxottawa.VODPlayer.VODActivity;
+import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
 import com.example.studioxottawa.news.NewsActivity;
 
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button vodButton = findViewById(R.id.vodsButton);
         vodButton.setOnClickListener(v-> {
-            loadVodLibrary();
+            loadVodLibrary(username); //temporary credential verification. Replace with actual authorization later.
         });
 
         Button serviceButton = findViewById(R.id.servicesButton);
@@ -85,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
         //xiaoxi }
     }
 
-    private void loadVodLibrary() {
+    private void loadVodLibrary(String username) {
         Intent vodLibrary = new Intent(MainActivity.this, VODLibraryActivity.class);
+        vodLibrary.putExtra("authorized", username.equalsIgnoreCase("Q2"));
         //This utilizes API calls to the youtube Data v3 interface.
         // Avoid unnecessary spamming in order to preserve api call quotas during testing.
         //Use the included loadVodDebug below if testing Vod playback.

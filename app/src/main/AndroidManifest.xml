@@ -14,11 +14,11 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.StudioXOttawa">
-        <activity android:name=".contact"></activity>
+        <activity android:name=".contact" />
         <activity android:name=".news.NewsActivity"/>
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".AboutusActivity" />
-        <activity android:name=".BookAppointments"></activity>
+        <activity android:name=".BookAppointments" />
         <activity
             android:name=".notifActivity"
             android:label="@string/title_activity_notif">
@@ -26,8 +26,8 @@
         <activity
             android:name=".ServicesActivity"
             android:label="@string/title_activity_services"/>
-        <activity android:name=".VODLibraryActivity" />
-        <activity android:name=".VODActivity" />
+        <activity android:name=".VODPlayer.VODLibraryActivity" />
+        <activity android:name=".VODPlayer.VODActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Schedule" />
-        <activity android:name=".Report"></activity>
+        <activity android:name=".Report" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

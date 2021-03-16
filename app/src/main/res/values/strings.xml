@@ -143,4 +143,7 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="PurchaseTitle">Would you like to purchase this?</string>
     <string name="PurchaseConfirm">Thank you for your purchase</string>
+    <string name="free_vids">Free</string>
+    <string name="youtube_button">Youtube</string>
+    <string name="prem_vids">Premium</string>
 </resources>

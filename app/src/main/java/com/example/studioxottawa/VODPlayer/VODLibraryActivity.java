@@ -1,7 +1,6 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.VODPlayer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.studioxottawa.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,78 +47,204 @@ public class VODLibraryActivity extends AppCompatActivity {
     YoutubeAPIConnector connection;
     ArrayList<Video> videoLibrary = new ArrayList<>();
     ArrayList<Video> currentPage = new ArrayList<>();
+    ArrayList<Video> freeLibrary = new ArrayList<>();
+    ArrayList<Video> premiumLibrary = new ArrayList<>();
+    ArrayList<Video> youtubeLibrary = new ArrayList<>();
     videoAdapter adapter = new videoAdapter();
     private final String ACTIVITY_NAME = "VOD_LIBRARY_ACTIVITY";
     private String resumeToken = "";
     private int pageNumCounter = 1;
+    private int currLibrary = -1;
+    private final int PREMIUM_LIBRARY = 2;
+    private final int YOUTUBE_LIBRARY = 1;
+    private final int FREE_LIBRARY = 0;
+
+    private void loadPremiumLibrary() {
+        if (currLibrary != PREMIUM_LIBRARY) {
+            currLibrary = PREMIUM_LIBRARY;
+            TextView pageNum = findViewById(R.id.pageNum);
+            ImageButton nextPage = findViewById(R.id.nextPage);
+            ImageButton prevPage = findViewById(R.id.prevPage);
+            if (videoLibrary.size() != 0) {
+                videoLibrary.clear();
+                currentPage.clear();
+            }
+            if (premiumLibrary.size() == 0) {
+                Video meditationVid = new Video("Deep Breathing Meditation", "breathing_meditation.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.meditation), Video.PREMIUM_MODIFIER);
+                Video lionsVid = new Video("Hearts & Colors: Lions", "hearts_and_colors_lions.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.lions), Video.PREMIUM_MODIFIER);
+                premiumLibrary.add(meditationVid);
+                premiumLibrary.add(lionsVid);
+            }
+            videoLibrary.clear();
+            videoLibrary.addAll(premiumLibrary);
+            currentPage.clear();
+            populate(1);
+
+            setPageNum(1);
+            pageNum.setText(String.valueOf(getPageNum()));
+
+            disableNextPage();
+            disablePrevPage();
+        }
+    }
+
+    private void loadFreeLibrary() {
+        if (currLibrary != FREE_LIBRARY) {
+            currLibrary = FREE_LIBRARY;
+            TextView pageNum = findViewById(R.id.pageNum);
+            ImageButton nextPage = findViewById(R.id.nextPage);
+            ImageButton prevPage = findViewById(R.id.prevPage);
+            if (videoLibrary.size() != 0) {
+                videoLibrary.clear();
+                currentPage.clear();
+            }
+            if (freeLibrary.size() == 0) {
+                Video stretchingVid = new Video("Stretching Demo", "video.mp4", null, Video.FREE_MODIFIER);
+                freeLibrary.add(stretchingVid);
+            }
+            videoLibrary.clear();
+            videoLibrary.addAll(freeLibrary);
+            currentPage.clear();
+            populate(1);
+
+            setPageNum(1);
+            pageNum.setText(String.valueOf(getPageNum()));
+
+            disableNextPage();
+            disablePrevPage();
+        }
+    }
+
+    private void loadYoutubeLibrary() {
+        if (currLibrary != YOUTUBE_LIBRARY) {
+            currLibrary = YOUTUBE_LIBRARY;
+            TextView pageNum = findViewById(R.id.pageNum);
+            ImageButton nextPage = findViewById(R.id.nextPage);
+            ImageButton prevPage = findViewById(R.id.prevPage);
+
+            if (videoLibrary.size() != 0) {
+                videoLibrary.clear();
+                currentPage.clear();
+            }
+
+            if (youtubeLibrary.size() == 0) {
+                connection = new YoutubeAPIConnector();
+                connection.execute();
+            }
+            else {
+
+                videoLibrary.addAll(youtubeLibrary);
+                currentPage.clear();
+                populate(1);
+                setPageNum(1);
+                pageNum.setText(String.valueOf(getPageNum()));
+            }
+
+            enableNextPage();
+
+            prevPage.setOnClickListener(v -> {
+                if (getPageNum() != 1) {
+                    if ((((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) && connection.getNextPageToken().isEmpty()) {
+                        enableNextPage();
+                    }
+                    resetList();
+                    setPageNum(getPageNum()-1);
+                    populate(getPageNum());
+                    pageNum.setText(String.valueOf(getPageNum()));
+                    if (getPageNum() == 1) {
+                        disablePrevPage();
+                    }
+
+                }
+            });
+
+            nextPage.setOnClickListener(v -> {
+                if (((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) {
+                    if (connection.getStatus() != AsyncTask.Status.RUNNING) {
+                        connection = new YoutubeAPIConnector();
+                        resetList();
+                        connection.execute(resumeToken);
+                    }
+                    else if (!connection.getNextPageToken().isEmpty()) {
+                        resetList();
+                        connection.runAgain();
+                    }
+                }
+                else {
+                    if (getPageNum() == 1) {
+                        enablePrevPage();
+                    }
+                    resetList();
+                    setPageNum(getPageNum()+1);
+                    populate(getPageNum());
+                    if ((((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) && connection.getNextPageToken().isEmpty()) {
+                        disableNextPage();
+                    }
+                }
+                pageNum.setText(String.valueOf(getPageNum()));
+            });
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vod_library);
 
+
         ListView vodDisplay = findViewById(R.id.vod_list);
         vodDisplay.setAdapter(adapter);
 
-        connection = new YoutubeAPIConnector();
-        connection.execute();
+        Button freeLibrary = findViewById(R.id.freeVidsButton);
+        Button youtubeLibrary = findViewById(R.id.youtubeButton);
+        Button premiumLibrary = findViewById(R.id.premiumVids);
+
+        premiumLibrary.setEnabled(getIntent().getExtras().getBoolean("authorized"));
+
+        freeLibrary.setOnClickListener(v -> loadFreeLibrary());
+
+        youtubeLibrary.setOnClickListener(v -> loadYoutubeLibrary());
+
+        premiumLibrary.setOnClickListener(v -> loadPremiumLibrary());
+
 
         TextView pageNum = findViewById(R.id.pageNum);
         pageNum.setText(String.valueOf(getPageNum()));
+
+        disableNextPage();
+        disablePrevPage();
+    }
+
+    private void enableNextPage() {
+        ImageButton nextPage = findViewById(R.id.nextPage);
+
+        nextPage.setAlpha((float) 1.0);
+        nextPage.setClickable(true);
+        nextPage.setEnabled(true);
+    }
+
+    private void enablePrevPage() {
         ImageButton prevPage =  findViewById(R.id.prevPage);
+
+        prevPage.setAlpha((float) 1.0);
+        prevPage.setClickable(true);
+        prevPage.setEnabled(true);
+    }
+
+    private void disableNextPage() {
+        ImageButton nextPage = findViewById(R.id.nextPage);
+
+        nextPage.setAlpha((float) 0.3);
+        nextPage.setClickable(false);
+        nextPage.setEnabled(false);
+    }
+
+    private void disablePrevPage() {
+        ImageButton prevPage =  findViewById(R.id.prevPage);
+
         prevPage.setEnabled(false);
         prevPage.setClickable(false);
         prevPage.setAlpha((float)0.3);
-        ImageButton nextPage =  findViewById(R.id.nextPage);
-        prevPage.setOnClickListener(v -> {
-            if (getPageNum() != 1) {
-                if ((((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) && connection.getNextPageToken().isEmpty()) {
-                    nextPage.setAlpha((float) 1.0);
-                    nextPage.setClickable(true);
-                    nextPage.setEnabled(true);
-                }
-                resetList();
-                setPageNum(getPageNum()-1);
-                populate(getPageNum());
-                pageNum.setText(String.valueOf(getPageNum()));
-                if (getPageNum() == 1) {
-                    prevPage.setAlpha((float) 0.3);
-                    prevPage.setClickable(false);
-                    prevPage.setEnabled(false);
-                }
-
-            }
-        });
-
-        nextPage.setOnClickListener(v -> {
-            if (((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) {
-                if (connection.getStatus() != AsyncTask.Status.RUNNING) {
-                    connection = new YoutubeAPIConnector();
-                    resetList();
-                    connection.execute(resumeToken);
-                }
-                else if (!connection.getNextPageToken().isEmpty()) {
-                    resetList();
-                    connection.runAgain();
-                }
-            }
-            else {
-                if (getPageNum() == 1) {
-                    prevPage.setAlpha((float) 1.0);
-                    prevPage.setClickable(true);
-                    prevPage.setEnabled(true);
-                }
-                resetList();
-                setPageNum(getPageNum()+1);
-                populate(getPageNum());
-                if ((((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) && connection.getNextPageToken().isEmpty()) {
-                    nextPage.setAlpha((float) 0.3);
-                    nextPage.setClickable(false);
-                    nextPage.setEnabled(false);
-                }
-            }
-            pageNum.setText(String.valueOf(getPageNum()));
-        });
     }
 
     private void setPageNum(int i) {
@@ -128,12 +256,16 @@ public class VODLibraryActivity extends AppCompatActivity {
     }
 
     public class Video {
+        public static final String PREMIUM_HEADER = "http://192.168.1.6/videos/";
+        public static final int PREMIUM_MODIFIER = 4;
         private int type;
         private String URL, title;
         private Bitmap thumbnail;
         private static final int YOUTUBE_MODIFIER = 1;
         private static final String YOUTUBE_HEADER = "https://www.youtube.com/watch?v=";
-        private static final int ZOOM_MODIFIER = 2; //Zoom currently unsupported
+        private static final int ZOOM_MODIFIER = 2; //Zoom currently unsupported, needs web repository of videos. No special loading instructions required
+        private static final String FREE_HEADER = "https://www.wellnessliving.com/a/drive-download/V2xcVmlkZW9cVmlkZW9GaWxlOjo4NTQ4OTo6M2J2Q0Uzcg%3D%3D/";
+        private static final int FREE_MODIFIER = 3;
 
         public Video(String title, String vidID, Bitmap image, int origin) {
             this.setTitle(title);
@@ -155,6 +287,10 @@ public class VODLibraryActivity extends AppCompatActivity {
                 this.URL = YOUTUBE_HEADER + URL;
             else if (getType() == ZOOM_MODIFIER)
                 this.URL = URL;//Currently Unsupported, fall back to default case.
+            else if (getType() == FREE_MODIFIER)
+                this.URL = FREE_HEADER + URL;
+            else if (getType() == PREMIUM_MODIFIER)
+                this.URL = PREMIUM_HEADER + URL;
             else
                 this.URL = URL;
         }
@@ -272,6 +408,7 @@ public class VODLibraryActivity extends AppCompatActivity {
                         }
                         Video newVideo = new Video(title, vidId, image, Video.YOUTUBE_MODIFIER);
                         videoLibrary.add(newVideo);
+                        youtubeLibrary.add(newVideo);
                         if (i <= 10)
                             currentPage.add(newVideo); //Adds first 10 results to the current page listing
                     }
@@ -394,7 +531,9 @@ public class VODLibraryActivity extends AppCompatActivity {
             tv = newView.findViewById(R.id.video_name);
             iv = newView.findViewById(R.id.thumbnail_box);
             tv.setText(currVideo.getTitle());
-            iv.setImageBitmap(currVideo.getThumbnail());
+            if (currVideo.getThumbnail() != null) {
+                iv.setImageBitmap(currVideo.getThumbnail());
+            }
             newView.setOnClickListener(v -> {
                 if (currVideo.getType()==Video.YOUTUBE_MODIFIER) {
                     Log.d(ACTIVITY_NAME, "Starting extraction of youtube video URL");
@@ -421,6 +560,12 @@ public class VODLibraryActivity extends AppCompatActivity {
                         }
                     }.extract(currVideo.getURL(), false, false);
 
+                }
+                else if (currVideo.getType() == Video.FREE_MODIFIER) {
+                    launchVOD(currVideo.getURL());
+                }
+                else if (currVideo.getType() == Video.PREMIUM_MODIFIER) {
+                    launchVOD(currVideo.getURL());
                 }
 
                 //TODO Convert the URL as appropriate and commence exoplayer playback in VODActivity

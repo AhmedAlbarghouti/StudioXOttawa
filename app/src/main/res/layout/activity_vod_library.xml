@@ -5,6 +5,43 @@
     android:backgroundTint="#000000"
     android:orientation="vertical">
 
+    <ScrollView
+        android:id="@+id/libraryNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:id="@+id/freeVidsButton"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/free_vids" />
+
+            <Button
+                android:id="@+id/youtubeButton"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/youtube_button" />
+
+            <Button
+                android:id="@+id/premiumVids"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/prem_vids" />
+        </LinearLayout>
+    </ScrollView>
+
     <ListView
         android:id="@+id/vod_list"
         android:layout_width="match_parent"
