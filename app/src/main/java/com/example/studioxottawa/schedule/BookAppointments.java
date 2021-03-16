@@ -36,7 +36,13 @@ public class BookAppointments extends AppCompatActivity {
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
 
+        //Universally Unique Event ID
+        String Uid = passedEvent.getString("EVENT_UID");
+
         bookbtn.setOnClickListener(click-> {
+            //Change second argument to goto class
+            Intent bookingIntent = new Intent(BookAppointments.this, BookAppointments.class);
+            bookingIntent.putExtra("UID",Uid);
             Toast.makeText(getApplicationContext(),"Successfully Booked!",Toast.LENGTH_SHORT).show();
         });
 

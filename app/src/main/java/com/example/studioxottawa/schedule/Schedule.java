@@ -75,10 +75,12 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
 
         eventList.setOnItemClickListener((list,item,position,id) -> {
             Bundle eventToPass = new Bundle();
+            eventToPass.putString("EVENT_UID",events.get(position).getUid());
             eventToPass.putString("EVENT_NAME",events.get(position).getName());
             eventToPass.putString("EVENT_DATE",events.get(position).getDate());
             eventToPass.putString("EVENT_TIME",events.get(position).getTime());
             eventToPass.putString("EVENT_STAFF",events.get(position).getStaff());
+
             Intent bookingIntent = new Intent(Schedule.this, BookAppointments.class);
             bookingIntent.putExtras(eventToPass);
             startActivity(bookingIntent);
@@ -89,29 +91,29 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
     private void loadEventsToCloud() {
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Events");
 
-        Event event1 = new Event("Zumba with Nadege & Soul","22/3/2021","6:30PM - 7:15PM","Soul & Nadege");
+        Event event1 = new Event("Zumba with Nadege & Soul","16/3/2021","6:30PM - 7:15PM","Soul & Nadege");
         Log.i("uid",event1.getUid());
         eventsReference.child(event1.getUid()).setValue(event1);
 
-        Event event2 = new Event("Virtual Zumba with Nadege & Soul","22/3/2021","6:30PM - 7:15PM","Soul & Nadege");
+        Event event2 = new Event("Virtual Zumba with Nadege & Soul","16/3/2021","6:30PM - 7:15PM","Soul & Nadege");
         eventsReference.child(event2.getUid()).setValue(event2);
 
-        Event event3 = new Event("Yoga with Nadège & Soul","23/3/2021","6:00PM - 6:55PM","Soul & Nadege");
+        Event event3 = new Event("Yoga with Nadège & Soul","17/3/2021","6:00PM - 6:55PM","Soul & Nadege");
         eventsReference.child(event3.getUid()).setValue(event3);
 
-        Event event4 = new Event("Virtual Yoga with Nadège & Soul","23/3/2021","6:00PM - 6:55PM","Soul & Nadege");
+        Event event4 = new Event("Virtual Yoga with Nadège & Soul","17/3/2021","6:00PM - 6:55PM","Soul & Nadege");
         eventsReference.child(event4.getUid()).setValue(event4);
 
-        Event event5 = new Event("Bachata for couples (Intermediate)","23/3/2021","7:00PM - 7:55PM","Soul & Nadege");
+        Event event5 = new Event("Bachata for couples (Intermediate)","18/3/2021","7:00PM - 7:55PM","Soul & Nadege");
         eventsReference.child(event5.getUid()).setValue(event5);
 
-        Event event6 = new Event("Virtual Bachata for couples (Intermediate)","23/3/2021","7:00PM - 7:55PM","Soul & Nadege");
+        Event event6 = new Event("Virtual Bachata for couples (Intermediate)","18/3/2021","7:00PM - 7:55PM","Soul & Nadege");
         eventsReference.child(event6.getUid()).setValue(event6);
 
-        Event event7 = new Event("Bachata technique & footworks (Intermediate and up solo class)","23/3/2021","8:10PM - 9:10PM","Soul & Nadege");
+        Event event7 = new Event("Bachata technique & footworks (Intermediate and up solo class)","19/3/2021","8:10PM - 9:10PM","Soul & Nadege");
         eventsReference.child(event7.getUid()).setValue(event7);
 
-        Event event8 = new Event("Virtual Bachata technique & footworks (Intermediate and up solo class)","23/3/2021","8:10PM - 9:10PM","Soul & Nadege");
+        Event event8 = new Event("Virtual Bachata technique & footworks (Intermediate and up solo class)","19/3/2021","8:10PM - 9:10PM","Soul & Nadege");
         eventsReference.child(event8.getUid()).setValue(event8);
 
 
