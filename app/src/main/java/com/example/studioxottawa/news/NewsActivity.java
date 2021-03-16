@@ -7,6 +7,7 @@ import com.example.studioxottawa.R;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +26,14 @@ public class NewsActivity extends AppCompatActivity {
     private ArrayList<News> elements = new ArrayList<>();
     private ListView myList;
     private MyListAdapter myAdapter;
-    public static final String ACTIVITY_NAME = "BBC_ACTIVITY";
-    private ArrayList<News> tempFavourite = new ArrayList<>();
-    //Load content
+
     private ProgressBar progressBar;
     private String title;
     private String description;
     private String link;
     private String date;
     SQLiteDatabase db;
-    //    MyOpener dbOpener;
-    //fragment
+
     public static final String NEWS_TITLE = "TITLE";
     public static final String NEWS_DESCRIPTION = "DESCRIPTION";
     public static final String NEWS_LINK = "LINK";
@@ -65,13 +63,8 @@ public class NewsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         progressBar = (ProgressBar) findViewById(R.id.bbcProgressBar);
         progressBar.setVisibility(View.VISIBLE);
-
-//        dbOpener = new MyOpener(this);
-//        db = dbOpener.getWritableDatabase();
-
 
         //Create list view
         myList = findViewById(R.id.newsListView);
@@ -129,59 +122,6 @@ public class NewsActivity extends AppCompatActivity {
 
         } });
 
-
-
-
-
-//        Button favouriteButton = (Button)findViewById(R.id.GoToFavourite);
-//        favouriteButton.setOnClickListener( new View.OnClickListener()
-//        {  public void onClick(View v){
-//            Intent goToChatRoom = new Intent(BbcActivity.this, FavourityActivity.class);
-//            startActivity(goToChatRoom);
-//        } });
-
-
-        //create the fragment of news
-//        myList.setOnItemClickListener((list, item, position, id) -> {
-//            //Create a bundle to pass data to the new fragment
-//            Bundle dataToPass = new Bundle();
-//            dataToPass.putString(NEWS_TITLE, elements.get(position).getTitle() );
-//            dataToPass.putString(NEWS_DESCRIPTION, elements.get(position).getDescription() );
-//            dataToPass.putString(NEWS_LINK, elements.get(position).getLink() );
-//            dataToPass.putString(NEWS_DATE, elements.get(position).getDate() );
-//
-//            dataToPass.putInt(NEWS_POSITION, position);
-//            dataToPass.putLong(NEWS_ID, id);
-//
-//            if(isTablet)
-//            {
-//                dFragment = new DetailsFragment();
-//                dFragment.setArguments( dataToPass );
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.frameLayout, dFragment)
-//                        .commit();
-//            }
-//            else //isPhone
-//            {
-//                Intent nextActivity = new Intent(BbcActivity.this, EmptyActivity.class);
-//                nextActivity.putExtras(dataToPass); //send data to next activity
-//                startActivity(nextActivity); //make the transition
-//            }
-//        });
-
-//        //Toolbar and NavigationDraw
-//        Toolbar tBar = (Toolbar)findViewById(R.id.toolbar);
-//        setSupportActionBar(tBar);
-//
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-//                drawer, tBar, R.string.BBC_open, R.string.BBC_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
-//
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -208,22 +148,6 @@ public class NewsActivity extends AppCompatActivity {
                 elements.addAll(GetData.spiderArticle(html));
         }
     }
-//    private void Test() {
-//
-//        new Thread() {
-//            public void run() {
-//                String html = OkHttpUtils.OkGetArt("https://www.studioxottawa.com/news/");
-////                System.out.print("234"+html);
-//                elements.addAll(GetData.spiderArticle(html));
-//                String size = elements.size()+"";
-//                Log.i(TAG, "gycsize " + size);
-//                Log.i(TAG, "gyctitle " + elements.get(0).getTitle());
-//                Log.i(TAG, "gycdes " + elements.get(0).getDescription());
-//                Log.i(TAG, "gyclink " + elements.get(0).getLink());
-//                Log.i(TAG, "gycdate " + elements.get(0).getDate());
-//            }
-//        }.start();
-//    }
 
 
     /**
@@ -272,104 +196,5 @@ public class NewsActivity extends AppCompatActivity {
             return newView;
         }
     }
-
-//    /**
-//     * inflates the menu from XML layout
-//     * @param menu - {@link Menu} object that is applied by the activity
-//     * @return true
-//     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu items for use in the action bar
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu3, menu);
-//
-//        return true;
-//    }
-
-//    /**
-//     * @param item - {@link MenuItem} object in the {@link Menu}
-//     * @return true
-//     */
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        String message = null;
-//        Intent goTo;
-//        //Look at your menu XML file. Put a case for every id in that file:
-//        switch(item.getItemId())
-//        {
-//            //what to do when the menu item is selected:
-//            case R.id.bbc_fav_pic:
-//                message = getResources().getString(R.string.BBC_Toolbar_Option)
-//                        +" "+getResources().getString(R.string.BBC_Favourite);
-//                goTo = new Intent(BbcActivity.this, FavourityActivity.class);
-//                startActivity(goTo);
-//                break;
-//            case R.id.guardian_pic:
-//                message = getResources().getString(R.string.BBC_Toolbar_Option)
-//                        +" "+getResources().getString(R.string.BBC_Guardian_news);
-//                goTo = new Intent(BbcActivity.this, GuardianMain.class);
-//                startActivity(goTo);
-//                break;
-//            case R.id.nasa_pic:
-//                message = getResources().getString(R.string.BBC_Toolbar_Option)
-//                        +" "+getResources().getString(R.string.BBC_NASA);
-//                goTo = new Intent(BbcActivity.this, ImageDay.class);
-//                startActivity(goTo);
-//                break;
-//            case R.id.nasa_earth_pic:
-//                message = getResources().getString(R.string.BBC_Toolbar_Option)
-//                        +" "+getResources().getString(R.string.BBC_NASA_earth);
-//                goTo = new Intent(BbcActivity.this, BingMain.class);
-//                startActivity(goTo);
-//                break;
-//            case R.id.bbc_help:
-//                message = getResources().getString(R.string.BBC_Toolbar_Option)
-//                        +" "+getResources().getString(R.string.BBC_help);
-//                new AlertDialog.Builder(BbcActivity.this)
-//                        .setTitle(getString(R.string.BBC_AlertDialogTitle3))
-//                        .setMessage(getString(R.string.BBC_HelpMes1) + "\n" + getString(R.string.BBC_HelpMes2) + "\n"
-//                                + getString(R.string.BBC_HelpMes3) + "\n" + getString(R.string.BBC_HelpMes4) + "\n"
-//                                + getString(R.string.BBC_HelpMes5) + "\n")
-//                        .setNegativeButton(getString(R.string.BBC_Help_NegativeButton),null)
-//                        .setPositiveButton(getString(R.string.BBC_Help_PositiveButton), null).show();
-//                break;
-//        }
-//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//        return true;
-//    }
-
-//    /**
-//     * @param item - {@link MenuItem} object in the NavigationDrawer
-//     * @return false
-//     */
-//    @Override
-//    public boolean onNavigationItemSelected( MenuItem item) {
-//
-//        String message = null;
-//
-//        int id = item.getItemId();
-//        Intent goTo;
-//
-//        if(id == R.id.goToFav){
-//
-//            goTo = new Intent(BbcActivity.this, FavourityActivity.class);
-//            startActivity(goTo);
-//        }else if(id == R.id.goToGardian){
-//            goTo = new Intent(BbcActivity.this, GuardianMain.class);
-//            startActivity(goTo);
-//        }else if(id == R.id.goToNASA){
-//
-//            goTo = new Intent(BbcActivity.this, ImageDay.class);
-//            startActivity(goTo);
-//        }else if(id == R.id.goToNASAEarth){
-//
-//            goTo = new Intent(BbcActivity.this, BingMain.class);
-//            startActivity(goTo);
-//        }
-//        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-//        drawerLayout.closeDrawer(GravityCompat.START);
-//        return false;
-//    }
 }
 
