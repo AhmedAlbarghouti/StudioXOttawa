@@ -7,6 +7,7 @@ import com.example.studioxottawa.R;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,6 @@ public class NewsActivity extends AppCompatActivity {
     private ArrayList<News> elements = new ArrayList<>();
     private ListView myList;
     private MyListAdapter myAdapter;
-    public static final String ACTIVITY_NAME = "BBC_ACTIVITY";
-    private ArrayList<News> tempFavourite = new ArrayList<>();
 
     private ProgressBar progressBar;
     private String title;
