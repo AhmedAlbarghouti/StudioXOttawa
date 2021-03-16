@@ -14,6 +14,12 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
+import com.example.studioxottawa.schedule.Schedule;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -194,10 +200,23 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 // Payment completed successfully
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 Event event= getIntent().getParcelableExtra("EventObj");
+                Boolean isEvent =getIntent().getExtras().getBoolean("isService");
+
+
                 activity.displayAlert(
                         "Payment completed", "Payment Successful! Thank you"
 //                        gson.toJson(paymentIntent)
                 );
+                if(isEvent){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
+                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+                    startActivity(schedule);
+                }else if(!isEvent){
+
+                }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(

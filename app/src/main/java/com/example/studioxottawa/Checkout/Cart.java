@@ -106,6 +106,7 @@ public class Cart extends AppCompatActivity {
         Button placeOrder= findViewById(R.id.checkoutButton);
         placeOrder.setOnClickListener(btn->{
             Intent pay = new Intent(this,CheckoutActivityJava.class);
+            pay.putExtra("isService",isEvent);
             pay.putExtra("EventObj",event);
             pay.putExtra("EventTitle",eventName);
             pay.putExtra("EventId", eventKey);
