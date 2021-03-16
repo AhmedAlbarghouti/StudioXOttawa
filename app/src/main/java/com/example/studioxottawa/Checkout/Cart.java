@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,7 @@ public class Cart extends AppCompatActivity {
     ArrayList<String> product;
     private Boolean isService=false;
     private String service;
-    private Event event;
+    ListView myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,11 @@ public class Cart extends AppCompatActivity {
         product= getIntent().getExtras().getStringArrayList("List");
         service=getIntent().getExtras().getString("UID");
         isService=getIntent().getExtras().getBoolean("isService");
+        Button cancel= (Button) findViewById(R.id.cancelButton);
+        cancel.setOnClickListener(e->{
+            finish();
+        });
+
 //        Log.e("Product",product.toString());
         Log.e("service",isService.toString());
 
@@ -92,8 +98,14 @@ public class Cart extends AppCompatActivity {
 
 
 //        calculatePrice();
-        ListView myList= findViewById(R.id.ItemPurchView);
+
+        myList= findViewById(R.id.ItemPurchView);
         myList.setAdapter(myAdapter=new CartAdapter(this));
+        myList.setOnItemLongClickListener((parent, view, position, id) -> {
+            products.remove(position);
+            myAdapter.notifyDataSetChanged();
+            return true;
+        });
 
         Button placeOrder= findViewById(R.id.checkoutButton);
         placeOrder.setOnClickListener(btn->{
@@ -261,6 +273,8 @@ public class Cart extends AppCompatActivity {
                         calculatePrice();
                     }
                 });
+
+
 
             return view;
         }

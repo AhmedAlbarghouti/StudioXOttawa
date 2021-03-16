@@ -135,7 +135,7 @@ public class ServicesActivity extends AppCompatActivity {
                         Intent viewCart = new Intent(ServicesActivity.this, Cart.class);
 
                         viewCart.putStringArrayListExtra("List",stringList);
-                        startActivity(viewCart);
+                        startActivityForResult(viewCart,1);
                     }
                 });
 

@@ -16,6 +16,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+
             android:text="Studio X Ottawa Limited T-shirt"
             android:layout_toRightOf="@id/imageThumb"
             android:id="@+id/check_item_desc"/>
@@ -78,12 +79,13 @@
 
         <ImageButton
             android:id="@+id/removeItemBtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="4dp"
+
             android:cropToPadding="true"
             android:scaleType="fitXY"
             android:src="@drawable/red_x" />
