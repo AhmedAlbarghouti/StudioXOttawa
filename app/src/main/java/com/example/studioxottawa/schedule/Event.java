@@ -1,9 +1,12 @@
 package com.example.studioxottawa.schedule;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 import java.util.UUID;
 
-public class Event{
+public class Event implements Parcelable {
     private String name;
     private String date;
     private String time;
@@ -32,6 +35,26 @@ public class Event{
         this.staff = staff;
         this.uid = uid;
     }
+
+    protected Event(Parcel in) {
+        name = in.readString();
+        date = in.readString();
+        time = in.readString();
+        staff = in.readString();
+        uid = in.readString();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -73,4 +96,17 @@ public class Event{
         this.uid = uid;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(date);
+        dest.writeString(time);
+        dest.writeString(staff);
+        dest.writeString(uid);
+    }
 }

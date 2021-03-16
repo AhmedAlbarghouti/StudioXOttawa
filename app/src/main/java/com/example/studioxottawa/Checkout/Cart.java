@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,7 @@ public class Cart extends AppCompatActivity {
     private Boolean isEvent =false;
     private String eventKey;
     private String eventName;
+    private Event event;
     ListView myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,7 @@ public class Cart extends AppCompatActivity {
         Button placeOrder= findViewById(R.id.checkoutButton);
         placeOrder.setOnClickListener(btn->{
             Intent pay = new Intent(this,CheckoutActivityJava.class);
+            pay.putExtra("EventObj",event);
             pay.putExtra("EventTitle",eventName);
             pay.putExtra("EventId", eventKey);
             pay.putExtra("Total Price",price);
@@ -126,7 +129,7 @@ public class Cart extends AppCompatActivity {
              String time = String.valueOf(snapshot.child("time").getValue());
              String staff = String.valueOf(snapshot.child("staff").getValue());
              String uid = String.valueOf(snapshot.child("uid").getValue());
-//             event=new Event(name,date,time,staff,uid);
+             event=new Event(name,date,time,staff,uid);
              eventName= name+" "+date+" "+time+" with "+staff;
              Product temp = new Product(eventName,25.00,1);
              temp.BitMapToString(BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa));

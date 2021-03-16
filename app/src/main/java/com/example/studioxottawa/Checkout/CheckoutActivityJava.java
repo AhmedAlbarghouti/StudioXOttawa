@@ -1,19 +1,11 @@
 package com.example.studioxottawa.Checkout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -21,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.schedule.Event;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -56,6 +49,9 @@ public class CheckoutActivityJava extends AppCompatActivity {
     private String paymentIntentClientSecret = "sk_test_51ILUoQJBRyYbLiOnRqvcjq1l6erjzTKcz7FpqnM1AZ6Phfh2NM4r8wjA0kqSldEHhjwUyTLnAB0qHRlwLxtUKoaQ00YSQCu08T";
     private Stripe stripe;
     private double price = 0;
+//    private static Intent intent= getIntent().getParcelableExtra("EventObj");
+
+
     private NumberFormat formatter = new DecimalFormat("#0.00");
 //
 //    private  static ArrayList<String> products= new ArrayList<String>();
@@ -66,6 +62,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         setContentView(R.layout.activity_checkout_java);
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
         price = getIntent().getExtras().getDouble("Total Price");
+
         stripe = new Stripe(
                 getApplicationContext(),
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
@@ -142,7 +139,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         paymentIntentClientSecret = responseMap.get("clientSecret");
     }
 
-    private static final class PayCallback implements Callback {
+    private  final class PayCallback implements Callback {
         @NonNull
         private final WeakReference<CheckoutActivityJava> activityRef;
 
@@ -176,7 +173,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
     }
 
-    private static final class PaymentResultCallback
+    private final class PaymentResultCallback
             implements ApiResultCallback<PaymentIntentResult> {
         @NonNull
         private final WeakReference<CheckoutActivityJava> activityRef;
@@ -196,6 +193,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Event event= getIntent().getParcelableExtra("EventObj");
                 activity.displayAlert(
                         "Payment completed", "Payment Successful! Thank you"
 //                        gson.toJson(paymentIntent)
