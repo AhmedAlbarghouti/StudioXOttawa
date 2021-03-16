@@ -1,23 +1,36 @@
 package com.example.studioxottawa.schedule;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 public class Event{
     private String name;
-    private Calendar date;
+    private String date;
     private String time;
     private String staff;
+    private String uid;
 
     //Default constructor
     public Event(){
 
     }
 
-    public Event(String name, Calendar date, String time, String staff) {
+
+
+    public Event(String name, String date, String time, String staff) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.staff = staff;
+        uid = String.valueOf(UUID.randomUUID());
+    }
+
+    public Event(String name, String date, String time, String staff, String uid) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.staff = staff;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -28,11 +41,11 @@ public class Event{
         this.name = name;
     }
 
-    public Calendar getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -52,5 +65,12 @@ public class Event{
         this.staff = staff;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
 }

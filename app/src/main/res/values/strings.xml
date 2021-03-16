@@ -156,4 +156,5 @@
     <string name="reset_password">Reset Password</string>
     <string name="welcomeHeader">Welcome</string>
     <string name="user">User</string>
+    <string name="add_class_button">add event</string>
 </resources>

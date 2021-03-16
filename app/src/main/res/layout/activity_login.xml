@@ -50,7 +50,7 @@
 
         <Button
             android:text="@string/sign_in"
-            android:background="@color/teal_200"
+            android:backgroundTint="@color/StudioXPink"
             android:id="@+id/signButton"
             android:layout_width="250dp"
             android:layout_height="70dp"

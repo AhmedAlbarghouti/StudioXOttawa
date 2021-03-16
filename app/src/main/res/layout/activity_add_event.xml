@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".staff.AddEvent">
+
+    <TextView
+        android:id="@+id/addEventTV"
+        android:text="Create New Event"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+
+    <EditText
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/addEventTV"
+        android:id="@+id/newEventNameET"
+        android:hint="Fitness Class"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        />
+
+    <ImageButton
+        android:id="@+id/newEventDateButton"
+        android:src="@drawable/ic_baseline_date_range_24"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/newEventNameET"
+        />
+    <TextView
+        android:id="@+id/newEventDateTV"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/newEventNameET"
+        android:text="No Date Selected"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/newEventDateButton"
+        />
+
+    <EditText
+        android:layout_below="@id/newEventDateButton"
+        android:id="@+id/newEventTimeET"
+        android:hint="6:00PM - 6:55PM"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        />
+
+    <Button
+        android:id="@+id/createEventButton"
+        android:text="Create Event"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/newEventTimeET"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/StudioXPink"
+        />
+
+</RelativeLayout>

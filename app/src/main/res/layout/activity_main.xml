@@ -14,6 +14,8 @@
         android:id="@+id/topRow"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+
+
         android:orientation="horizontal" >
 
         <ImageButton
@@ -22,27 +24,13 @@
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="false"
+
             android:src="@drawable/bell_icon" />
 
-        <Button
-            android:id="@+id/logoutButton"
-            android:text="Logout"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:textStyle="bold"
-            android:layout_toRightOf="@id/bellImageButton"
-            android:layout_marginLeft="50dp"
-            />
 
-        <Button
-            android:id="@+id/generateReport"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Report"
-            android:visibility="visible"
-            android:layout_toRightOf="@id/logoutButton"
-            android:layout_marginLeft="100dp"
-            />
+
+
+
 
         <TextView
             android:id="@+id/welcomeTV"
@@ -50,7 +38,8 @@
             android:layout_height="50dp"
             android:text="@string/welcomeHeader"
             android:textSize="30sp"
-            android:layout_below="@id/logoutButton"
+            android:layout_weight="0"
+            android:layout_marginTop="50dp"
             android:gravity="center"
             android:textStyle="bold"
             />
@@ -59,7 +48,8 @@
             android:id="@+id/userTV"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="@string/user"
+            android:text=""
+            android:layout_weight="0"
             android:textSize="25sp"
             android:layout_below="@id/welcomeTV"
             android:gravity="center"
@@ -77,9 +67,10 @@
             android:id="@+id/firstRow"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_below="@id/topRow"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1"
 
-            android:orientation="horizontal"
-            android:layout_marginTop="150dp"
             >
 
             <Button
@@ -92,6 +83,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:text="Schedule"
+                android:backgroundTint="@color/StudioXPink"
                 />
 
             <Button
@@ -103,6 +95,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:text="Services"
+                android:backgroundTint="@color/StudioXPink"
                 />
         </LinearLayout>
 
@@ -123,6 +116,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:text="Video On Demand"
+            android:backgroundTint="@color/StudioXPink"
 
 
             />
@@ -136,6 +130,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:text="News"
+            android:backgroundTint="@color/StudioXPink"
             />
 
         </LinearLayout>
@@ -156,6 +151,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:text="Contact Us"
+            android:backgroundTint="@color/StudioXPink"
 
 
             />
@@ -169,6 +165,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:text="About Us"
+            android:backgroundTint="@color/StudioXPink"
             />
 
 
@@ -176,5 +173,38 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/fourthRow"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/thirdRow"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:text="Logout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/StudioXPink"
+            />
+
+        <Button
+            android:id="@+id/adminTasksButton"
+            android:text="Admin Tasks"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:backgroundTint="@color/StudioXPink"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
+
+            />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

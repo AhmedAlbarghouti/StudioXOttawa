@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.ForgotPassword"></activity>
+        <activity android:name=".staff.AddService"></activity>
+        <activity android:name=".staff.StaffMenu" />
+        <activity android:name=".staff.AddEvent" />
+        <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
         <activity android:name=".contact.contact" />
         <activity android:name=".news.NewsActivity" />
@@ -37,13 +40,7 @@
         </activity>
         <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
-        <activity android:name=".welcome.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".welcome.MainActivity" />
     </application>
 
 </manifest>

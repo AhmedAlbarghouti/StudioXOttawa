@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.staff.AddEvent;
 import com.example.studioxottawa.staff.Report;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.vod.VODActivity;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String userID;
     private TextView userTV;
+    private Button adminTasksButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +44,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button contactBtn=findViewById(R.id.contactButton);
         Button logoutBtn=findViewById(R.id.logoutButton);
+        adminTasksButton =findViewById(R.id.adminTasksButton);
 
-        Button generateReport=findViewById(R.id.generateReport);
-        generateReport.setVisibility(View.INVISIBLE);
 
         userTV = findViewById(R.id.userTV);
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
+
+
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User signInUser = snapshot.getValue(User.class);
-                String name = signInUser.email;
+                String name = signInUser.fullName;
                 userTV.setText(name);
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
-                    generateReport.setVisibility(View.VISIBLE);
+                    adminTasksButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -68,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        adminTasksButton.setOnClickListener(click -> {
+            Intent adminTasks = new Intent(this, com.example.studioxottawa.staff.StaffMenu.class);
+            startActivity(adminTasks);
+        });
         contactBtn.setOnClickListener(btn-> {
                     Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
                     startActivity(contact);
@@ -82,12 +91,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         });
 
-        generateReport.setOnClickListener(btn->{
 
-            Intent nextActivity = new Intent(MainActivity.this, Report.class);
-            startActivity(nextActivity); //make the transitio
-
-        });
 
         Button loginBtn2 = (Button)findViewById(R.id.newsButton);
         loginBtn2.setOnClickListener(click -> {
