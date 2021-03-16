@@ -39,13 +39,7 @@
         <activity android:name=".VODPlayer.VODActivity" />
         <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
-        <activity android:name=".welcome.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".welcome.MainActivity" />
     </application>
 
 </manifest>

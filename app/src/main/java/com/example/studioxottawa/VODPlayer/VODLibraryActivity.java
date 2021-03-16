@@ -1,5 +1,6 @@
 package com.example.studioxottawa.VODPlayer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -22,6 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.welcome.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,6 +67,30 @@ public class VODLibraryActivity extends AppCompatActivity {
     private final int PREMIUM_LIBRARY = 2;
     private final int YOUTUBE_LIBRARY = 1;
     private final int FREE_LIBRARY = 0;
+
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
+
+    private void authorize(Button premButton) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User signInUser = snapshot.getValue(User.class);
+                Boolean isStaff = signInUser.staff;
+                premButton.setEnabled(isStaff);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void loadPremiumLibrary() {
         if (currLibrary != PREMIUM_LIBRARY) {
@@ -191,15 +224,17 @@ public class VODLibraryActivity extends AppCompatActivity {
         ListView vodDisplay = findViewById(R.id.vod_list);
         vodDisplay.setAdapter(adapter);
 
-        Button freeLibrary = findViewById(R.id.freeVidsButton);
-        Button youtubeLibrary = findViewById(R.id.youtubeButton);
-        Button premiumLibrary = findViewById(R.id.premiumVids);
+        Button freeButton = findViewById(R.id.freeVidsButton);
+        Button youtubeButton = findViewById(R.id.youtubeButton);
+        Button premiumButton = findViewById(R.id.premiumVids);
 
-        freeLibrary.setOnClickListener(v -> loadFreeLibrary());
+        authorize(premiumButton);
 
-        youtubeLibrary.setOnClickListener(v -> loadYoutubeLibrary());
+        freeButton.setOnClickListener(v -> loadFreeLibrary());
 
-        premiumLibrary.setOnClickListener(v -> loadPremiumLibrary());
+        youtubeButton.setOnClickListener(v -> loadYoutubeLibrary());
+
+        premiumButton.setOnClickListener(v -> loadPremiumLibrary());
 
         loadFreeLibrary();
 
@@ -248,7 +283,7 @@ public class VODLibraryActivity extends AppCompatActivity {
     }
 
     public class Video {
-        public static final String PREMIUM_HEADER = "http://192.168.1.6/videos/";
+        public static final String PREMIUM_HEADER = "http://76.10.173.120:2355/videos/"; //This is a WIP needs file server setup
         public static final int PREMIUM_MODIFIER = 4;
         private int type;
         private String URL, title;
@@ -448,12 +483,12 @@ public class VODLibraryActivity extends AppCompatActivity {
             // Make sure we clean up if the task is killed
             lock.lock();
             try {
-                if (!getNextPageToken().isEmpty())
-                    finished = true;
+                if (!getNextPageToken().isEmpty()) {
+                }
                 else {
                     resumeToken = getNextPageToken();
-                    finished=true;
                 }
+                finished = true;
 
             } finally {
                 lock.unlock();

@@ -114,12 +114,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         user.sendEmailVerification();
                                         Toast.makeText(RegisterActivity.this, "Account Created Successfully! check your email to verify your account!",Toast.LENGTH_LONG).show();
                                         finish();
-                                    }else{
-                                        Toast.makeText(RegisterActivity.this, "Failed To Create Account! Try again!",Toast.LENGTH_LONG).show();
-
                                     }
                                 }
                             });
+                        }else{
+                            Toast.makeText(RegisterActivity.this, "Failed To Create Account! Try again!",Toast.LENGTH_LONG).show();
+
                         }
 
                     }
