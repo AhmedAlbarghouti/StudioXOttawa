@@ -11,6 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.news.GetData;
+import com.example.studioxottawa.news.News;
+import com.example.studioxottawa.news.OkHttpUtils;
 import com.example.studioxottawa.staff.AddEvent;
 import com.example.studioxottawa.staff.Report;
 import com.example.studioxottawa.services.ServicesActivity;
@@ -28,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private String userID;
     private TextView userTV;
     private Button adminTasksButton;
+    public static ArrayList<News> elements = new ArrayList<>();
 
 
     @Override
@@ -52,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-
+        Thread thread = new NewsThread();
+        thread.start();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -167,6 +174,17 @@ public class MainActivity extends AppCompatActivity {
         Intent vodPlayback = new Intent(MainActivity.this, VODActivity.class);
         vodPlayback.putExtra("playbackURI", url);
         startActivity(vodPlayback);
+    }
+
+    private class NewsThread extends Thread{
+        public void run(){
+            String html;
+            for(int i=1; i<9; i++){
+                String url = "https://www.studioxottawa.com/news/page/"+i+"/";
+                html = OkHttpUtils.OkGetArt(url);
+                elements.addAll(GetData.spiderArticle(html));
+            }
+        }
     }
 
     //xiaoxi {
