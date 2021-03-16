@@ -40,11 +40,10 @@
         <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
         <activity android:name=".welcome.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
+        <activity android:name=".staff.StaffMenu"/>
+        <activity android:name=".staff.AddService">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -34,11 +34,11 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-        newEventNameET = findViewById(R.id.newEventNameET);
-        newEventTimeET = findViewById(R.id.newEventTimeET);
+        newEventNameET = findViewById(R.id.new_product_name);
+        newEventTimeET = findViewById(R.id.new_product_price);
         newEventDateTV = findViewById(R.id.newEventDateTV);
-        newEventDateButton = findViewById(R.id.newEventDateButton);
-        createNewEventButton = findViewById(R.id.createEventButton);
+        newEventDateButton = findViewById(R.id.new_product_image);
+        createNewEventButton = findViewById(R.id.AddProductBtn);
         c = Calendar.getInstance();
 
         newEventDateButton.setOnClickListener(new View.OnClickListener(){

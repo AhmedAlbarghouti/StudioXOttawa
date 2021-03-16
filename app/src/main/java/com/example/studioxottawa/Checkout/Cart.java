@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,21 +41,30 @@ import java.util.List;
 public class Cart extends AppCompatActivity {
 
     private ArrayList<Product> products= new ArrayList<>();
-    private ArrayList<Product> productTwo= new ArrayList<>();
     private NumberFormat formatter = new DecimalFormat("#0.00");
     private double price=0;
     private  CartAdapter myAdapter;
     private TextView priceTv;
-    ArrayList<String> json;
+    ArrayList<String> product;
+    private Boolean isService=false;
+    private String service;
+    private Event event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
 
-      json= getIntent().getExtras().getStringArrayList("List");
+        product= getIntent().getExtras().getStringArrayList("List");
+        service=getIntent().getExtras().getString("UID");
+        isService=getIntent().getExtras().getBoolean("isService");
+//        Log.e("Product",product.toString());
+        Log.e("service",isService.toString());
 
-      loadServices();
+
+        if(isService){ loadEvent();}else{ loadProducts();}
+
+
 //
 //        for(String s : json){
 //            Log.e("JJson",s);
@@ -81,7 +91,7 @@ public class Cart extends AppCompatActivity {
 
 
 
-        calculatePrice();
+//        calculatePrice();
         ListView myList= findViewById(R.id.ItemPurchView);
         myList.setAdapter(myAdapter=new CartAdapter(this));
 
@@ -93,31 +103,62 @@ public class Cart extends AppCompatActivity {
         });
     }
 
-
-    public void loadServices(){
-
-        for(String s: json) {
-        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products").child(s);
-        referenceServices.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    String item= String.valueOf(snapshot.child("item").getValue());
-                    String price= String.valueOf(snapshot.child("price").getValue());
-                    String quantity= String.valueOf(snapshot.child("quantity").getValue());
-                    String thumbnail= String.valueOf(snapshot.child("thumbnail").getValue());
-                    Product temp= new Product(thumbnail,item,Double.parseDouble(price),Integer.parseInt(quantity));
-                    products.add(temp);
-                }
+ public void loadEvent() {
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+     DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events").child(service);
 
+     referenceEvents.addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+             String name = String.valueOf(snapshot.child("name").getValue());
+             String date = String.valueOf(snapshot.child("date").getValue());
+             String time = String.valueOf(snapshot.child("time").getValue());
+             String staff = String.valueOf(snapshot.child("staff").getValue());
+             String uid = String.valueOf(snapshot.child("uid").getValue());
+//             event=new Event(name,date,time,staff,uid);
+             String eventName= name+" "+date+" "+time+" with "+staff;
+             Product temp = new Product(eventName,150.00,1);
+             temp.BitMapToString(BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa));
+             products.add(temp);
+             calculatePrice();
+             Log.i("value", name);
+
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+
+         }
+     });
+ }
+    public void loadProducts(){
+            for (String s : product) {
+                DatabaseReference referenceProduct = FirebaseDatabase.getInstance().getReference().child("Products").child(s);
+                referenceProduct.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        String item = String.valueOf(snapshot.child("item").getValue());
+                        String price = String.valueOf(snapshot.child("price").getValue());
+                        String quantity = String.valueOf(snapshot.child("quantity").getValue());
+                        String thumbnail = String.valueOf(snapshot.child("thumbnail").getValue());
+                        Product temp = new Product(thumbnail, item, Double.parseDouble(price), 1);
+
+                        products.add(temp);
+                        calculatePrice();
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
-        });
         }
-    }
 //        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
 //        referenceServices.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -199,26 +240,28 @@ public class Cart extends AppCompatActivity {
             }else{
                 holder =(ViewHolder)view.getTag();
             }
-            Product product= getItem(i);
-            holder.desc.setText(product.getItem());
-            holder.thumbnail.setImageBitmap(product.getBitmap());
-            holder.price.setText(formatter.format(product.getPrice()));
-            holder.btn_plus.setOnClickListener(view1 -> {
-                int qty= Integer.parseInt(holder.quantity.getText().toString())+1;
-                product.setQuantity(qty);
-                holder.quantity.setText(String.valueOf(qty));
-                calculatePrice();
-            });
 
-            holder.btn_minus.setOnClickListener(view1 -> {
-                int qty= Integer.parseInt(holder.quantity.getText().toString());
-                if(qty>0) {
-                    qty-=1;
+                Product product = (Product)getItem(i);
+                holder.desc.setText(product.getItem());
+                holder.thumbnail.setImageBitmap(product.getBitmap());
+                holder.price.setText(formatter.format(product.getPrice()));
+                holder.btn_plus.setOnClickListener(view1 -> {
+                    int qty = Integer.parseInt(holder.quantity.getText().toString()) + 1;
                     product.setQuantity(qty);
                     holder.quantity.setText(String.valueOf(qty));
                     calculatePrice();
-                }
-            });
+                });
+
+                holder.btn_minus.setOnClickListener(view1 -> {
+                    int qty = Integer.parseInt(holder.quantity.getText().toString());
+                    if (qty > 0) {
+                        qty -= 1;
+                        product.setQuantity(qty);
+                        holder.quantity.setText(String.valueOf(qty));
+                        calculatePrice();
+                    }
+                });
+
             return view;
         }
     }

@@ -1,3 +1,4 @@
+
 package com.example.studioxottawa.services;
 
 import android.graphics.Bitmap;
@@ -49,6 +50,7 @@ public class Product {
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        setThumbnail(temp);
         return temp;
     }
 
@@ -66,6 +68,11 @@ public class Product {
 
     public Product(String thumbnail, String item, Double price,int quantity) {
         setThumbnail(thumbnail);
+        setItem(item);
+        setPrice(price);
+        setQuantity(quantity);
+    }
+    public Product(String item, Double price,int quantity) {
         setItem(item);
         setPrice(price);
         setQuantity(quantity);

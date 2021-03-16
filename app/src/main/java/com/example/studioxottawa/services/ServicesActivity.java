@@ -95,17 +95,10 @@ public class ServicesActivity extends AppCompatActivity {
 //        productList.add(p3);
 //        productList.add(p4);
 
-//        rootRef=FirebaseDatabase.getInstance().getReference();
-////        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-////            @Override
-////            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
+//        rootRef=FirebaseDatabase.getInstance().getReference().child("Products");
 //                for (Product p : productList) {
 //
-//                        HashMap<String, Object> productDataMap = new HashMap<>();
-//                        String item=p.getItem();
-//                        String price=p.getPrice().toString();
-//                        rootRef.child("Products").child(p.getItem()).setValue(p);
+////                        rootRef.child("Products").child(p.getItem()).setValue(p);
 //
 //
 //
@@ -217,7 +210,7 @@ public class ServicesActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
                     String item= String.valueOf(ds.child("item").getValue());
-                    String price= String.valueOf(ds.child("quantity").getValue());
+                    String price= String.valueOf(ds.child("price").getValue());
                     String quantity= String.valueOf(ds.child("quantity").getValue());
                     String thumbnail= String.valueOf(ds.child("thumbnail").getValue());
                     Product temp= new Product(thumbnail,item,Double.parseDouble(price),Integer.parseInt(quantity));

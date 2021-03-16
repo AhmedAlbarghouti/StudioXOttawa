@@ -9,8 +9,25 @@
     tools:showIn="@layout/activity_checkout_java"
     tools:context=".Checkout.CheckoutActivityJava">
 
-
-
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/CheckoutStudioXLogo"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_studioxottawa"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/summaryOfPurchase"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_above="@id/ItemPurchView"
+        android:layout_marginBottom="10dp"
+        android:text="Purchase Summary"/>
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
         android:layout_width="match_parent"
@@ -29,6 +46,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/CheckoutStudioXLogo"
         android:layout_above="@id/amountText"
         android:id="@+id/ItemPurchView"/>
     <TextView

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.example.studioxottawa.R;
@@ -22,6 +23,7 @@ public class StaffMenu extends AppCompatActivity {
 
         addServiceButton.setOnClickListener(click->{
             Intent addServiceActivity = new Intent(this, AddService.class);
+            Log.i("EEEEEEEEEEEEEEEEEEEEE",addServiceActivity.toString());
             startActivity(addServiceActivity);
         });
 

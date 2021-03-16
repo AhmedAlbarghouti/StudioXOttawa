@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -75,7 +76,17 @@
             android:layout_toRightOf="@id/quantityET"
             android:scaleType="fitXY"/>
 
-
+        <ImageButton
+            android:id="@+id/removeItemBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/red_x" />
 
 
         <!--    <TextView-->
