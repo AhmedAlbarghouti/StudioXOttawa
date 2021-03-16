@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
 
 public class BookAppointments extends AppCompatActivity {
@@ -41,9 +42,11 @@ public class BookAppointments extends AppCompatActivity {
 
         bookbtn.setOnClickListener(click-> {
             //Change second argument to goto class
-            Intent bookingIntent = new Intent(BookAppointments.this, BookAppointments.class);
+            Intent bookingIntent = new Intent(BookAppointments.this, Cart.class);
             bookingIntent.putExtra("UID",Uid);
+            bookingIntent.putExtra("isService",true);
             Toast.makeText(getApplicationContext(),"Successfully Booked!",Toast.LENGTH_SHORT).show();
+            startActivity(bookingIntent);
         });
 
     }

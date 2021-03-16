@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageThumb" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            android:text="Studio X Ottawa Limited T-shirt"
+            android:layout_toRightOf="@id/imageThumb"
+            android:id="@+id/check_item_desc"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="25.00"
+            android:layout_toRightOf="@id/symbol_row"
+            android:layout_below="@id/check_item_desc"
+            android:id="@+id/check_item_price"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/check_item_desc"
+            android:layout_toRightOf="@id/imageThumb"
+            android:id="@+id/symbol_row"
+            android:text="$" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/minus"
+            android:id="@+id/minusBtn"
+            android:layout_below="@id/check_item_price"
+            android:layout_toRightOf="@id/imageThumb"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/quantityET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/check_item_price"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/minusBtn"
+            android:text="1"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/plus"
+            android:id="@+id/addBtn"
+            android:layout_below="@id/check_item_price"
+            android:layout_toRightOf="@id/quantityET"
+            android:scaleType="fitXY"/>
+
+        <ImageButton
+            android:id="@+id/removeItemBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/red_x" />
+
+
+        <!--    <TextView-->
+        <!--        android:layout_width="40dp"-->
+        <!--        android:layout_height="40dp"-->
+        <!--        android:outlineProvider="bounds"-->
+        <!--        android:textAlignment="center"-->
+        <!--        android:id="@+id/quantityET"-->
+        <!--        android:background="@drawable/square_rec"-->
+        <!--        android:text=""/>-->
+    </RelativeLayout>
+    <!--    <TextView-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="fill"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:text="150.00"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:id="@+id/check_item_price"/>-->
+
+</LinearLayout>

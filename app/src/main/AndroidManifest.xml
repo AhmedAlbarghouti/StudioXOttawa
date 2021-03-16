@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".staff.AddService"></activity>
-        <activity android:name=".staff.StaffMenu" />
-        <activity android:name=".staff.AddEvent" />
+        <activity android:name=".Checkout.Cart"></activity>
+        <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
         <activity android:name=".contact.contact" />
@@ -40,7 +39,12 @@
         </activity>
         <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
-        <activity android:name=".welcome.MainActivity" />
+        <activity android:name=".welcome.MainActivity">
+        </activity>
+        <activity android:name=".staff.StaffMenu"/>
+        <activity android:name=".staff.AddService">
+
+        </activity>
     </application>
 
 </manifest>
