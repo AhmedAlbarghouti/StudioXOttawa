@@ -7,6 +7,33 @@
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".services.ServicesActivity" >
 
+
+    <ImageView
+        android:id="@+id/ServiceStudioXLogo"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_studioxottawa" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toRightOf="@id/ServiceStudioXLogo"
+        android:text="SHOP"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold|italic" />
+
     <ImageButton
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -19,7 +46,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/serviceContainer"
         android:layout_width="match_parent"
-        android:layout_below="@id/cartButton"
+        android:layout_below="@id/ServiceStudioXLogo"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2" />
