@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".welcome.LoginActivity"
+    tools:context=".welcome.RegisterActivity"
     android:background="@color/white">
 
     <RelativeLayout
-        android:id="@+id/loginBox"
+        android:id="@+id/registerBox"
         android:layout_centerVertical="true"
 
 
         android:layout_centerHorizontal="true"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="500dp"
         >
 
         <TextView
-            android:id="@+id/loginTV"
-            android:layout_marginLeft="100dp"
+            android:id="@+id/registerTV"
+            android:layout_marginStart="100dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
+            android:text="@string/register"
             android:textSize="30sp"
             />
-
         <EditText
-            android:id="@+id/usernameET"
+            android:id="@+id/nameET"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_below="@id/loginTV"
+            android:layout_below="@id/registerTV"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/name_hint"
+            android:textSize="20sp"
+            android:inputType="textPersonName"
+             />
+
+        <EditText
+            android:id="@+id/phonenumberET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/nameET"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/phone_hint"
+            android:textSize="20sp"
+            android:inputType="phone"
+            />
+        <EditText
+            android:id="@+id/emailET"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/phonenumberET"
             android:layout_centerHorizontal="true"
             android:hint="@string/email_hint"
             android:textSize="20sp"
@@ -41,7 +60,7 @@
             android:id="@+id/passET"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_below="@id/usernameET"
+            android:layout_below="@id/emailET"
             android:layout_centerHorizontal="true"
             android:hint="@string/password"
             android:textSize="20sp"
@@ -49,33 +68,26 @@
             />
 
         <Button
-            android:text="@string/sign_in"
+            android:text="@string/createaccount"
             android:background="@color/teal_200"
-            android:id="@+id/signButton"
+            android:id="@+id/registerButton"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_below="@id/passET"
             android:layout_centerHorizontal="true"/>
 
         <TextView
-            android:id="@+id/lostpassTV"
-            android:text="@string/lost_your_password"
+            android:id="@+id/signInTV"
+            android:text="@string/signinaccount"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_below="@id/signButton"
             android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerButton"
             />
 
 
-/>
+        />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/signupTV"
-        android:text="@string/don_t_have_an_account_sign_up_here"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/loginBox"
-        />
+
 </RelativeLayout>

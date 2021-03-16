@@ -4,51 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".welcome.MainActivity">
 
     tools:context=".MainActivity">
 
 
 
-<ImageSwitcher
-    android:id="@+id/photoSwitcher"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
 
->
-
-    <Button
-        android:id="@+id/generateReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:text="Report"
-        android:visibility="gone" />
-</ImageSwitcher>
-    <LinearLayout
-        android:id="@+id/toprow"
+    <RelativeLayout
+        android:id="@+id/topRow"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="150dp"
+        android:orientation="horizontal" >
 
-        android:orientation="vertical"
-        >
+        <ImageButton
+            android:id="@+id/bellImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="false"
+            android:src="@drawable/bell3" />
 
-<!--   xiaoxi     <ImageButton-->
-<!--            android:id="@+id/bellImageButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentRight="false"-->
-<!--            android:src="@drawable/bell_icon" />-->
+        <Button
+            android:id="@+id/logoutButton"
+            android:text="Logout"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/bellImageButton"
+            android:layout_marginLeft="50dp"
+            />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/generateReport"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Report"
+            android:visibility="visible"
+            android:layout_toRightOf="@id/logoutButton"
+            android:layout_marginLeft="100dp"
+            />
+
+        <TextView
+            android:id="@+id/welcomeTV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/welcomeHeader"
+            android:textSize="30sp"
+            android:layout_below="@id/logoutButton"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/userTV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/user"
+            android:textSize="25sp"
+            android:layout_below="@id/welcomeTV"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </RelativeLayout>
+
+
+
+
 
 
         <LinearLayout
             android:id="@+id/firstRow"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@id/photoSwitcher"
+
             android:orientation="horizontal"
+            android:layout_marginTop="150dp"
             >
 
             <Button

@@ -63,8 +63,6 @@ public class VODLibraryActivity extends AppCompatActivity {
         if (currLibrary != PREMIUM_LIBRARY) {
             currLibrary = PREMIUM_LIBRARY;
             TextView pageNum = findViewById(R.id.pageNum);
-            ImageButton nextPage = findViewById(R.id.nextPage);
-            ImageButton prevPage = findViewById(R.id.prevPage);
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
@@ -92,8 +90,6 @@ public class VODLibraryActivity extends AppCompatActivity {
         if (currLibrary != FREE_LIBRARY) {
             currLibrary = FREE_LIBRARY;
             TextView pageNum = findViewById(R.id.pageNum);
-            ImageButton nextPage = findViewById(R.id.nextPage);
-            ImageButton prevPage = findViewById(R.id.prevPage);
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
@@ -199,20 +195,16 @@ public class VODLibraryActivity extends AppCompatActivity {
         Button youtubeLibrary = findViewById(R.id.youtubeButton);
         Button premiumLibrary = findViewById(R.id.premiumVids);
 
-        premiumLibrary.setEnabled(getIntent().getExtras().getBoolean("authorized"));
-
         freeLibrary.setOnClickListener(v -> loadFreeLibrary());
 
         youtubeLibrary.setOnClickListener(v -> loadYoutubeLibrary());
 
         premiumLibrary.setOnClickListener(v -> loadPremiumLibrary());
 
+        loadFreeLibrary();
 
         TextView pageNum = findViewById(R.id.pageNum);
         pageNum.setText(String.valueOf(getPageNum()));
-
-        disableNextPage();
-        disablePrevPage();
     }
 
     private void enableNextPage() {

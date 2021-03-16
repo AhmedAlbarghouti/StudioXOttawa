@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/aboutusbg"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".AboutusActivity"
+    tools:context=".aboutus.AboutusActivity"
     tools:deviceIds="wear">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "868858963396",
+    "project_id": "studioxottawaapp",
+    "storage_bucket": "studioxottawaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868858963396:android:d8290ad8fcd4545e04b091",
+        "android_client_info": {
+          "package_name": "com.example.studioxottawa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868858963396-ukidc5hk4m268e3s6bmdt2d5k7b907ev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.studioxottawa",
+            "certificate_hash": "222e501752855cf3a93fa98b80b0efae18f918e7"
+          }
+        },
+        {
+          "client_id": "868858963396-p1uls268a37t0khsgmdaterfkpb52qf8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr8NZ18DIyYdeU3k_EsY9NTUST58bKfDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868858963396-p1uls268a37t0khsgmdaterfkpb52qf8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

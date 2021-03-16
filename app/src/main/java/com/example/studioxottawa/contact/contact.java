@@ -1,4 +1,4 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.contact;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.studioxottawa.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class contact extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{

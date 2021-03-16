@@ -1,4 +1,4 @@
-package com.example.studioxottawa;
+package com.example.studioxottawa.services;
 
 import android.graphics.Bitmap;
 

@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -12,32 +11,35 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.StudioXOttawa">
-        <activity android:name=".contact" />
-        <activity android:name=".news.NewsActivity"/>
+        android:theme="@style/Theme.StudioXOttawa"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".welcome.ForgotPassword"></activity>
+        <activity android:name=".welcome.RegisterActivity" />
+        <activity android:name=".contact.contact" />
+        <activity android:name=".news.NewsActivity" />
         <activity android:name=".news.EmptyActivity" />
-        <activity android:name=".AboutusActivity" />
-        <activity android:name=".BookAppointments" />
+        <activity android:name=".aboutus.AboutusActivity" />
+        <activity android:name=".schedule.BookAppointments" />
         <activity
-            android:name=".notifActivity"
-            android:label="@string/title_activity_notif">
-        </activity>
+            android:name=".notification.notifActivity"
+            android:label="@string/title_activity_notif" />
         <activity
+            android:name=".services.ServicesActivity"
+            android:label="@string/title_activity_services" />
+        <activity android:name=".welcome.LoginActivity">
             android:name=".ServicesActivity"
             android:label="@string/title_activity_services"/>
-        <activity android:name=".VODPlayer.VODLibraryActivity" />
-        <activity android:name=".VODPlayer.VODActivity" />
-        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schedule" />
-        <activity android:name=".Report" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".VODPlayer.VODLibraryActivity" />
+        <activity android:name=".VODPlayer.VODActivity" />
+        <activity android:name=".schedule.Schedule" />
+        <activity android:name=".staff.Report" />
+        <activity android:name=".welcome.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
