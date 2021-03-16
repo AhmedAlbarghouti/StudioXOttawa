@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MyDBnotif.db";
-    public static final String NOTIFTAB_TABLE_NAME = "notiftab";
+    public static final String NOTIFTAB_TABLE_NAME = "notiftab2";
     public static final String NOTIFTAB_COLUMN_ID = "id";
     public static final String NOTIFTAB_COLUMN_UNAME = "uname";
     public static final String NOTIFTAB_COLUMN_LESSON = "lesson";
@@ -23,14 +23,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private HashMap hp;
 
     public DBHelper(Context context) {
-        super(context, DATABASE_NAME , null, 1);
+        super(context, DATABASE_NAME , null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         db.execSQL(
-                "create table notiftab " +
+                "create table notiftab2 " +
                         "(id INTEGER PRIMARY KEY AUTOINCREMENT, uname text, lesson text, aptment text, date text, time text)"
         );
     }
@@ -38,9 +38,15 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS notiftab");
+        db.execSQL("DROP TABLE IF EXISTS notiftab2");
         onCreate(db);
     }
+
+   public void droptable() {
+       SQLiteDatabase sdb;
+       sdb= this.getWritableDatabase();
+       sdb.execSQL("DROP TABLE IF EXISTS notiftab2");
+   }
 
     public boolean insertNotif (String uname, String lesson, String aptment, String date,String time) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -50,15 +56,47 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("aptment", aptment);
         contentValues.put("date", date);
         contentValues.put("time", time);
-        db.insert("notiftab", null, contentValues);
+        db.insert("notiftab2", null, contentValues);
         return true;
     }
+
+        public Integer deleteNotif (String uname) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("notiftab2",
+                "uname = ?" ,
+                new String[] { uname });
+    }
+
+
+    public ArrayList<String> getAllnotifs() {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from notiftab2", null );
+        res.moveToFirst();
+       String str = "";
+        while(res.isAfterLast() == false){
+
+            str = //res.getString(res.getColumnIndex(NOTIFTAB_COLUMN_UNAME));
+            res.getString(res.getColumnIndex(NOTIFTAB_COLUMN_LESSON)) + " " +
+            res.getString(res.getColumnIndex(NOTIFTAB_COLUMN_APTMENT)) + " " +
+            res.getString(res.getColumnIndex(NOTIFTAB_COLUMN_DATE)) + " " +
+            res.getString(res.getColumnIndex(NOTIFTAB_COLUMN_TIME));
+
+            array_list.add(str);
+            res.moveToNext();
+        }
+        return array_list;
+    }
+
 
     //public Cursor getData(String uname) {
      public ArrayList<String> getData(String uname) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from notiftab where uname="+ "'" +uname+"'"+"", null );
+        Cursor res =  db.rawQuery( "select * from notiftab2 where uname="+ "'" +uname+"'"+"", null );
 
         ArrayList<String> array_list = new ArrayList<String>();
             res.moveToFirst();
@@ -96,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
       public Cursor getcursor(String uname) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from notiftab where uname="+ "'" +uname+"'"+"", null );
+        Cursor res =  db.rawQuery( "select * from notiftab2 where uname="+ "'" +uname+"'"+"", null );
 
         return res;
     }

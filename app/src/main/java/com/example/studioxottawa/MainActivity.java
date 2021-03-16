@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             loadServices();
         });
 
-
         //xiaoxi {
         loadnotifActivity(); //loads notification...
         // get the reference of Button's
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 loadAboutusActivity();
             }
         });
-
         //xiaoxi }
     }
 
@@ -116,27 +114,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadnotifActivity() {   //xiaoxi
+    //Xiao
+    private void loadnotifActivity() {
 
-        //create new intent and start notif activity
-        //we need to check if there are any notification data exists first before we create the notif icon
-        String uname = "Q1"; //for this user Q1 we will not show any notification
         //get user name from login
         String loggedusername = getIntent().getExtras().getString("USER_NAME");
-        if (!(loggedusername.equals(uname))) {
 
-            createmocdata();  //using sqllite within android, which stores data as file on the phone
+        //using sqllite within android, which stores data as file on the phone
+        createmocdata();
+
+        ArrayList<String> mynotifs = new ArrayList<String>();
+
+        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        DBHelper mydb;
+        mydb = new DBHelper(this);
+
+        mynotifs = mydb.getData(loggedusername);
+        if (mynotifs.size()==0) {
+        } else {
+
             //all built in android classes to create notification icon on the top of the screen
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.bell5)
                             .setContentTitle("Studio X Ottawa Notifications")
                             .setContentText("Select for details")
-                            .setAutoCancel(true) // makes auto cancel of notification
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT); //set priority of notification
-
-            //should get data from database for events/appointments
-            //currrent date...grab data and show the notification to user
+                            .setAutoCancel(true)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
             Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
 
@@ -147,50 +151,38 @@ public class MainActivity extends AppCompatActivity {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(contentIntent);
 
-
-
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
             //finally build the notification
             manager.notify(0, builder.build());
-        } //endif username = Q1
+        } //end of if mynotifs = 0
+       // } //endif username = Q1
 
     }   //xiaoxi }
 
+
     //xiaoxi {
     private void createmocdata() {
-        //we are saving appoints for user Q2 (3 appoints, using for loop to create moc appointment data
-        //Q1 user will not have notification
-        //any other user will have lessons data (3 lessons--we are using for loop to create moc data
-        DBHelper mydb; //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        DBHelper mydb;
         mydb = new DBHelper(this);
-        ArrayList<String> mynotifs = new ArrayList<String>();
-        //get logged in user name
-        String loggedusername = getIntent().getExtras().getString("USER_NAME");
-        //mydb.deleteNotif(loggedusername);
-        mynotifs = mydb.getData(loggedusername); //check if logging on user have any data (appointments or lessons schedule for them)
-        // mynotifs = mydb.getAllnotifs();
-        if (mynotifs.size()==0) { //if logging on user, does not have anydata, create 3 records for them
-            //if already have data, do not create more data
-            //user Q2 is used  for appointments only,
-            String unameQ2 = "Q2";
 
+        ArrayList<String> mynotifs = new ArrayList<String>();
+        mynotifs = mydb.getAllnotifs();
+
+        if (mynotifs.size()==0) {
             //creating some time and date for appointments and lessons mocup data
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
             Date dt = new Date();
-            //Calendar c = Calendar.getInstance();
             calendar.setTime(dt);
-
             //SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-
             String date1 = "";
             String time1 = "";
 
-            //for loop to create three records, 2 appointments for Q2 and 2 lessons for rest of the users except Q1. which does not have any notifs
-            for(int i=0; i<=1; i++){
+            for(int i=0; i<=2; i++){
                 hour = hour + i;
                 minute = minute + i;
                 calendar.add(Calendar.DATE, i);
@@ -199,29 +191,29 @@ public class MainActivity extends AppCompatActivity {
                 dt = calendar.getTime();
                 date1 = df.format(dt);
 
-                if(loggedusername.equals(unameQ2)) {
-                    mydb.insertNotif(loggedusername, "", "Yes", date1, time1);
-                }
-                else  {
                     switch (i) {
                         case 0:
                             //str = "Latin Dance Class on" + " " + date1 + " " + time1;
-                            mydb.insertNotif(loggedusername, "Latin Dance ", "", date1, time1);
+                            mydb.insertNotif("Dora", "", "Yes", date1, time1);
+
+                            mydb.insertNotif("Anna", "Latin Dance Class", "", date1, time1);
+                            mydb.insertNotif("Tom", "", "Yes", date1, time1);
                             break;
                         case 1:
-
+                            mydb.insertNotif("Dora", "", "Yes", date1, time1);
                             //str = "Fitness Class on" + " " + date1 + " " + time1;
-                            mydb.insertNotif(loggedusername, "Fitness", "", date1, time1);
+                            mydb.insertNotif("Anna", "Fitness Class", "", date1, time1);
+                            mydb.insertNotif("Tom", "Salsa Class", "", date1, time1);
                             break;
                         case 2:
-
                             //str = "VOD Class on" + " " + date1 + " " + time1;
-                            mydb.insertNotif(loggedusername, "VOD Class", "", date1, time1);
+
+                            mydb.insertNotif("Anna", "VOD Class", "", date1, time1);
+                            mydb.insertNotif("Tom", "Fitness Class", "", date1, time1);
                             break;
                         default:
                     } //end of switch
-                } //end of else
-            } //end of for loop
+                } //end of for loop
         } //end of if user has data
     }//end of createmocdata
 
