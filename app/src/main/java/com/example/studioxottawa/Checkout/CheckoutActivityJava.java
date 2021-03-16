@@ -57,8 +57,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
     private Stripe stripe;
     private double price = 0;
     private NumberFormat formatter = new DecimalFormat("#0.00");
-
-    //    private  static ArrayList<Product> products= new ArrayList<Product>();
+//
+//    private  static ArrayList<String> products= new ArrayList<String>();
 //    private MyListAdapter myAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -219,4 +219,5 @@ public class CheckoutActivityJava extends AppCompatActivity {
             activity.displayAlert("Error", e.toString());
         }
     }
+
 }

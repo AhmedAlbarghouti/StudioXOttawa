@@ -16,28 +16,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
-import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Cart extends AppCompatActivity {
 
@@ -47,8 +40,9 @@ public class Cart extends AppCompatActivity {
     private  CartAdapter myAdapter;
     private TextView priceTv;
     ArrayList<String> product;
-    private Boolean isService=false;
-    private String service;
+    private Boolean isEvent =false;
+    private String eventKey;
+    private String eventName;
     ListView myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +51,18 @@ public class Cart extends AppCompatActivity {
 
 
         product= getIntent().getExtras().getStringArrayList("List");
-        service=getIntent().getExtras().getString("UID");
-        isService=getIntent().getExtras().getBoolean("isService");
+        eventKey =getIntent().getExtras().getString("UID");
+        isEvent =getIntent().getExtras().getBoolean("isService");
         Button cancel= (Button) findViewById(R.id.cancelButton);
         cancel.setOnClickListener(e->{
             finish();
         });
 
 //        Log.e("Product",product.toString());
-        Log.e("service",isService.toString());
+        Log.e("service", isEvent.toString());
 
 
-        if(isService){ loadEvent();}else{ loadProducts();}
+        if(isEvent){ loadEvent();}else{ loadProducts();}
 
 
 //
@@ -110,6 +104,8 @@ public class Cart extends AppCompatActivity {
         Button placeOrder= findViewById(R.id.checkoutButton);
         placeOrder.setOnClickListener(btn->{
             Intent pay = new Intent(this,CheckoutActivityJava.class);
+            pay.putExtra("EventTitle",eventName);
+            pay.putExtra("EventId", eventKey);
             pay.putExtra("Total Price",price);
             startActivity(pay);
         });
@@ -118,7 +114,7 @@ public class Cart extends AppCompatActivity {
  public void loadEvent() {
 
 
-     DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events").child(service);
+     DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events").child(eventKey);
 
      referenceEvents.addValueEventListener(new ValueEventListener() {
          @Override
@@ -131,8 +127,8 @@ public class Cart extends AppCompatActivity {
              String staff = String.valueOf(snapshot.child("staff").getValue());
              String uid = String.valueOf(snapshot.child("uid").getValue());
 //             event=new Event(name,date,time,staff,uid);
-             String eventName= name+" "+date+" "+time+" with "+staff;
-             Product temp = new Product(eventName,150.00,1);
+             eventName= name+" "+date+" "+time+" with "+staff;
+             Product temp = new Product(eventName,25.00,1);
              temp.BitMapToString(BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa));
              products.add(temp);
              calculatePrice();
@@ -246,6 +242,7 @@ public class Cart extends AppCompatActivity {
                 holder.thumbnail=(ImageView) view.findViewById(R.id.imageThumb);
                 holder.price=(TextView)  view.findViewById(R.id.check_item_price);
                 holder.quantity=(TextView) view.findViewById(R.id.quantityET);
+
                 holder.btn_minus=(ImageButton) view.findViewById(R.id.minusBtn);
                 holder.btn_plus=(ImageButton) view.findViewById(R.id.addBtn);
                 view.setTag(holder);
@@ -253,6 +250,12 @@ public class Cart extends AppCompatActivity {
                 holder =(ViewHolder)view.getTag();
             }
 
+            if(isEvent){
+                holder.btn_minus.setVisibility(view.INVISIBLE);
+                holder.btn_plus.setVisibility(View.INVISIBLE);
+                holder.quantity.setVisibility(View.INVISIBLE);
+
+            }
                 Product product = (Product)getItem(i);
                 holder.desc.setText(product.getItem());
                 holder.thumbnail.setImageBitmap(product.getBitmap());
