@@ -1,11 +1,19 @@
 package com.example.studioxottawa.Checkout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -15,11 +23,16 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.schedule.Schedule;
+import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.services.ServicesActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -54,14 +67,21 @@ public class CheckoutActivityJava extends AppCompatActivity {
     private OkHttpClient httpClient = new OkHttpClient();
     private String paymentIntentClientSecret = "sk_test_51ILUoQJBRyYbLiOnRqvcjq1l6erjzTKcz7FpqnM1AZ6Phfh2NM4r8wjA0kqSldEHhjwUyTLnAB0qHRlwLxtUKoaQ00YSQCu08T";
     private Stripe stripe;
+
     private double price = 0;
 //    private static Intent intent= getIntent().getParcelableExtra("EventObj");
 
 
+    private ArrayList<Product> products= new ArrayList<>();
+    ArrayList<String> productsPurchase;
     private NumberFormat formatter = new DecimalFormat("#0.00");
 //
 //    private  static ArrayList<String> products= new ArrayList<String>();
 //    private MyListAdapter myAdapter;
+    private MyListAdapter adapter;
+    private AlertDialog.Builder builder;
+    private ListView servicesView;
+    private Bitmap i1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +89,17 @@ public class CheckoutActivityJava extends AppCompatActivity {
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
         price = getIntent().getExtras().getDouble("Total Price");
 
+        productsPurchase = getIntent().getStringArrayListExtra("forPay");
+        servicesView = findViewById(R.id.ItemPurchView);
+        servicesView.setAdapter(adapter = new MyListAdapter());
+        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+
+        servicesView.setOnItemClickListener((parent, view, position, id) -> {
+            adapter.notifyDataSetChanged();
+        });
+
+
+        loadProducts();
         stripe = new Stripe(
                 getApplicationContext(),
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
@@ -78,6 +109,31 @@ public class CheckoutActivityJava extends AppCompatActivity {
         startCheckout();
     }
 
+    public void loadProducts(){
+        for (String s : productsPurchase) {
+            DatabaseReference referenceProduct = FirebaseDatabase.getInstance().getReference().child("Products").child(s);
+            referenceProduct.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String item = String.valueOf(snapshot.child("item").getValue());
+                    String price = String.valueOf(snapshot.child("price").getValue());
+                    String quantity = String.valueOf(snapshot.child("quantity").getValue());
+                    Product temp = new Product( item, Double.parseDouble(price), 1);
+
+                    products.add(temp);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        adapter.notifyDataSetChanged();
+
+    }
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
 
@@ -215,7 +271,14 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
                     startActivity(schedule);
                 }else if(!isEvent){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    for(Product p: products) {
+                        eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
+                    }
+                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+                    startActivity(schedule);
                 }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
@@ -234,6 +297,35 @@ public class CheckoutActivityJava extends AppCompatActivity {
             }
             // Payment request failed – allow retrying using the same payment method
             activity.displayAlert("Error", e.toString());
+        }
+    }
+
+    private class MyListAdapter extends BaseAdapter {
+
+        public int getCount() {
+            return products.size();
+        }
+
+        public Product getItem(int position) { return products.get(position); }
+
+        public long getItemId(int position) {
+            return (long) position;
+        }
+
+        public View getView(int position, View old, ViewGroup parent) {
+            Log.i("gycreport", " getview ");
+            View newView = null;
+            LayoutInflater inflater = getLayoutInflater();
+            newView = inflater.inflate(R.layout.service_layout, parent, false);
+            Product u = getItem(position);
+            TextView item = newView.findViewById(R.id.serviceTitle);
+            item.setText("  "+u.getItem());
+            TextView price = newView.findViewById(R.id.servicePrice);
+            price.setText("  "+formatter.format(u.getPrice()));
+            ImageView thumbnail = newView.findViewById(R.id.serviceImage);
+            thumbnail.setImageBitmap(i1);
+            //return it to be put in the table
+            return newView;
         }
     }
 

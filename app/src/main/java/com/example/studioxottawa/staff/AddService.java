@@ -59,7 +59,7 @@ public class AddService extends AppCompatActivity {
         String price= productPrice.getText().toString();
 
 
-        Product newProduct= new Product(BitMapToString(imageBitmap),item,Double.parseDouble(price),0);
+        Product newProduct= new Product(item,Double.parseDouble(price),0);
 
 
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Products");

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class Cart extends AppCompatActivity {
 
     private ArrayList<Product> products= new ArrayList<>();
+    private ArrayList<String> forPay;
     private NumberFormat formatter = new DecimalFormat("#0.00");
     private double price=0;
     private  CartAdapter myAdapter;
@@ -45,6 +46,7 @@ public class Cart extends AppCompatActivity {
     private String eventKey;
     private String eventName;
     private Event event;
+    private Bitmap i1;
     ListView myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
 
+        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+        forPay=new ArrayList<String>();
         product= getIntent().getExtras().getStringArrayList("List");
         eventKey =getIntent().getExtras().getString("UID");
         isEvent =getIntent().getExtras().getBoolean("isService");
@@ -111,6 +115,7 @@ public class Cart extends AppCompatActivity {
             pay.putExtra("EventTitle",eventName);
             pay.putExtra("EventId", eventKey);
             pay.putExtra("Total Price",price);
+            pay.putStringArrayListExtra("forPay",forPay);
             startActivity(pay);
         });
     }
@@ -133,7 +138,6 @@ public class Cart extends AppCompatActivity {
              event=new Event(name,date,time,staff,uid);
              eventName= name+" "+date+" "+time+" with "+staff;
              Product temp = new Product(eventName,25.00,1);
-             temp.BitMapToString(BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa));
              products.add(temp);
              calculatePrice();
              Log.i("value", name);
@@ -156,9 +160,12 @@ public class Cart extends AppCompatActivity {
                         String item = String.valueOf(snapshot.child("item").getValue());
                         String price = String.valueOf(snapshot.child("price").getValue());
                         String quantity = String.valueOf(snapshot.child("quantity").getValue());
-                        String thumbnail = String.valueOf(snapshot.child("thumbnail").getValue());
-                        Product temp = new Product(thumbnail, item, Double.parseDouble(price), 1);
+                        Product temp = new Product( item, Double.parseDouble(price), 1);
 
+
+                        if(!(forPay.contains(item))){
+                            forPay.add(item);
+                        }
                         products.add(temp);
                         calculatePrice();
                     }
@@ -262,21 +269,24 @@ public class Cart extends AppCompatActivity {
             }
                 Product product = (Product)getItem(i);
                 holder.desc.setText(product.getItem());
-                holder.thumbnail.setImageBitmap(product.getBitmap());
+                holder.thumbnail.setImageBitmap(i1);
                 holder.price.setText(formatter.format(product.getPrice()));
                 holder.btn_plus.setOnClickListener(view1 -> {
-                    int qty = Integer.parseInt(holder.quantity.getText().toString()) + 1;
+                    int qty = Integer.parseInt(holder.quantity.getText().toString())+1;
                     product.setQuantity(qty);
                     holder.quantity.setText(String.valueOf(qty));
+
                     calculatePrice();
                 });
 
                 holder.btn_minus.setOnClickListener(view1 -> {
                     int qty = Integer.parseInt(holder.quantity.getText().toString());
                     if (qty > 0) {
-                        qty -= 1;
+                        qty -=1;
+
                         product.setQuantity(qty);
                         holder.quantity.setText(String.valueOf(qty));
+
                         calculatePrice();
                     }
                 });

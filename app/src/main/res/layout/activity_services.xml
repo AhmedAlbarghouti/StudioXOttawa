@@ -43,11 +43,9 @@
         android:scaleType="fitXY"
         android:id="@+id/cartButton"
         />
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/serviceContainer"
         android:layout_width="match_parent"
         android:layout_below="@id/ServiceStudioXLogo"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2" />
+        android:layout_height="match_parent" />
 </RelativeLayout>
