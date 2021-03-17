@@ -39,6 +39,8 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,7 @@ public class ServicesActivity extends AppCompatActivity {
 
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
+    private NumberFormat formatter = new DecimalFormat("#0.00");
     private Bitmap i1;
 
     private ArrayList<Product> productList = new ArrayList<>();
@@ -95,6 +98,7 @@ public class ServicesActivity extends AppCompatActivity {
                });
                builder.setNegativeButton("Cancel",(dialogInterface, i) -> dialogInterface.cancel()).create().show();
 
+               adapter.notifyDataSetChanged();
 
            });
 
@@ -161,12 +165,14 @@ public class ServicesActivity extends AppCompatActivity {
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
                     productList.add(temp);
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
     }
@@ -191,7 +197,7 @@ public class ServicesActivity extends AppCompatActivity {
             TextView item = newView.findViewById(R.id.serviceTitle);
             item.setText("  "+u.getItem());
             TextView price = newView.findViewById(R.id.servicePrice);
-            price.setText("  "+u.getPrice());
+            price.setText("  "+formatter.format(u.getPrice()));
             ImageView thumbnail = newView.findViewById(R.id.serviceImage);
             thumbnail.setImageBitmap(i1);
             //return it to be put in the table

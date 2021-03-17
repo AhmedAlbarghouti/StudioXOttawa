@@ -1,11 +1,19 @@
 package com.example.studioxottawa.Checkout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -16,6 +24,7 @@ import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.schedule.Schedule;
 import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.services.ServicesActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,14 +78,25 @@ public class CheckoutActivityJava extends AppCompatActivity {
 //
 //    private  static ArrayList<String> products= new ArrayList<String>();
 //    private MyListAdapter myAdapter;
+    private MyListAdapter adapter;
+    private AlertDialog.Builder builder;
+    private ListView servicesView;
+    private Bitmap i1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_java);
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
         price = getIntent().getExtras().getDouble("Total Price");
-        productsPurchase = getIntent().getStringArrayListExtra("forPay");
 
+        productsPurchase = getIntent().getStringArrayListExtra("forPay");
+        servicesView = findViewById(R.id.ItemPurchView);
+        servicesView.setAdapter(adapter = new MyListAdapter());
+        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+
+        servicesView.setOnItemClickListener((parent, view, position, id) -> {
+            adapter.notifyDataSetChanged();
+        });
 
 
         loadProducts();
@@ -105,13 +125,14 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
                 }
 
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });
         }
+        adapter.notifyDataSetChanged();
+
     }
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
@@ -276,6 +297,35 @@ public class CheckoutActivityJava extends AppCompatActivity {
             }
             // Payment request failed – allow retrying using the same payment method
             activity.displayAlert("Error", e.toString());
+        }
+    }
+
+    private class MyListAdapter extends BaseAdapter {
+
+        public int getCount() {
+            return products.size();
+        }
+
+        public Product getItem(int position) { return products.get(position); }
+
+        public long getItemId(int position) {
+            return (long) position;
+        }
+
+        public View getView(int position, View old, ViewGroup parent) {
+            Log.i("gycreport", " getview ");
+            View newView = null;
+            LayoutInflater inflater = getLayoutInflater();
+            newView = inflater.inflate(R.layout.service_layout, parent, false);
+            Product u = getItem(position);
+            TextView item = newView.findViewById(R.id.serviceTitle);
+            item.setText("  "+u.getItem());
+            TextView price = newView.findViewById(R.id.servicePrice);
+            price.setText("  "+formatter.format(u.getPrice()));
+            ImageView thumbnail = newView.findViewById(R.id.serviceImage);
+            thumbnail.setImageBitmap(i1);
+            //return it to be put in the table
+            return newView;
         }
     }
 
