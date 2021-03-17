@@ -25,6 +25,7 @@ import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.schedule.Schedule;
 import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.services.ServicesActivity;
+import com.example.studioxottawa.welcome.MainActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -277,8 +278,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     for(Product p: products) {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
-                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
-                    startActivity(schedule);
+                    Intent mainAct = new Intent(CheckoutActivityJava.this, MainActivity.class);
+                    startActivity(mainAct);
                 }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method

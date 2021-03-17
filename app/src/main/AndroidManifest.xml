@@ -23,14 +23,14 @@
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".aboutus.AboutusActivity" />
         <activity android:name=".schedule.BookAppointments" />
+        <activity android:name=".staff.AddEvent" />
         <activity
             android:name=".notification.notifActivity"
             android:label="@string/title_activity_notif" />
         <activity
             android:name=".services.ServicesActivity"
             android:label="@string/title_activity_services" />
-        <activity android:name=".vod.VODLibraryActivity" />
-        <activity android:name=".vod.VODActivity" />
+
         <activity android:name=".welcome.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

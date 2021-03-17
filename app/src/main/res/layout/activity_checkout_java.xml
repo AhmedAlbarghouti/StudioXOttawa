@@ -91,30 +91,30 @@
         android:layout_above="@id/cardInputWidget"
         android:text="$"
         />
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:text="Amount: "-->
-<!--        android:layout_above="@id/cardInputWidget"-->
-<!--        android:id="@+id/labelText"/>-->
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/amountText"-->
-<!--        android:layout_above="@id/cardInputWidget"-->
-<!--        android:text="0.00"-->
-<!--        android:hint="$$$"-->
-<!--        android:layout_toRightOf="@+id/labelText"/>-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:text="Amount: "-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:id="@+id/labelText"/>-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/amountText"-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:text="0.00"-->
+    <!--        android:hint="$$$"-->
+    <!--        android:layout_toRightOf="@+id/labelText"/>-->
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/symbol"-->
-<!--        android:layout_toRightOf="@+id/amountText"-->
-<!--        android:layout_above="@id/cardInputWidget"-->
-<!--        android:text="$"-->
-<!--        />-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/symbol"-->
+    <!--        android:layout_toRightOf="@+id/amountText"-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:text="$"-->
+    <!--        />-->
 
 
 </RelativeLayout>

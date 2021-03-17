@@ -135,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
-        Button scheduleBtn = findViewById(R.id.scheduleButton);
-        scheduleBtn.setOnClickListener(click -> {
+
 
 
         Button schedulebtn = findViewById(R.id.scheduleButton);
@@ -225,12 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
     }   //xiaoxi }
 
-    //xiaoxi {
-    private void loadnotifActivity() {
-        //create new intent and start about us activity
-        Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-        MainActivity.this.startActivity(notifIntent);
-    }
+
 
     //Xiao
     private void loadnotifActivity(String name) {
@@ -241,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
         //using sqllite within android, which stores data as file on the phone
         //changed method name from mocdata to eventdata
-        createEventData(name);
+            createEventData(name);
 
 
 
@@ -371,5 +365,4 @@ public class MainActivity extends AppCompatActivity {
     //xiaoxi }
 
 
-}
 }
