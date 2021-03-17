@@ -12,7 +12,7 @@
         android:contentDescription="@string/thumbnail_preview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/picture_frame" />
+        app:srcCompat="@drawable/logo_studioxottawa" />
 
     <TextView
         android:id="@+id/video_name"

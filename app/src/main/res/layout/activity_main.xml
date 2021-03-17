@@ -14,9 +14,8 @@
         android:id="@+id/topRow"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-
-
         android:orientation="horizontal" >
+
 
         <ImageButton
             android:id="@+id/bellImageButton"
@@ -26,9 +25,6 @@
             android:layout_alignParentRight="false"
 
              />
-
-
-
 
 
 
@@ -70,7 +66,6 @@
             android:layout_below="@id/topRow"
             android:layout_marginTop="100dp"
             android:layout_weight="1"
-
             >
 
             <Button
@@ -206,5 +201,6 @@
 
 
     </LinearLayout>
+
 
 </RelativeLayout>

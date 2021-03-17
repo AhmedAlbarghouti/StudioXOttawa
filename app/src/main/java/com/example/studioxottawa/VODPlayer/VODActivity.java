@@ -1,4 +1,4 @@
-package com.example.studioxottawa.vod;
+package com.example.studioxottawa.VODPlayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 

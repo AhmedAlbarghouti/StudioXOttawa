@@ -21,8 +21,8 @@ import com.example.studioxottawa.news.News;
 import com.example.studioxottawa.news.OkHttpUtils;
 import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.ServicesActivity;
-import com.example.studioxottawa.vod.VODActivity;
-import com.example.studioxottawa.vod.VODLibraryActivity;
+import com.example.studioxottawa.VODPlayer.VODActivity;
+import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
 import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.notification.notifActivity;
 import com.example.studioxottawa.schedule.Schedule;
@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
+        Button scheduleBtn = findViewById(R.id.scheduleButton);
+        scheduleBtn.setOnClickListener(click -> {
 
 
         Button schedulebtn = findViewById(R.id.scheduleButton);
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             Intent schedule = new Intent(this, Schedule.class);
             startActivity(schedule);
         });
+
 
         Button vodButton = findViewById(R.id.vodsButton);
         vodButton.setOnClickListener(v-> {
@@ -220,6 +223,13 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(MainActivity.this, AboutusActivity.class);
         MainActivity.this.startActivity(myIntent);
 
+    }   //xiaoxi }
+
+    //xiaoxi {
+    private void loadnotifActivity() {
+        //create new intent and start about us activity
+        Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
+        MainActivity.this.startActivity(notifIntent);
     }
 
     //Xiao
@@ -361,4 +371,5 @@ public class MainActivity extends AppCompatActivity {
     //xiaoxi }
 
 
+}
 }
