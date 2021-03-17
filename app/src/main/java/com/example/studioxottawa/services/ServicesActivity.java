@@ -161,6 +161,7 @@ public class ServicesActivity extends AppCompatActivity {
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
                     productList.add(temp);
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
