@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5b5b5b"
+    android:background="@color/aboutusbg"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".aboutus.AboutusActivity"
     tools:deviceIds="wear">
@@ -26,7 +26,7 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="15dp"
                     android:text="@string/Aboutus1"
                     />
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/SoulNadege" />
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#00ccff"
+                    android:textColor="@color/aboutushdtxt"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus2" />
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus3" />
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus4" />
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#00ccff"
+                    android:textColor="@color/aboutushdtxt"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus5" />
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus6" />
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#00ccff"
+                    android:textColor="@color/aboutushdtxt"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus7" />
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
 
                     android:text="@string/Aboutus8" />
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#00ccff"
+                    android:textColor="@color/aboutushdtxt"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus9" />
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="#fafafa"
+                    android:textColor="@color/aboutustxt"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:text="@string/Aboutus10" />

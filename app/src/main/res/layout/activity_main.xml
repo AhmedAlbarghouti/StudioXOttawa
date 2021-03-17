@@ -25,7 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="false"
 
-            android:src="@drawable/bell_icon" />
+             />
 
 
 

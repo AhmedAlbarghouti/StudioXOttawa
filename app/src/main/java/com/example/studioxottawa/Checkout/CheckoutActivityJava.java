@@ -211,7 +211,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
+                    eventsReference.child(user.getUid()).child("Events Purchased").child(event.getUid()).setValue(event);
                     Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
                     startActivity(schedule);
                 }else if(!isEvent){

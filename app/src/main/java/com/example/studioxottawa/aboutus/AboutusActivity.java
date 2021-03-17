@@ -18,7 +18,11 @@ public class AboutusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aboutus);
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+    }
 
 }
 

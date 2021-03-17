@@ -2,26 +2,32 @@ package com.example.studioxottawa.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.TextView;
 
+import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.news.GetData;
 import com.example.studioxottawa.news.News;
 import com.example.studioxottawa.news.OkHttpUtils;
-import com.example.studioxottawa.staff.AddEvent;
-import com.example.studioxottawa.staff.Report;
+import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.vod.VODActivity;
 import com.example.studioxottawa.vod.VODLibraryActivity;
 import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.notification.notifActivity;
 import com.example.studioxottawa.schedule.Schedule;
+
+
 import com.example.studioxottawa.news.NewsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String userID;
     private TextView userTV;
     private Button adminTasksButton;
+
     public static ArrayList<News> elements = new ArrayList<>();
 
 
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button contactBtn=findViewById(R.id.contactButton);
         Button logoutBtn=findViewById(R.id.logoutButton);
         adminTasksButton =findViewById(R.id.adminTasksButton);
@@ -65,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User signInUser = snapshot.getValue(User.class);
-                String name = signInUser.fullName;
-                userTV.setText(name);
+                String username = signInUser.fullName;
+                userTV.setText(username);
+                loadnotifActivity(username);
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
                     adminTasksButton.setVisibility(View.VISIBLE);
@@ -75,8 +84,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
+        });
+
+        Button contactbtn=findViewById(R.id.contactButton);
+        contactbtn.setOnClickListener(click -> {
+                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
+                    startActivity(contact);
+
         });
 
 
@@ -93,7 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         logoutBtn.setOnClickListener(click->{
+            DBHelper mydb;
+            mydb = new DBHelper(this);
+            SQLiteDatabase db = mydb.getWritableDatabase();
+            db.execSQL("delete from notiftab2");
+            db.close();
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         });
@@ -106,19 +128,20 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToProfile);
         });
 
+
         Button loginBtn3 = (Button)findViewById(R.id.aboutusButton);
         loginBtn3.setOnClickListener(click -> {
             Intent goToProfile = new Intent(MainActivity.this, AboutusActivity.class);
             startActivity(goToProfile);
         });
 
-        Button scheduleBtn = findViewById(R.id.scheduleButton);
-        scheduleBtn.setOnClickListener(click -> {
 
+
+        Button schedulebtn = findViewById(R.id.scheduleButton);
+        schedulebtn.setOnClickListener(click -> {
             Intent schedule = new Intent(this, Schedule.class);
             startActivity(schedule);
         });
-
 
         Button vodButton = findViewById(R.id.vodsButton);
         vodButton.setOnClickListener(v-> {
@@ -129,26 +152,29 @@ public class MainActivity extends AppCompatActivity {
         serviceButton.setOnClickListener(v-> {
             loadServices();
         });
+
+        //xiaoxi {
+
         // get the reference of Button's
         Button aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
-        ImageButton notifBtn = (ImageButton) findViewById(R.id.bellImageButton);  //xiaoxi
 
-// perform setOnClickListener event on aboutus btn //xiaoxi  {
         aboutusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //load aboutus activity by calling local method
+                //loads aboutus activity by calling local method
                 loadAboutusActivity();
             }
+
         });  //xiaoxi }
 
-        notifBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //load aboutus activity by calling local method
-                loadnotifActivity();
-            }
-        });  //xiaoxi }
+//        notifBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //load aboutus activity by calling local method
+//                loadnotifActivity();
+//            }
+//        });  //xiaoxi }
+
 
     }
 
@@ -188,18 +214,151 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //xiaoxi {
+
     private void loadAboutusActivity() {
         //create new intent and start about us activity
         Intent myIntent = new Intent(MainActivity.this, AboutusActivity.class);
         MainActivity.this.startActivity(myIntent);
 
+    }
+
+    //Xiao
+    private void loadnotifActivity(String name) {
+
+        //get user name from login
+        String loggedusername= name;
+
+
+        //using sqllite within android, which stores data as file on the phone
+        //changed method name from mocdata to eventdata
+        createEventData(name);
+
+
+
+        ArrayList<String> mynotifs = new ArrayList<String>();
+
+        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        DBHelper mydb;
+        mydb = new DBHelper(this);
+
+        mynotifs = mydb.getData(loggedusername);
+        if (mynotifs.size()==0) {
+        } else {
+
+            //all built in android classes to create notification icon on the top of the screen
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.bell5)
+                            .setContentTitle("Studio X Ottawa Notifications")
+                            .setContentText("Select for details")
+                            .setAutoCancel(true)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
+
+            //passing on logged on user name to notifActivity class
+            notifIntent.putExtra("username", loggedusername);
+
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+            //finally build the notification
+            manager.notify(0, builder.build());
+        } //end of if mynotifs = 0
+       // } //endif username = Q1
+
     }   //xiaoxi }
+
+
+
 
     //xiaoxi {
-    private void loadnotifActivity() {
-        //create new intent and start about us activity
-        Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-        MainActivity.this.startActivity(notifIntent);
+    private void createEventData(String username) {
+        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
+        DBHelper mydb;
+        mydb = new DBHelper(this);
 
-    }   //xiaoxi }
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        String o = user.getDisplayName();
+
+        userRef.child(uid).child("Events Purchased").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    String name = String.valueOf(ds.child("name").getValue());
+                    String date = String.valueOf(ds.child("date").getValue());
+                    String time = String.valueOf(ds.child("time").getValue());
+                    String staff = String.valueOf(ds.child("staff").getValue());
+                    String uid = String.valueOf(ds.child("uid").getValue());
+
+                    mydb.insertNotif(username,name,"Yes",date,time);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        ArrayList<String> mynotifs = new ArrayList<String>();
+//        mynotifs = mydb.getAllnotifs();
+//
+//        if (mynotifs.size()==0) {
+//            //creating some time and date for appointments and lessons mocup data
+//            Calendar calendar = Calendar.getInstance(Locale.getDefault());
+//            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//            int minute = calendar.get(Calendar.MINUTE);
+//            Date dt = new Date();
+//            calendar.setTime(dt);
+//            //SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+//            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+//            String date1 = "";
+//            String time1 = "";
+//
+//            for(int i=0; i<=2; i++){
+//                hour = hour + i;
+//                minute = minute + i;
+//                calendar.add(Calendar.DATE, i);
+//                time1 = String.valueOf(hour) +":"+ String.valueOf(minute);
+//
+//                dt = calendar.getTime();
+//                date1 = df.format(dt);
+//
+//                    switch (i) {
+//                        case 0:
+//                            //str = "Latin Dance Class on" + " " + date1 + " " + time1;
+//                            mydb.insertNotif("Dora", "", "Yes", date1, time1);
+//
+//                            mydb.insertNotif("Anna", "Latin Dance Class", "", date1, time1);
+//                            mydb.insertNotif("Tom", "", "Yes", date1, time1);
+//                            break;
+//                        case 1:
+//                            mydb.insertNotif("Dora", "", "Yes", date1, time1);
+//                            //str = "Fitness Class on" + " " + date1 + " " + time1;
+//                            mydb.insertNotif("Anna", "Fitness Class", "", date1, time1);
+//                            mydb.insertNotif("Tom", "Salsa Class", "", date1, time1);
+//                            break;
+//                        case 2:
+//                            //str = "VOD Class on" + " " + date1 + " " + time1;
+//
+//                            mydb.insertNotif("Anna", "VOD Class", "", date1, time1);
+//                            mydb.insertNotif("Tom", "Fitness Class", "", date1, time1);
+//                            break;
+//                        default:
+//                    } //end of switch
+//                } //end of for loop
+//        } //end of if user has data
+    }//end of createmocdata
+
+    //xiaoxi }
+
+
 }
