@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.welcome.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -81,9 +82,11 @@ public class VODLibraryActivity extends AppCompatActivity {
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User signInUser = snapshot.getValue(User.class);
-                Boolean isStaff = signInUser.staff;
-                premButton.setEnabled(isStaff);
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    if (ds.child("Premium Video Access (1 month)").exists()) {
+                        premButton.setEnabled(true);
+                    }
+                }
             }
 
             @Override
