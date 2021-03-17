@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,17 +15,44 @@
 
     <TextView
         android:id="@+id/serviceTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serviceImage" />
+        android:layout_toRightOf="@id/serviceImage"
+        android:textSize="20sp"
+        android:textColor="@color/StudioXPink"
+        android:textStyle="bold|italic"
+        android:text="Title" />
 
     <TextView
         android:id="@+id/servicePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serviceImage" />
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/serviceImage"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/serviceTitle"
+        android:text="80.50"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+      />
+
+    <TextView
+        android:id="@+id/serviceMoneySymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/serviceTitle"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="-117dp"
+        android:layout_toStartOf="@+id/servicePrice"
+        android:layout_toRightOf="@id/serviceImage"
+        android:text="$"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        android:textStyle="bold|italic" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
