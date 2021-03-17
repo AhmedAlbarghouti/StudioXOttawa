@@ -81,9 +81,11 @@ public class VODLibraryActivity extends AppCompatActivity {
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User signInUser = snapshot.getValue(User.class);
-                Boolean isStaff = signInUser.staff;
-                premButton.setEnabled(isStaff);
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    if (ds.child("Premium Video Access (1 month)").exists()) {
+                        premButton.setEnabled(true);
+                    }
+                }
             }
 
             @Override
