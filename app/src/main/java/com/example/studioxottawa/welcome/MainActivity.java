@@ -1,7 +1,6 @@
 package com.example.studioxottawa.welcome;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -24,7 +23,6 @@ import com.example.studioxottawa.R;
 import com.example.studioxottawa.news.GetData;
 import com.example.studioxottawa.news.News;
 import com.example.studioxottawa.news.OkHttpUtils;
-import com.example.studioxottawa.notification.DBHelper;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.VODPlayer.VODActivity;
 import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Button logoutBtn=findViewById(R.id.logoutButton);
         adminTasksButton =findViewById(R.id.adminTasksButton);
 
-        lv_ctxt = this;
+        lv_ctxt = this;   //xiao
 
         userTV = findViewById(R.id.userTV);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -170,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        loadnotifActivity();
+        //get data from firebase and check the notification data
+        checkNotificationData();
              //xiaoxi }
 
     }
@@ -217,88 +216,14 @@ public class MainActivity extends AppCompatActivity {
 
     }   //xiaoxi }
 
-
-    //Xiao
-    private void loadnotifActivity(  ) {
-
-        //get user name from login
-//        String loggedusername= name;
-        ArrayList<String> mynotifs = new ArrayList<String>();
-        //using sqllite within android, which stores data as file on the phone
-        mynotifs =  createEventData();
-
-
-
-//        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
-//        DBHelper mydb = new DBHelper();
-////        mynotifs = mydb.getAllnotifs();
-//        //mynotifs = mydb.getData(loggedusername);
-//       String loggedonuser = mydb.get_username();
-//        mynotifs = mydb.get_firebase_data();
-//        if (mynotifs.size()==0) {
-//        } else {
-//            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            String NOTIFICATION_CHANNEL_ID = "reminder";
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                @SuppressLint("WrongConstant") NotificationChannel notificationChannel =
-//                        new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);
-//
-//                // Configure the notification channel.
-//                notificationChannel.setDescription("Channel description");
-//                notificationChannel.enableLights(true);
-//                notificationChannel.setLightColor(Color.RED);
-//                notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-//                notificationChannel.enableVibration(true);
-//                // Register the channel with the system; you can't change the importance
-//                // or other notification behaviors after this
-//                notificationManager.createNotificationChannel(notificationChannel);
-//            }
-//            //all built in android classes to create notification icon on the top of the screen
-//            NotificationCompat.Builder builder =
-//                    new NotificationCompat.Builder(this,"reminder")
-//                            .setDefaults(Notification.DEFAULT_ALL)
-//                            .setSmallIcon(R.drawable.ic_launcher_background)
-//                            .setContentTitle("Studio X Ottawa Notifications")
-//                            .setContentText("Select for details")
-//                            .setAutoCancel(true)
-//                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//            Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-//
-//            //passing on logged on user name to notifActivity class
-//
-//           // String loggedusername = mydb.get_username();
-//
-//           // notifIntent.putExtra("username", loggedusername);
-//            //
-//            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifIntent,
-//                    PendingIntent.FLAG_UPDATE_CURRENT);
-//            builder.setContentIntent(contentIntent);
-//
-//            // Add as notification
-//           // NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
-//            //finally build the notification
-//            notificationManager.notify(0, builder.build());
-//        } //end of if mynotifs = 0
-//       // } //endif username = Q1
-
-    }   //xiaoxi }
-
-
-
-
     //xiaoxi {
-    private ArrayList<String>  createEventData() {
+    private void checkNotificationData() {
         ArrayList<String> array_list = new ArrayList<String>();
-        //SQlite database class object, this DB class takes cares of database operations(create, update, delete, insert)
-        //DBHelper mydb;
-        //mydb = new DBHelper(this);
-        //mydb.droptable();
+
+        //Firebase reference use for reading or writing data to database
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        //String o = user.getDisplayName();
 
         userRef.child(uid).child("Events Purchased").addValueEventListener(new ValueEventListener() {
             @Override
@@ -313,65 +238,12 @@ public class MainActivity extends AppCompatActivity {
                     String str = "";
                     str = name + "," + date+ "," + time;
                     array_list.add(str);
+                }//end of for loop
 
-                   // mydb.insertNotif(username,name,"Yes",date,time);
+                //check if we need to load notification
+                if (array_list.size()!=0) {
+                    loadnotifActivity();
                 }
-//           /////////////////////////////////////////////////////////////////////////////
-
-                if (array_list.size()==0) {
-                } else {
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    String NOTIFICATION_CHANNEL_ID = "reminder";
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        @SuppressLint("WrongConstant") NotificationChannel notificationChannel =
-                                new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);
-
-                        // Configure the notification channel.
-                        notificationChannel.setDescription("Channel description");
-                        notificationChannel.enableLights(true);
-                        notificationChannel.setLightColor(Color.RED);
-                        notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-                        notificationChannel.enableVibration(true);
-                        // Register the channel with the system; you can't change the importance
-                        // or other notification behaviors after this
-                        notificationManager.createNotificationChannel(notificationChannel);
-                    }
-                    //all built in android classes to create notification icon on the top of the screen
-                    NotificationCompat.Builder builder =
-                            new NotificationCompat.Builder(lv_ctxt,"reminder")
-                                    .setDefaults(Notification.DEFAULT_ALL)
-                                    .setSmallIcon(R.drawable.bell3)
-                                    .setContentTitle("Studio X Ottawa Notifications")
-                                    .setContentText("Select for details")
-                                    .setAutoCancel(true)
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                    Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
-
-                    //passing on logged on user name to notifActivity class
-
-                    // String loggedusername = mydb.get_username();
-
-                    // notifIntent.putExtra("username", loggedusername);
-                    //
-                    PendingIntent contentIntent = PendingIntent.getActivity(lv_ctxt, 0, notifIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(contentIntent);
-
-                    // Add as notification
-                    // NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
-                    //finally build the notification
-                    notificationManager.notify(0, builder.build());
-                } //end of if mynotifs = 0
-
-
-
-
-//                ///////////////////////////////////////////////////////////////////////
-
-
-
             }
 
             @Override
@@ -379,11 +251,52 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        return array_list;
 
-    }//end of createeventdata
+    }//end of checkNotificationData
 
-    //xiaoxi }
+    //Xiao
+    private void loadnotifActivity() {
+
+            //NotificationManager allow to put notification into the titilebar of your App
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String NOTIFICATION_CHANNEL_ID = "reminder";
+
+            //check only for version 0 and newer versions
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                @SuppressLint("WrongConstant") NotificationChannel notificationChannel =
+                        new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);
+
+                // Configure the notification channel.
+                notificationChannel.setDescription("Channel description");
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                notificationChannel.enableVibration(true);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+            //all built in android classes to create notification icon on the top of the screen
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(lv_ctxt,"reminder")
+                            .setDefaults(Notification.DEFAULT_ALL)
+                            .setSmallIcon(R.drawable.bell3)
+                            .setContentTitle("Studio X Ottawa Notifications")
+                            .setContentText("Select for details")
+                            .setAutoCancel(true)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            Intent notifIntent = new Intent(MainActivity.this, notifActivity.class);
+
+            //PendingIntent to pass the content of the notification and set the content
+            PendingIntent contentIntent = PendingIntent.getActivity(lv_ctxt, 0, notifIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+           //finally build the notification
+            notificationManager.notify(0, builder.build());
+
+    }   //xiaoxi }
 
 
 }

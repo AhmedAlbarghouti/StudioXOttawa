@@ -6,35 +6,35 @@
     <TextView
 
         android:id="@+id/c1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="5"
         android:background="@color/aboutusbg"
-        android:padding="18dip"
+        android:padding="1dip"
         android:text="Text 1"
         android:textColor="#000"
-        android:textSize="12dp" />
+        android:textSize="13dp" />
 
     <TextView
 
         android:id="@+id/c2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:background="@color/aboutusbg"
-        android:padding="18dip"
+        android:padding="1dip"
         android:text="Text 1"
         android:textColor="#000"
-        android:textSize="12dp" />
+        android:textSize="13dp" />
 
     <TextView
 
         android:id="@+id/c3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="3"
         android:background="@color/aboutusbg"
-        android:padding="18dip"
-        android:text="Text 2"
+        android:padding="1dip"
+        android:text="Text 3"
         android:textColor="#000"
-        android:textSize="12dp" />
+        android:textSize="13dp" />
 
 
 </TableRow>

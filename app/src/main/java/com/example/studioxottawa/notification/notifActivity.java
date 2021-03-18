@@ -31,9 +31,8 @@ public class notifActivity extends AppCompatActivity {
     TextView textView2;
     TextView textView3;
     Button button;
-    DBHelper mydb;
     TableLayout tabaptlayout;
-    public static Context lv_ctxt ;
+    public static Context lv_ctxt2 ;
     String loggedusername = "";
 
     @Override
@@ -42,9 +41,9 @@ public class notifActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
 
-        lv_ctxt = this;
+        lv_ctxt2 = this;
 
-//for call studio x ottawa button
+        //for call studio x ottawa button
         button = (Button) findViewById(R.id.buttonCall);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -57,13 +56,13 @@ public class notifActivity extends AppCompatActivity {
 
 
         textView = (TextView) findViewById(R.id.notif1);
-        //getting the notification message
-        //get the logged on user name passed from mainActivity to this intent
-//        String loggedusername= getIntent().getStringExtra("username");
-
-//        //////////////////////////////////////////////////////////
+       //get full name of the logged on user from data base
+        FirebaseUser user1;
         DatabaseReference userRef1 = FirebaseDatabase.getInstance().getReference("Users");
-        userRef1.addValueEventListener(new ValueEventListener() {
+        user1 = FirebaseAuth.getInstance().getCurrentUser();
+        String uid1 = user1.getUid();
+
+        userRef1.child(uid1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User signInUser = snapshot.getValue(User.class);
@@ -88,16 +87,15 @@ public class notifActivity extends AppCompatActivity {
                 //Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
             }
         });
-//        mydb = new DBHelper();
 
+        //table data strings
         String str_date = "";
         String str_time = "";
         String str_event = "";
 
-      //  Cursor res = mydb.getcursor(loggedusername);
-
         tabaptlayout=(TableLayout)findViewById(R.id.tabaptmnt);
-//creating column headings
+
+        //creating column headings
         View tableRowapt = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
         TextView col11  = (TextView) tableRowapt.findViewById(R.id.c1);
         TextView col21  = (TextView) tableRowapt.findViewById(R.id.c2);
@@ -108,115 +106,37 @@ public class notifActivity extends AppCompatActivity {
         col31.setText("Time");
         tabaptlayout.addView(tableRowapt);
 
-      //  res.moveToFirst();
-
-      //  while(res.isAfterLast() == false){
-
-
-        ArrayList<String> mynotifs = new ArrayList<String>();
-
-//        mynotifs = mydb.get_firebase_data();
-//
-
-        FirebaseUser user;
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        //String o = user.getDisplayName();
-
-
-        userRef.child(uid).child("Events Purchased").addValueEventListener(new ValueEventListener() {
+        //get events data from database
+        userRef1.child(uid1).child("Events Purchased").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()){
+                    //get each column's value
                     String name = String.valueOf(ds.child("name").getValue());
                     String date = String.valueOf(ds.child("date").getValue());
                     String time = String.valueOf(ds.child("time").getValue());
-                    String staff = String.valueOf(ds.child("staff").getValue());
-                    String uid = String.valueOf(ds.child("uid").getValue());
 
-                    //mydb.insertNotif(username,name,"Yes",date,time);
-//                    String str = "";
-//                    str = name + "," + date+ "," + time;
-//                    array_list.add(str);
-
-                    View tableRow = LayoutInflater.from(lv_ctxt).inflate(R.layout.tabrow, null, false);
+                    View tableRow = LayoutInflater.from(lv_ctxt2).inflate(R.layout.tabrow, null, false);
                     TextView col1 = (TextView) tableRow.findViewById(R.id.c1);
                     TextView col2 = (TextView) tableRow.findViewById(R.id.c2);
                     TextView col3 = (TextView) tableRow.findViewById(R.id.c3);
 
+                    //set column value
                     col1.setText(name);
                     col2.setText(date);
                     col3.setText(time);
                     tabaptlayout.addView(tableRow);
-
-                }
-            }
+                }// end of for loop
+            } // end of onDataChange
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
-
-
-
-
-//        for (int i=0; i<=mynotifs.size(); i++) {
-//
-//            View tableRow = LayoutInflater.from(this).inflate(R.layout.tabrow, null, false);
-//            TextView col1 = (TextView) tableRow.findViewById(R.id.c1);
-//            TextView col2 = (TextView) tableRow.findViewById(R.id.c2);
-//            TextView col3 = (TextView) tableRow.findViewById(R.id.c3);
-//            String str = mynotifs.get(i);
-//            String[] str_arry = str.split(",");
-//                for (int j=0; j<=str_arry.length; j++) {
-//
-//                    str_event = "";
-//                    str_date = "";
-//                    str_time = "";
-//
-//                    switch(j) {
-//                        case 0:
-//                            str_event = str_arry[0];
-//                            break;
-//                        case 1:
-//                            str_date = str_arry[1];
-//                            break;
-//                        case 2:
-//                            str_time = str_arry[2];
-//                            break;
-//                        default:
-//                    }
-//
-//                }  //end of j for loop
-//
-////            str_lesson = res.getString(res.getColumnIndex("lesson"));
-////            str_apt = res.getString(res.getColumnIndex("aptment"));
-////            str_date = res.getString(res.getColumnIndex("date"));
-////            str_time = res.getString(res.getColumnIndex("time"));
-////            if (str_lesson.equals("")) {
-////                str_event = "Appointment";
-////            } else {
-////                str_event = str_lesson;
-////            }
-//
-//            col1.setText(str_event);
-//            col2.setText(str_date);
-//            col3.setText(str_time);
-//            tabaptlayout.addView(tableRow);
-//
-//            //      res.moveToNext();
-//
-//            // } //end of while loop
-//        } //end of for loop.
-        /////////////////////////////////////////
-
-    }
+    } //end of onCreate override method
 
     @Override
+    //the system is temporarily destroying this instance of the activity to save space
     protected void onDestroy() {
         super.onDestroy();
 
