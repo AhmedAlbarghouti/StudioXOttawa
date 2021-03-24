@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -45,13 +48,17 @@ public class notifActivity extends AppCompatActivity {
 
         //for call studio x ottawa button
         button = (Button) findViewById(R.id.buttonCall);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(click -> {
 
-            public void onClick(View arg0) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:6139125083"));
-                startActivity(callIntent);
-            }
+            Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
+            startActivity(contact);
+
+//
+//            public void onClick(View arg0) {
+//                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                callIntent.setData(Uri.parse("tel:6139125083"));
+//                startActivity(callIntent);
+ //           }
         });
 
 
@@ -73,7 +80,7 @@ public class notifActivity extends AppCompatActivity {
                 textView.setText(msg);
 
                 textView3 = (TextView) findViewById(R.id.notif3);
-                msg =  "\n"+"If you have any questions, please click to call us:";
+                msg =  "\n"+"If you have any questions, please click to contact us:";
                 textView3.setText(msg);
 
                 textView2 = (TextView) findViewById(R.id.notif2);
@@ -98,12 +105,13 @@ public class notifActivity extends AppCompatActivity {
         //creating column headings
         View tableRowapt = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
         TextView col11  = (TextView) tableRowapt.findViewById(R.id.c1);
+        col11.setPaintFlags(col11.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         TextView col21  = (TextView) tableRowapt.findViewById(R.id.c2);
         TextView col31  = (TextView) tableRowapt.findViewById(R.id.c3);
 
-        col11.setText("Event");
-        col21.setText("Date");
-        col31.setText("Time");
+        col11.setText("EVENT");
+        col21.setText("DATE");
+        col31.setText("TIME");
         tabaptlayout.addView(tableRowapt);
 
         //get events data from database
@@ -118,11 +126,32 @@ public class notifActivity extends AppCompatActivity {
 
                     View tableRow = LayoutInflater.from(lv_ctxt2).inflate(R.layout.tabrow, null, false);
                     TextView col1 = (TextView) tableRow.findViewById(R.id.c1);
+                    col1.setPaintFlags(col11.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                     TextView col2 = (TextView) tableRow.findViewById(R.id.c2);
                     TextView col3 = (TextView) tableRow.findViewById(R.id.c3);
 
                     //set column value
                     col1.setText(name);
+
+
+                    col1.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            Intent contact = new Intent(lv_ctxt2, com.example.studioxottawa.contact.contact.class);
+                            startActivity(contact);
+                        }
+                    });
+
+
+
+
+
+
+
+
+
                     col2.setText(date);
                     col3.setText(time);
                     tabaptlayout.addView(tableRow);
@@ -141,4 +170,8 @@ public class notifActivity extends AppCompatActivity {
         super.onDestroy();
 
     }
+
+
+
+
 }
