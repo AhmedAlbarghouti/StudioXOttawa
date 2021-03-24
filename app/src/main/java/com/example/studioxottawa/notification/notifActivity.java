@@ -53,12 +53,6 @@ public class notifActivity extends AppCompatActivity {
             Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
             startActivity(contact);
 
-//
-//            public void onClick(View arg0) {
-//                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-//                callIntent.setData(Uri.parse("tel:6139125083"));
-//                startActivity(callIntent);
- //           }
         });
 
 
@@ -105,7 +99,6 @@ public class notifActivity extends AppCompatActivity {
         //creating column headings
         View tableRowapt = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
         TextView col11  = (TextView) tableRowapt.findViewById(R.id.c1);
-        col11.setPaintFlags(col11.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         TextView col21  = (TextView) tableRowapt.findViewById(R.id.c2);
         TextView col31  = (TextView) tableRowapt.findViewById(R.id.c3);
 
@@ -133,7 +126,7 @@ public class notifActivity extends AppCompatActivity {
                     //set column value
                     col1.setText(name);
 
-
+                    //text view link to list activity
                     col1.setOnClickListener(new View.OnClickListener() {
 
                         @Override
