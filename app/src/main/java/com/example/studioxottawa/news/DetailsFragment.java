@@ -59,7 +59,7 @@ public class DetailsFragment extends Fragment {
         text.setText(getText);
 
         TextView title = (TextView)result.findViewById(R.id.FragmentTitle);
-        title.setText(dataFromActivity.getString(NewsActivity.NEWS_TITLE));
+        title.setText(dataFromActivity.getString(NewsActivity.NEWS_TITLE).replace("_b","\n"));
 
         TextView description = (TextView)result.findViewById(R.id.FragmentDescription);
         description.setText(dataFromActivity.getString(NewsActivity.NEWS_DESCRIPTION).replace("_b","\n"));
@@ -69,7 +69,7 @@ public class DetailsFragment extends Fragment {
         new ImageLoadTask(url, imageView).execute();
 
         TextView date = (TextView)result.findViewById(R.id.FragmentDate);
-        date.setText(dataFromActivity.getString(NewsActivity.NEWS_DATE));
+        date.setText(dataFromActivity.getString(NewsActivity.NEWS_DATE).replace("_b","\n"));
 
         Button hideButton = (Button)result.findViewById(R.id.hideButton);
         hideButton.setOnClickListener( clk -> {
@@ -107,6 +107,7 @@ public class DetailsFragment extends Fragment {
             this.imageView = imageView;
         }
 
+        // Load the image in background
         @Override
         protected Bitmap doInBackground(Void... params) {
             try {

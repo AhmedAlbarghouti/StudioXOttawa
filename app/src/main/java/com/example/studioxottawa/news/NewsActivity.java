@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.welcome.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 public class NewsActivity extends AppCompatActivity {
 
-    private ArrayList<News> allNews = new ArrayList<>();
+    private static ArrayList<News> allNews = new ArrayList<>();
     private ListView myList;
     private MyListAdapter myAdapter;
 
@@ -46,48 +47,46 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        // Load News from database
-        loadNews();
-
         boolean isTablet = findViewById(R.id.frameLayout) != null;
+
+        Log.i("gycreport", "MyList Ready");
+        myList = findViewById(R.id.newsListView);
+        myList.setAdapter( myAdapter = new MyListAdapter());
+        myList.setOnItemClickListener( (list, item, position, id) -> {
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(NEWS_TITLE, allNews.get(position).getTitle() );
+            dataToPass.putString(NEWS_DESCRIPTION, allNews.get(position).getDescription() );
+            dataToPass.putString(NEWS_LINK, allNews.get(position).getLink() );
+            dataToPass.putString(NEWS_DATE, allNews.get(position).getDate() );
+
+            dataToPass.putInt(NEWS_POSITION, position);
+            dataToPass.putLong(NEWS_ID, id);
+
+            if(isTablet)
+            {
+                dFragment = new DetailsFragment();
+                dFragment.setArguments( dataToPass );
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, dFragment)
+                        .commit();
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(NewsActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+
+            myAdapter.notifyDataSetChanged();
+        }   );
 
         Button returnButton = (Button)findViewById(R.id.goBack);
         returnButton.setOnClickListener( new View.OnClickListener()
         {  public void onClick(View v){
-//            Intent nextActivity = new Intent(NewsActivity.this, MainActivity.class);
-//            startActivity(nextActivity);
-            Log.i("gycreport", "MyList Ready");
-            myList = findViewById(R.id.newsListView);
-            myList.setAdapter( myAdapter = new MyListAdapter());
-            myList.setOnItemClickListener( (list, item, position, id) -> {
-                //Create a bundle to pass data to the new fragment
-                Bundle dataToPass = new Bundle();
-                dataToPass.putString(NEWS_TITLE, allNews.get(position).getTitle() );
-                dataToPass.putString(NEWS_DESCRIPTION, allNews.get(position).getDescription() );
-                dataToPass.putString(NEWS_LINK, allNews.get(position).getLink() );
-                dataToPass.putString(NEWS_DATE, allNews.get(position).getDate() );
-
-                dataToPass.putInt(NEWS_POSITION, position);
-                dataToPass.putLong(NEWS_ID, id);
-
-                if(isTablet)
-                {
-                    dFragment = new DetailsFragment();
-                    dFragment.setArguments( dataToPass );
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.frameLayout, dFragment)
-                            .commit();
-                }
-                else //isPhone
-                {
-                    Intent nextActivity = new Intent(NewsActivity.this, EmptyActivity.class);
-                    nextActivity.putExtras(dataToPass); //send data to next activity
-                    startActivity(nextActivity); //make the transition
-                }
-
-                myAdapter.notifyDataSetChanged();
-            }   );
+            Intent nextActivity = new Intent(NewsActivity.this, MainActivity.class);
+            startActivity(nextActivity);
         } });
 
     }
@@ -95,7 +94,7 @@ public class NewsActivity extends AppCompatActivity {
     /**
      * Used to load news from Firebase database
      */
-    private void loadNews() {
+    public static void loadNews() {
         // Connect with Firebase database
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
 
@@ -162,9 +161,9 @@ public class NewsActivity extends AppCompatActivity {
             newView = inflater.inflate(R.layout.row_layout_news, parent, false);
             News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
-            tView.setText("  "+n.getTitle());
+            tView.setText("  "+n.getTitle().replace("_b",""));
             TextView tViewDate = newView.findViewById(R.id.newsDate);
-            tViewDate.setText(n.getDate());
+            tViewDate.setText(n.getDate().replace("_b",""));
             return newView;
         }
     }

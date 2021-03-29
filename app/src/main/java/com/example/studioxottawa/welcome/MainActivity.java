@@ -117,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        // Goes to News page
         Button loginBtn2 = (Button)findViewById(R.id.newsButton);
+        NewsActivity.loadNews();
         loginBtn2.setOnClickListener(click -> {
             Intent goToProfile = new Intent(MainActivity.this, NewsActivity.class);
             startActivity(goToProfile);
