@@ -22,10 +22,7 @@ import android.widget.TextView;
 
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
-import com.example.studioxottawa.news.GetData;
-import com.example.studioxottawa.news.News;
-import com.example.studioxottawa.news.OkHttpUtils;
-import com.example.studioxottawa.schedule.Event;
+import com.example.studioxottawa.news.NewsActivity;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.VODPlayer.VODActivity;
 import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
@@ -34,7 +31,6 @@ import com.example.studioxottawa.notification.notifActivity;
 import com.example.studioxottawa.schedule.Schedule;
 
 
-import com.example.studioxottawa.news.NewsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView userTV;
     private Button adminTasksButton;
 
-    public static ArrayList<News> elements = new ArrayList<>();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
-
-        Thread thread = new NewsThread();
-        thread.start();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -210,16 +200,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(vodPlayback);
     }
 
-    private class NewsThread extends Thread{
-        public void run(){
-            String html;
-            for(int i=1; i<9; i++){
-                String url = "https://www.studioxottawa.com/news/page/"+i+"/";
-                html = OkHttpUtils.OkGetArt(url);
-                elements.addAll(GetData.spiderArticle(html));
-            }
-        }
-    }
 
     //xiaoxi {
 
