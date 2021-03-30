@@ -36,7 +36,6 @@ public class DetailsFragment extends Fragment {
     private Bundle dataFromActivity;
     private long id;
     private AppCompatActivity parentActivity;
-    private String getText;
     private String url;
     private ImageView imageView;
 
@@ -55,10 +54,6 @@ public class DetailsFragment extends Fragment {
 
         View result =  inflater.inflate(R.layout.fragment_details_news, container, false);
 
-        // Set text Strings for contents
-        TextView text = (TextView)result.findViewById(R.id.FragmentText);
-        text.setText(getText);
-
         TextView title = (TextView)result.findViewById(R.id.FragmentTitle);
         title.setText(dataFromActivity.getString(NewsActivity.NEWS_TITLE).replace("_b","\n"));
 
@@ -67,6 +62,7 @@ public class DetailsFragment extends Fragment {
 
         url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
         imageView = (ImageView)result.findViewById(R.id.FragmentImage);
+        Log.i("gycimage", url);
         if(url.equals("null")){
             imageView.setImageResource(R.drawable.studioxottawa3);
         }else{
