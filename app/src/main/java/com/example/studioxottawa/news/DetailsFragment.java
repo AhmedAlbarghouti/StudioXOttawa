@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,11 @@ public class DetailsFragment extends Fragment {
 
         url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
         imageView = (ImageView)result.findViewById(R.id.FragmentImage);
-        new ImageLoadTask(url, imageView).execute();
+        if(url.equals("null")){
+            imageView.setImageResource(R.drawable.studioxottawa3);
+        }else{
+            new ImageLoadTask(url, imageView).execute();
+        }
 
         TextView date = (TextView)result.findViewById(R.id.FragmentDate);
         date.setText(dataFromActivity.getString(NewsActivity.NEWS_DATE).replace("_b","\n"));
@@ -132,6 +137,7 @@ public class DetailsFragment extends Fragment {
         }
 
     }
+
 }
 
 
