@@ -154,7 +154,7 @@
     <string name="signinaccount">Already Registered? <u>Sign In</u></string>
     <string name="enter_email_hint">Enter Your Email</string>
     <string name="reset_password">Reset Password</string>
-    <string name="welcomeHeader">Welcome</string>
+    <string name="welcomeHeader">Studio X Ottawa</string>
     <string name="user">User</string>
     <string name="add_class_button">add event</string>
 </resources>

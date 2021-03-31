@@ -45,7 +45,6 @@ public class BookAppointments extends AppCompatActivity {
             Intent bookingIntent = new Intent(BookAppointments.this, Cart.class);
             bookingIntent.putExtra("UID",Uid);
             bookingIntent.putExtra("isService",true);
-            Toast.makeText(getApplicationContext(),"Successfully Booked!",Toast.LENGTH_SHORT).show();
             startActivity(bookingIntent);
         });
 

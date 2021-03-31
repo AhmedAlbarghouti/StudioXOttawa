@@ -15,10 +15,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
 
 import android.widget.TextView;
+
 
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
@@ -44,15 +46,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-
     private String userID;
     private TextView userTV;
     private Button adminTasksButton;
+
 
     public static ArrayList<News> elements = new ArrayList<>();
 
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         adminTasksButton =findViewById(R.id.adminTasksButton);
 
 
+
         userTV = findViewById(R.id.userTV);
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -75,12 +79,13 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new NewsThread();
         thread.start();
 
+
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User signInUser = snapshot.getValue(User.class);
                 String username = signInUser.fullName;
-                userTV.setText(username);
+//                userTV.setText(username);
                 loadnotifActivity(username);
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {

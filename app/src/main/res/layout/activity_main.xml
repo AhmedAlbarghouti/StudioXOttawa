@@ -1,206 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     tools:context=".welcome.MainActivity">
 
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
 
 
 
-    <RelativeLayout
-        android:id="@+id/topRow"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal" >
 
-
-        <ImageButton
-            android:id="@+id/bellImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="false"
-
-             />
-
-
-
-        <TextView
-            android:id="@+id/welcomeTV"
+        <RelativeLayout
+            android:id="@+id/topRow"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/welcomeHeader"
-            android:textSize="30sp"
-            android:layout_weight="0"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:id="@+id/userTV"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text=""
-            android:layout_weight="0"
-            android:textSize="25sp"
-            android:layout_below="@id/welcomeTV"
-            android:gravity="center"
-            android:textStyle="bold"
-            />
-
-    </RelativeLayout>
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
 
 
-
-
-
-
-        <LinearLayout
-            android:id="@+id/firstRow"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@id/topRow"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
             >
 
+
+
+
+
+            <TextView
+                android:id="@+id/welcomeTV"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="@string/welcomeHeader"
+
+                android:textColor="@color/white"
+                android:textSize="30sp"
+
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/userTV"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text=""
+                android:layout_weight="0"
+                android:textSize="25sp"
+                android:layout_below="@id/welcomeTV"
+                android:gravity="center"
+                android:textStyle="normal"
+                />
+
+        </RelativeLayout>
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/firstRow"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/topRow"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                >
+
+                <Button
+
+
+                    android:id="@+id/scheduleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Schedule"
+                    android:backgroundTint="@color/StudioXPink"
+                    />
+
+                <Button
+                    android:id="@+id/servicesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_toRightOf="@id/scheduleButton"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Services"
+                    android:backgroundTint="@color/StudioXPink"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+            android:id="@+id/secondRow"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/firstRow"
+            android:orientation="horizontal">
+
+
             <Button
-
-
-                android:id="@+id/scheduleButton"
+                android:id="@+id/vodsButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="Schedule"
+                android:text="Video On Demand"
                 android:backgroundTint="@color/StudioXPink"
+
+
                 />
 
             <Button
-                android:id="@+id/servicesButton"
+                android:id="@+id/newsButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_toRightOf="@id/scheduleButton"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="Services"
+                android:text="News"
                 android:backgroundTint="@color/StudioXPink"
                 />
-        </LinearLayout>
+
+            </LinearLayout>
 
 
         <LinearLayout
-        android:id="@+id/secondRow"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/firstRow"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:id="@+id/vodsButton"
+            android:id="@+id/thirdRow"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Video On Demand"
-            android:backgroundTint="@color/StudioXPink"
+            android:layout_below="@id/secondRow"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/contactButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Contact Us"
+                android:backgroundTint="@color/StudioXPink"
 
 
-            />
+                />
 
-        <Button
-            android:id="@+id/newsButton"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_toRightOf="@id/scheduleButton"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="News"
-            android:backgroundTint="@color/StudioXPink"
-            />
+            <Button
+                android:id="@+id/aboutusButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_toRightOf="@id/scheduleButton"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="About Us"
+                android:backgroundTint="@color/StudioXPink"
+                />
+
+
+
 
         </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/thirdRow"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/secondRow"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/contactButton"
+        <LinearLayout
+            android:id="@+id/fourthRow"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Contact Us"
-            android:backgroundTint="@color/StudioXPink"
+            android:layout_below="@id/thirdRow"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/logoutButton"
+                android:text="Logout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/StudioXPink"
+                />
+
+            <Button
+                android:id="@+id/adminTasksButton"
+                android:text="Admin Tasks"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:backgroundTint="@color/StudioXPink"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="invisible"
+
+                />
 
 
-            />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/aboutusButton"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_toRightOf="@id/scheduleButton"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="About Us"
-            android:backgroundTint="@color/StudioXPink"
-            />
-
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/fourthRow"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/thirdRow"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/logoutButton"
-            android:text="Logout"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/StudioXPink"
-            />
-
-        <Button
-            android:id="@+id/adminTasksButton"
-            android:text="Admin Tasks"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/StudioXPink"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="invisible"
-
-            />
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
