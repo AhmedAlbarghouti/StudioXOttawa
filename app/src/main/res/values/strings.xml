@@ -24,7 +24,7 @@
     <string name="username_email">Username/Email</string>
     <string name="login">Login</string>
     <string name="AboutusTitle">
-        "\n     Welcome to Studio X Ottawa Inc."</string>
+        "     Welcome to Studio X Ottawa Inc."</string>
 
     <string name="Aboutus0">
         "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
@@ -116,6 +116,7 @@
         "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n"
         "2010-2014\n"
         "Blackanese Mambo Team Directors\n\n"
+        "\n\n      Copyright 2013 - Studio X Ottawa Inc. | All Rights Reserved |\n\n\n"
     </string>
 
     <string name="SoulNadege">"   Our Main instructors!"

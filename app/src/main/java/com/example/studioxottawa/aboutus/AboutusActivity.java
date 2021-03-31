@@ -8,8 +8,6 @@ import android.os.Bundle;
 
 import com.example.studioxottawa.R;
 
-import java.util.Arrays;
-
 public class AboutusActivity extends AppCompatActivity {
 
     @Override
@@ -18,6 +16,8 @@ public class AboutusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aboutus);
 
     }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
