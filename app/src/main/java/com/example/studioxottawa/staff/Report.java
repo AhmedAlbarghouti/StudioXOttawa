@@ -29,7 +29,7 @@ public class Report extends AppCompatActivity {
     private MyListAdapter myAdapter;
     private ListView myList;
     private ArrayList<User> allUsers = new ArrayList<User>();
-    private ArrayList eventsPurchasedList= new ArrayList();
+    private ArrayList<Event> eventsPurchasedList;
     private ArrayList productsPurchasedList= new ArrayList();
     private TextView text;
 
@@ -76,6 +76,7 @@ public class Report extends AppCompatActivity {
                     String email = String.valueOf(ds.child("email").getValue());
                     DataSnapshot eventsPurchasedSnapshot = ds.child("Events Purchased");
 
+                    eventsPurchasedList= new ArrayList();
                     for(DataSnapshot dsEvent : eventsPurchasedSnapshot.getChildren()){
                         String name = String.valueOf(dsEvent.child("name").getValue());
                         String staff = String.valueOf(dsEvent.child("staff").getValue());
@@ -116,18 +117,20 @@ public class Report extends AppCompatActivity {
             newView = inflater.inflate(R.layout.row_layout, parent, false);
             User u = (User)getItem(position);
             TextView tViewName = newView.findViewById(R.id.fullName);
-            tViewName.setText("  "+u.fullName);
+            tViewName.setText(u.fullName);
             TextView tViewEmail = newView.findViewById(R.id.email);
-            tViewEmail.setText("  "+u.email);
+            tViewEmail.setText(u.email);
             TextView tViewPhone = newView.findViewById(R.id.phoneNumber);
-            tViewPhone.setText("  "+u.PhoneNumber);
+            tViewPhone.setText(u.PhoneNumber);
 
-            String eventDetail = null;
+            String eventDetail = "";
+            int counter = 1;
             for(Event event : u.getEventsPurchased()){
-                eventDetail = eventDetail+event.getName()+" by "+event.getStaff()+", at "+event.getTime()+", "+event.getDate()+"\n";
+                eventDetail = eventDetail+counter+". "+event.getName()+" by "+event.getStaff()+", at "+event.getTime()+", "+event.getDate()+"\n\n";
+                counter+=1;
             }
             TextView tViewEvents = newView.findViewById(R.id.event);
-            tViewEvents.setText("  "+eventDetail);
+            tViewEvents.setText("Event purchased:\n"+eventDetail);
             //return it to be put in the table
             return newView;
         }

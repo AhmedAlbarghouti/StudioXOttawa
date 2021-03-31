@@ -12,6 +12,7 @@
         android:layout_gravity="fill"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/fullName"/>
 
     <TextView
@@ -19,6 +20,7 @@
         android:layout_gravity="fill"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/email"/>
 
     <TextView
@@ -26,6 +28,7 @@
         android:layout_gravity="fill"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/phoneNumber"/>
 
     <TextView
@@ -33,6 +36,7 @@
         android:layout_gravity="fill"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/event"/>
 
 
