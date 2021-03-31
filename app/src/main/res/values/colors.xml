@@ -11,4 +11,6 @@
     <color name="aboutusbg">#d8e9ff</color>
     <color name="aboutustxt">#000000</color>
     <color name="aboutushdtxt">#00157d</color>
+    <color name="orangeColor">#fc7d32</color>
+    <color name="darkGrey">#383330</color>
 </resources>
