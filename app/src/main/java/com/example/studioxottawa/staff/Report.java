@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.welcome.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,8 @@ public class Report extends AppCompatActivity {
     private MyListAdapter myAdapter;
     private ListView myList;
     private ArrayList<User> allUsers = new ArrayList<User>();
-    private ArrayList test= new ArrayList();
+    private ArrayList eventsPurchasedList= new ArrayList();
+    private ArrayList productsPurchasedList= new ArrayList();
     private TextView text;
 
     @Override
@@ -72,9 +74,19 @@ public class Report extends AppCompatActivity {
                     String fullName = String.valueOf(ds.child("fullName").getValue());
                     String phoneNumber = String.valueOf(ds.child("PhoneNumber").getValue());
                     String email = String.valueOf(ds.child("email").getValue());
-//                    boolean staff = Boolean.valueOf(String.valueOf(ds.child("staff").getValue()));
+                    DataSnapshot eventsPurchasedSnapshot = ds.child("Events Purchased");
 
-                    allUsers.add(new User(fullName, email, phoneNumber));
+                    for(DataSnapshot dsEvent : eventsPurchasedSnapshot.getChildren()){
+                        String name = String.valueOf(dsEvent.child("name").getValue());
+                        String staff = String.valueOf(dsEvent.child("staff").getValue());
+                        String time = String.valueOf(dsEvent.child("time").getValue());
+                        String date = String.valueOf(dsEvent.child("date").getValue());
+                        String uid = String.valueOf(dsEvent.child("uid").getValue());
+                        Log.i("gycevent", name+staff+time+date+uid);
+                        eventsPurchasedList.add(new Event(name, date, time, staff, uid));
+                    }
+
+                    allUsers.add(new User(fullName, email, phoneNumber, eventsPurchasedList, productsPurchasedList));
                     Log.i("gycreport", fullName+" "+email+" "+phoneNumber+" "+ allUsers.size());
                 }
             }
@@ -109,6 +121,13 @@ public class Report extends AppCompatActivity {
             tViewEmail.setText("  "+u.email);
             TextView tViewPhone = newView.findViewById(R.id.phoneNumber);
             tViewPhone.setText("  "+u.PhoneNumber);
+
+            String eventDetail = null;
+            for(Event event : u.getEventsPurchased()){
+                eventDetail = eventDetail+event.getName()+" by "+event.getStaff()+", at "+event.getTime()+", "+event.getDate()+"\n";
+            }
+            TextView tViewEvents = newView.findViewById(R.id.event);
+            tViewEvents.setText("  "+eventDetail);
             //return it to be put in the table
             return newView;
         }
