@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".welcome.LoginActivity"
-    android:background="@color/white">
+    android:background="@drawable/gradient1">
 
     <RelativeLayout
         android:id="@+id/loginBox"
@@ -19,12 +19,15 @@
 
         <TextView
             android:id="@+id/loginTV"
-            android:layout_marginLeft="100dp"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            />
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/usernameET"
@@ -33,9 +36,12 @@
             android:layout_below="@id/loginTV"
             android:layout_centerHorizontal="true"
             android:hint="@string/email_hint"
-            android:textSize="20sp"
             android:inputType="textEmailAddress"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/passET"
@@ -44,9 +50,12 @@
             android:layout_below="@id/usernameET"
             android:layout_centerHorizontal="true"
             android:hint="@string/password"
-            android:textSize="20sp"
             android:inputType="textPassword"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="normal" />
 
         <Button
             android:text="@string/sign_in"
@@ -55,7 +64,11 @@
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_below="@id/passET"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"/>
 
         <TextView
             android:id="@+id/lostpassTV"
@@ -64,7 +77,10 @@
             android:layout_width="wrap_content"
             android:layout_below="@id/signButton"
             android:layout_centerHorizontal="true"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"/>
 
 
 />
@@ -77,5 +93,8 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/loginBox"
-        />
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="normal"/>
 </RelativeLayout>
