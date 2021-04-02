@@ -63,7 +63,7 @@ public class DetailsFragment extends Fragment {
         url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
         imageView = (ImageView)result.findViewById(R.id.FragmentImage);
         Log.i("gycimage", url);
-        if(url.equals("null")){
+        if(url.equals("null") || url.isEmpty()){
             imageView.setImageResource(R.drawable.studioxottawa3);
         }else{
             new ImageLoadTask(url, imageView).execute();

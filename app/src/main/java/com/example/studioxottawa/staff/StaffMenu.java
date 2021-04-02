@@ -11,7 +11,7 @@ import com.example.studioxottawa.R;
 
 public class StaffMenu extends AppCompatActivity {
 
-    Button addServiceButton, addEventButton, reportButton;
+    Button addServiceButton, addEventButton, reportButton, addNews;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ public class StaffMenu extends AppCompatActivity {
 
         addServiceButton = findViewById(R.id.addServiceButton);
         addEventButton = findViewById(R.id.addEventButton);
+        addNews = findViewById(R.id.addNews);
         reportButton = findViewById(R.id.reportButton);
 
         addServiceButton.setOnClickListener(click->{
@@ -30,6 +31,11 @@ public class StaffMenu extends AppCompatActivity {
         addEventButton.setOnClickListener(click->{
             Intent addEventActivity = new Intent(this, AddEvent.class);
             startActivity(addEventActivity);
+        });
+
+        addNews.setOnClickListener(click->{
+            Intent addNewsActivity = new Intent(this, AddNews.class);
+            startActivity(addNewsActivity);
         });
 
         reportButton.setOnClickListener(click->{

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class NewsActivity extends AppCompatActivity {
 
     private static ArrayList<News> allNews = new ArrayList<>();
+    public static long maxNewsID;
     private ListView myList;
     private MyListAdapter myAdapter;
 
@@ -55,10 +56,11 @@ public class NewsActivity extends AppCompatActivity {
         myList.setOnItemClickListener( (list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
-            dataToPass.putString(NEWS_TITLE, allNews.get(position).getTitle() );
-            dataToPass.putString(NEWS_DESCRIPTION, allNews.get(position).getDescription() );
-            dataToPass.putString(NEWS_LINK, allNews.get(position).getLink() );
-            dataToPass.putString(NEWS_DATE, allNews.get(position).getDate() );
+            int index = allNews.size()-position-1;
+            dataToPass.putString(NEWS_TITLE, allNews.get(index).getTitle() );
+            dataToPass.putString(NEWS_DESCRIPTION, allNews.get(index).getDescription() );
+            dataToPass.putString(NEWS_LINK, allNews.get(index).getLink() );
+            dataToPass.putString(NEWS_DATE, allNews.get(index).getDate() );
 
             dataToPass.putInt(NEWS_POSITION, position);
             dataToPass.putLong(NEWS_ID, id);
@@ -98,7 +100,7 @@ public class NewsActivity extends AppCompatActivity {
         // Connect with Firebase database
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
 
-        referenceEvents.addValueEventListener(new ValueEventListener() {
+        referenceEvents.orderByChild("id").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Retrieve each news from database and add to Arraylist
@@ -108,8 +110,14 @@ public class NewsActivity extends AppCompatActivity {
                     String description = String.valueOf(ds.child("description").getValue());
                     String link = String.valueOf(ds.child("link").getValue());
                     String date = String.valueOf(ds.child("date").getValue());
-
-                    allNews.add(new News(title, description, link, date));
+                    long id = 0;
+                    if(ds.child("id").getValue() != null){
+                        id = (Long)(ds.child("id").getValue());
+                    }
+                    maxNewsID = id;
+                    Log.i("newsID", "newsID is "+id+" maxID is "+maxNewsID);
+                    Log.i("link", "link is empty?"+(link.isEmpty()));
+                    allNews.add(new News(title, description, link, date, id));
                     Log.i("gycreport", title+" "+description+" "+link+" "+ allNews.size());
                 }
             }
@@ -138,7 +146,7 @@ public class NewsActivity extends AppCompatActivity {
          * @return the object to show at row position
          */
         public Object getItem(int position) {
-            return allNews.get(position);
+            return allNews.get(allNews.size()-position-1);
         }
 
         /**
@@ -159,6 +167,7 @@ public class NewsActivity extends AppCompatActivity {
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.row_layout_news, parent, false);
+//            News n = (News)getItem(position);
             News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
             tView.setText("  "+n.getTitle().replace("_b",""));
