@@ -26,7 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Studio X Ottawa News"
-            android:textSize="25sp"/>
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="normal"/>
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -38,23 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:columnCount="5"
-            android:rowCount="1">
-
-            <ProgressBar
-                android:id="@+id/bbcProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:visibility="invisible" />
-
-        </GridLayout>
-
     </LinearLayout>
 
     <Button
@@ -62,7 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_weight="0"
-        android:text="Go Back" />
+        android:text="Go Back"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="normal"/>
 
 
 </LinearLayout>

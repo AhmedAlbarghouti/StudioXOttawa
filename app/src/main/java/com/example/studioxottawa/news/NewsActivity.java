@@ -172,7 +172,7 @@ public class NewsActivity extends AppCompatActivity {
             TextView tView = newView.findViewById(R.id.newsTitle);
             tView.setText("  "+n.getTitle().replace("_b",""));
             TextView tViewDate = newView.findViewById(R.id.newsDate);
-            tViewDate.setText(n.getDate().replace("_b",""));
+            tViewDate.setText("  "+n.getDate().replace("_b",""));
             return newView;
         }
     }

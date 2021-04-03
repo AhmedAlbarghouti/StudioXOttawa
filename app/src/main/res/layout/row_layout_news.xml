@@ -12,31 +12,42 @@
         android:layout_gravity="fill">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/newsImage"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
             android:layout_row="0"
             android:layout_column="0"
-            android:src="@mipmap/studiox" />
+            android:src="@drawable/studioxottawa3" />
 
         <TextView
             android:id="@+id/newsDate"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_columnSpan="2"
             android:layout_gravity="left"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal"/>
 
         <TextView
             android:id="@+id/newsTitle"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_row="0"
             android:layout_column="3"
             android:layout_columnSpan="3"
             android:layout_gravity="left"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal"/>
 
     </GridLayout>
 
