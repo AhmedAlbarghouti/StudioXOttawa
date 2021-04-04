@@ -30,7 +30,6 @@
         <activity
             android:name=".services.ServicesActivity"
             android:label="@string/title_activity_services" />
-
         <activity android:name=".welcome.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
