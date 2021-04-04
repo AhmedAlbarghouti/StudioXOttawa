@@ -8,23 +8,21 @@
 
     <TextView
         android:id="@+id/add_Product_title"
-        android:text="Add Product"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        />
+        android:gravity="center"
+        android:text="@string/add_product"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/add_Product_title"
         android:id="@+id/new_product_name"
-        android:hint="Product Name"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        />
+        android:layout_below="@id/add_Product_title"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/product_name_hint" />
 
     <ImageView
         android:id="@+id/new_product_image"
@@ -39,21 +37,19 @@
 
 
     <EditText
-        android:layout_below="@id/new_product_image"
         android:id="@+id/new_product_price"
-        android:hint="Product Price"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        />
+        android:layout_below="@id/new_product_image"
+        android:gravity="center"
+        android:hint="@string/product_price_hint" />
 
     <Button
         android:id="@+id/AddProductBtn"
-        android:text="Add Product"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_price"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/StudioXPink"
-        />
+        android:text="@string/add_product" />
 </RelativeLayout>

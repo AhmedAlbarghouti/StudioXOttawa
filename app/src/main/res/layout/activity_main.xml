@@ -74,24 +74,22 @@
                 android:id="@+id/scheduleButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="Schedule"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/StudioXPink"
-                />
+                android:text="@string/schedule" />
 
             <Button
                 android:id="@+id/servicesButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_toRightOf="@id/scheduleButton"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="Services"
                 android:backgroundTint="@color/StudioXPink"
-                />
+                android:text="@string/services" />
         </LinearLayout>
 
 
@@ -103,30 +101,29 @@
         android:orientation="horizontal">
 
 
-        <Button
-            android:id="@+id/vodsButton"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Video On Demand"
-            android:backgroundTint="@color/StudioXPink"
+            <Button
+                android:id="@+id/vodsButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/StudioXPink"
+                android:text="@string/vod"
 
 
-            />
+                />
 
-        <Button
-            android:id="@+id/newsButton"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_toRightOf="@id/scheduleButton"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="News"
-            android:backgroundTint="@color/StudioXPink"
-            />
+            <Button
+                android:id="@+id/newsButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/scheduleButton"
+                android:layout_weight="1"
+                android:backgroundTint="@color/StudioXPink"
+                android:text="@string/news" />
 
         </LinearLayout>
 
@@ -142,11 +139,11 @@
             android:id="@+id/contactButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Contact Us"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/StudioXPink"
+            android:text="@string/contact"
 
 
             />
@@ -155,13 +152,12 @@
             android:id="@+id/aboutusButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/scheduleButton"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="About Us"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/aboutus" />
 
 
 
@@ -177,24 +173,23 @@
 
         <Button
             android:id="@+id/logoutButton"
-            android:text="Logout"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/logout" />
 
         <Button
             android:id="@+id/adminTasksButton"
-            android:text="Admin Tasks"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:backgroundTint="@color/StudioXPink"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/StudioXPink"
+            android:text="@string/admin"
             android:visibility="invisible"
 
             />

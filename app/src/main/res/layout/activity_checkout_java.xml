@@ -18,16 +18,17 @@
         android:src="@drawable/logo_studioxottawa"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"/>
+
     <TextView
+        android:id="@+id/summaryOfPurchase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/summaryOfPurchase"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_above="@id/ItemPurchView"
         android:layout_marginBottom="10dp"
-        android:text="Purchase Summary"/>
+        android:text="@string/purchaseSummary"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
@@ -36,13 +37,14 @@
         android:layout_marginLeft="20dp"
         android:layout_above="@id/payButton"
         android:layout_marginRight="20dp"/>
+
     <Button
-        android:text="Pay"
+        android:id="@+id/payButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/payButton"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:text="@string/pay" />
 
     <ListView
         android:layout_width="match_parent"
@@ -50,17 +52,18 @@
         android:layout_below="@id/CheckoutStudioXLogo"
         android:layout_above="@id/amountText"
         android:id="@+id/ItemPurchView"/>
+
     <TextView
+        android:id="@+id/labelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Amount: "
         android:layout_above="@id/cardInputWidget"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_centerInParent="true"
         android:layout_toStartOf="@id/symbol"
+        android:text="@string/amount"
         android:textColor="@color/black"
-        android:id="@+id/labelText"/>
+        android:textSize="16sp"
+        android:textStyle="bold" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

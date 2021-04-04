@@ -8,23 +8,24 @@
 
 
     <Button
-        android:text="cancel"
+        android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cancelButton"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/StudioXPink"
-        android:layout_alignParentBottom="true"/>
-    <Button
-        android:text="Place Order"
-        android:layout_width="100dp"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="@color/StudioXPink"
-        android:layout_height="wrap_content"
+        android:text="@string/cancel" />
 
+    <Button
         android:id="@+id/checkoutButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
         android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:backgroundTint="@color/StudioXPink"
+        android:text="@string/place_order" />
 
     <ListView
         android:layout_width="match_parent"
@@ -43,15 +44,16 @@
         android:src="@drawable/logo_studioxottawa"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"/>
+
     <TextView
+        android:id="@+id/labelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Price"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_above="@id/checkoutButton"
-        android:id="@+id/labelText"/>
+        android:text="@string/total_price"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

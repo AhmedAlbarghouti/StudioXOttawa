@@ -49,11 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_weight="0"
-        android:text="Go Back"
         android:fontFamily="sans-serif-light"
+        android:text="@string/back"
         android:textColor="@color/white"
         android:textSize="15sp"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 
 
 </LinearLayout>

@@ -51,24 +51,22 @@
             android:id="@+id/addServiceButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Add Service"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/add_service" />
 
         <Button
             android:id="@+id/addEventButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/scheduleButton"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Add Event"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/add_event" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,24 +80,22 @@
             android:id="@+id/addNews"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="ADD NEWS"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/add_news" />
 
 
         <Button
             android:id="@+id/reportButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Report"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/StudioXPink"
-            />
+            android:text="@string/report" />
 
 
 
