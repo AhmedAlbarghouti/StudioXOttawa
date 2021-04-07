@@ -103,6 +103,9 @@ public class NewsActivity extends AppCompatActivity {
         referenceEvents.orderByChild("id").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Refresh news contents
+                allNews = new ArrayList<>();
+
                 // Retrieve each news from database and add to Arraylist
                 for(DataSnapshot ds : snapshot.getChildren()){
 

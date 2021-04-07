@@ -28,9 +28,9 @@ public class Report extends AppCompatActivity {
 
     private MyListAdapter myAdapter;
     private ListView myList;
-    private ArrayList<User> allUsers = new ArrayList<User>();
-    private ArrayList<Event> eventsPurchasedList;
-    private ArrayList productsPurchasedList= new ArrayList();
+    private static ArrayList<User> allUsers = new ArrayList<User>();
+    private static ArrayList<Event> eventsPurchasedList;
+    private static ArrayList productsPurchasedList= new ArrayList();
     private TextView text;
 
     @Override
@@ -38,32 +38,38 @@ public class Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
 
-        loadUsers();
+        text = (TextView)findViewById(R.id.user_num);
+        text.setText("Total Users:  "+ allUsers.size());
 
+        Log.i("gycreport", "MyList Ready");
+        myList = findViewById(R.id.ListyView);
+        myList.setAdapter( myAdapter = new MyListAdapter());
+        myList.setOnItemClickListener( (parent, view, pos, id) -> {
+            myAdapter.notifyDataSetChanged();
+        }   );
 
-        Button reportButton = (Button)findViewById(R.id.load_report);
-        reportButton.setOnClickListener( new View.OnClickListener()
-        {  public void onClick(View v){
-
-            text = (TextView)findViewById(R.id.user_num);
-            text.setText("Total Users:  "+ allUsers.size());
-
-            Log.i("gycreport", "MyList Ready");
-            myList = findViewById(R.id.ListyView);
-            myList.setAdapter( myAdapter = new MyListAdapter());
-            myList.setOnItemClickListener( (parent, view, pos, id) -> {
-
-                myAdapter.notifyDataSetChanged();
-            }   );
-
-        } });
+//        Button reportButton = (Button)findViewById(R.id.load_report);
+//        reportButton.setOnClickListener( new View.OnClickListener()
+//        {  public void onClick(View v){
+//
+//            text = (TextView)findViewById(R.id.user_num);
+//            text.setText("Total Users:  "+ allUsers.size());
+//
+//            Log.i("gycreport", "MyList Ready");
+//            myList = findViewById(R.id.ListyView);
+//            myList.setAdapter( myAdapter = new MyListAdapter());
+//            myList.setOnItemClickListener( (parent, view, pos, id) -> {
+//                myAdapter.notifyDataSetChanged();
+//            }   );
+//
+//        } });
 
     }
 
     /**
      * Used to load users from Firebase database
      */
-    private void loadUsers() {
+    public static void loadUsers() {
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Users");
 
         referenceEvents.addValueEventListener(new ValueEventListener() {

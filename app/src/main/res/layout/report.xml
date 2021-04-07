@@ -4,51 +4,81 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:id="@+id/fragmentLocation">
+    android:id="@+id/fragmentLocation"
+    android:background="@drawable/gradient1">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="Client Weekly Report"
         android:id="@+id/title"
         android:textAlignment="center"
-        android:textSize="30dp"/>
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Attendance Percentage:88%"/>
+        android:text="Attendance Percentage:88%"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Hours:47.5"/>
+        android:text="Total Hours:47.5"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Video Replays:20"/>
+        android:text="Video Replays:20"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Earnings: 1500$"/>
-
-    <Button
-        android:id="@+id/load_report"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:textSize="8dp"
-        android:text="Load Report" />
+        android:text="Earnings: 1500$"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:id="@+id/user_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/ListyView"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
 </LinearLayout>

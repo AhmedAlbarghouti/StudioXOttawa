@@ -31,6 +31,7 @@ import com.example.studioxottawa.notification.notifActivity;
 import com.example.studioxottawa.schedule.Schedule;
 
 
+import com.example.studioxottawa.staff.Report;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
                     adminTasksButton.setVisibility(View.VISIBLE);
+                    Report.loadUsers();
                 }
             }
 
