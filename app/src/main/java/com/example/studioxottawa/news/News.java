@@ -4,11 +4,10 @@ public class News {
 
     private String title;
     private String description;
-//    private String author;
     private String link;
     private String date;
-//    private String category;
-//    private String comment;
+    private long id;
+
 
     /**
      * @param title - title of the news
@@ -17,11 +16,32 @@ public class News {
      * @param date - Date of the news
      */
     public News(String title, String description, String link, String date){
+        this(title, description, link, date, 0);
+    }
+
+    public News(String title, String description, String link, String date, long id){
         this.setTitle(title);
         this.setDescription(description);
         this.setLink(link);
         this.setDate(date);
+        this.setId(id);
     }
+
+
+    /**
+     * @param id - the Id of the news
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the Id of the news
+     */
+    public long getId() {
+        return id;
+    }
+
 
     /**
      * @param s - the title string of the news

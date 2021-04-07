@@ -135,3 +135,5 @@ public class DetailsFragment extends Fragment {
     }
 
 }
+
+

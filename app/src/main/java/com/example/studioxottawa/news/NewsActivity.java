@@ -1,12 +1,6 @@
 package com.example.studioxottawa.news;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.studioxottawa.R;
-import com.example.studioxottawa.welcome.MainActivity;
-
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,25 +9,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studioxottawa.R;
+import com.example.studioxottawa.welcome.MainActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class NewsActivity extends AppCompatActivity {
 
-
-    private ArrayList<News> elements = new ArrayList<>();
+    private static ArrayList<News> allNews = new ArrayList<>();
+    public static long maxNewsID;
     private ListView myList;
     private MyListAdapter myAdapter;
-
-    private ProgressBar progressBar;
-    private String title;
-    private String description;
-    private String link;
-    private String date;
-    SQLiteDatabase db;
 
     public static final String NEWS_TITLE = "TITLE";
     public static final String NEWS_DESCRIPTION = "DESCRIPTION";
@@ -44,9 +40,6 @@ public class NewsActivity extends AppCompatActivity {
     DetailsFragment dFragment;
     private static final String TAG = "GetData";
 
-    //Initially load 2 pages
-    private int pageCount = 2;
-
     /**
      * @param savedInstanceState - the Bundle object that is passed into the onCreate method
      */
@@ -55,32 +48,19 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-//        Thread thread = new TestThread();
-//        thread.start();
-//        try {
-//            thread.join();
-//        }
-//        catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        elements.addAll(MainActivity.elements);
-
-        progressBar = (ProgressBar) findViewById(R.id.bbcProgressBar);
-        progressBar.setVisibility(View.VISIBLE);
-
-        //Create list view
-        myList = findViewById(R.id.newsListView);
-        myList.setAdapter(myAdapter = new MyListAdapter());
         boolean isTablet = findViewById(R.id.frameLayout) != null;
 
-        //create the fragment of news
-        myList.setOnItemClickListener((list, item, position, id) -> {
+        Log.i("gycreport", "MyList Ready");
+        myList = findViewById(R.id.newsListView);
+        myList.setAdapter( myAdapter = new MyListAdapter());
+        myList.setOnItemClickListener( (list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
-            dataToPass.putString(NEWS_TITLE, elements.get(position).getTitle() );
-            dataToPass.putString(NEWS_DESCRIPTION, elements.get(position).getDescription() );
-            dataToPass.putString(NEWS_LINK, elements.get(position).getLink() );
-            dataToPass.putString(NEWS_DATE, elements.get(position).getDate() );
+            int index = allNews.size()-position-1;
+            dataToPass.putString(NEWS_TITLE, allNews.get(index).getTitle() );
+            dataToPass.putString(NEWS_DESCRIPTION, allNews.get(index).getDescription() );
+            dataToPass.putString(NEWS_LINK, allNews.get(index).getLink() );
+            dataToPass.putString(NEWS_DATE, allNews.get(index).getDate() );
 
             dataToPass.putInt(NEWS_POSITION, position);
             dataToPass.putLong(NEWS_ID, id);
@@ -100,27 +80,13 @@ public class NewsActivity extends AppCompatActivity {
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
-        });
+
+            myAdapter.notifyDataSetChanged();
+        }   );
 
         Button returnButton = (Button)findViewById(R.id.goBack);
         returnButton.setOnClickListener( new View.OnClickListener()
         {  public void onClick(View v){
-//            if(pageCount<=15){
-//                pageCount +=1;
-//                Thread thread = new LoadMore();
-//                thread.start();
-//                try {
-//                    thread.join();
-//                }
-//                catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                //refresh listview
-//                myList = findViewById(R.id.newsListView);
-//                myList.setAdapter(myAdapter = new MyListAdapter());
-//            }else{
-//                Toast.makeText(NewsActivity.this, "No more", Toast.LENGTH_LONG ).show();
-//            }
             Intent nextActivity = new Intent(NewsActivity.this, MainActivity.class);
             startActivity(nextActivity);
         } });
@@ -128,28 +94,41 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     /**
-     * inner class that deals with thread synchronization
+     * Used to load news from Firebase database
      */
-    private class TestThread extends Thread{
+    public static void loadNews() {
+        // Connect with Firebase database
+        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
 
-        public void run(){
-            String html;
-            for(int i=1; i<pageCount+1; i++){
-                String url = "https://www.studioxottawa.com/news/page/"+i+"/";
-                html = OkHttpUtils.OkGetArt(url);
-                elements.addAll(GetData.spiderArticle(html));
+        referenceEvents.orderByChild("id").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Refresh news contents
+                allNews = new ArrayList<>();
+
+                // Retrieve each news from database and add to Arraylist
+                for(DataSnapshot ds : snapshot.getChildren()){
+
+                    String title = String.valueOf(ds.child("title").getValue());
+                    String description = String.valueOf(ds.child("description").getValue());
+                    String link = String.valueOf(ds.child("link").getValue());
+                    String date = String.valueOf(ds.child("date").getValue());
+                    long id = 0;
+                    if(ds.child("id").getValue() != null){
+                        id = (Long)(ds.child("id").getValue());
+                    }
+                    maxNewsID = id;
+                    Log.i("newsID", "newsID is "+id+" maxID is "+maxNewsID);
+                    Log.i("link", "link is empty?"+(link.isEmpty()));
+                    allNews.add(new News(title, description, link, date, id));
+                    Log.i("gycreport", title+" "+description+" "+link+" "+ allNews.size());
+                }
             }
-        }
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
-    private class LoadMore extends Thread{
-
-        public void run(){
-            String html;
-                String url = "https://www.studioxottawa.com/news/page/"+pageCount+"/";
-                html = OkHttpUtils.OkGetArt(url);
-                elements.addAll(GetData.spiderArticle(html));
-        }
     }
 
 
@@ -162,7 +141,7 @@ public class NewsActivity extends AppCompatActivity {
          * @return the number of items
          */
         public int getCount() {
-            return elements.size();
+            return allNews.size();
         }
 
         /**
@@ -170,7 +149,7 @@ public class NewsActivity extends AppCompatActivity {
          * @return the object to show at row position
          */
         public Object getItem(int position) {
-            return elements.get(position);
+            return allNews.get(allNews.size()-position-1);
         }
 
         /**
@@ -191,13 +170,13 @@ public class NewsActivity extends AppCompatActivity {
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.row_layout_news, parent, false);
+//            News n = (News)getItem(position);
             News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
-            tView.setText("  "+n.getTitle());
+            tView.setText("  "+n.getTitle().replace("_b",""));
             TextView tViewDate = newView.findViewById(R.id.newsDate);
-            tViewDate.setText(n.getDate());
+            tViewDate.setText("  "+n.getDate().replace("_b",""));
             return newView;
         }
     }
 }
-
