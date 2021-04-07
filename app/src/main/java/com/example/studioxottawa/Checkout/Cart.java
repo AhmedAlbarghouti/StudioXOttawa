@@ -35,14 +35,14 @@ import java.util.ArrayList;
 
 public class Cart extends AppCompatActivity {
 
-    private ArrayList<Product> products= new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
     private ArrayList<String> forPay;
     private NumberFormat formatter = new DecimalFormat("#0.00");
-    private double price=0;
-    private  CartAdapter myAdapter;
+    private double price = 0;
+    private CartAdapter myAdapter;
     private TextView priceTv;
-    ArrayList<String> product;
-    private Boolean isEvent =false;
+    private ArrayList<String> product;
+    private Boolean isEvent = false;
     private String eventKey;
     private String eventName;
     private Event event;
@@ -57,12 +57,12 @@ public class Cart extends AppCompatActivity {
 
 
         i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
-        forPay=new ArrayList<String>();
-        product= getIntent().getExtras().getStringArrayList("List");
-        eventKey =getIntent().getExtras().getString("UID");
-        isEvent =getIntent().getExtras().getBoolean("isService");
-        Button cancel= (Button) findViewById(R.id.cancelButton);
-        cancel.setOnClickListener(e->{
+        forPay = new ArrayList<String>();
+        product = getIntent().getExtras().getStringArrayList("List");
+        eventKey = getIntent().getExtras().getString("UID");
+        isEvent = getIntent().getExtras().getBoolean("isService");
+        Button cancel = (Button) findViewById(R.id.cancelButton);
+        cancel.setOnClickListener(e -> {
             finish();
         });
 
@@ -70,33 +70,50 @@ public class Cart extends AppCompatActivity {
         Log.e("service", isEvent.toString());
 
 
-        if(isEvent){ loadEvent();}else{ loadProducts();}
+        if (isEvent) {
+            loadEvent();
+        } else {
+            loadProducts();
+        }
 
 
-        priceTv= findViewById(R.id.amountText);
+        priceTv = findViewById(R.id.amountText);
 
 
-        myList= findViewById(R.id.ItemPurchView);
-        myList.setAdapter(myAdapter=new CartAdapter(this));
+        myList = findViewById(R.id.ItemPurchView);
+        myList.setAdapter(myAdapter = new CartAdapter(this));
         myList.setOnItemLongClickListener((parent, view, position, id) -> {
             products.remove(position);
             myAdapter.notifyDataSetChanged();
             return true;
         });
 
-        Button placeOrder= findViewById(R.id.checkoutButton);
-        placeOrder.setOnClickListener(btn->{
-            Intent pay = new Intent(this,CheckoutActivityJava.class);
-            pay.putExtra("isService",isEvent);
-            pay.putExtra("EventObj",event);
-            pay.putExtra("EventTitle",eventName);
+        Button placeOrder = findViewById(R.id.checkoutButton);
+        placeOrder.setOnClickListener(btn -> {
+            Intent pay = new Intent(this, CheckoutActivityJava.class);
+            pay.putExtra("isService", isEvent);
+            pay.putExtra("EventObj", event);
+            pay.putExtra("EventTitle", eventName);
             pay.putExtra("EventId", eventKey);
-            pay.putExtra("Total Price",price);
-            pay.putStringArrayListExtra("forPay",forPay);
-            startActivity(pay);
+            pay.putExtra("Total Price", price);
+            pay.putStringArrayListExtra("forPay", forPay);
+            startActivityForResult(pay, 1);
         });
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1000) {
+            forPay.clear();
+            products.clear();
+            myAdapter.notifyDataSetChanged();
+            setResult(1000);
+            finish();
+        }
+
+}
     public void loadEvent() {
 
 
@@ -153,7 +170,9 @@ public class Cart extends AppCompatActivity {
 
                 }
             });
+
         }
+
     }
 
     public Bitmap StringToBitMap(String encodedString){
@@ -250,6 +269,7 @@ public class Cart extends AppCompatActivity {
                     products.remove(product); //new
                     forPay.remove(product.getItem());//new
                     if(products.size()==0){
+                        setResult(1000);
                         finish();
                     }
                 }

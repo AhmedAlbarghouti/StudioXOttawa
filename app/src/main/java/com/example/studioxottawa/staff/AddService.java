@@ -39,11 +39,14 @@ public class AddService extends AppCompatActivity {
         add_product=(Button)findViewById(R.id.AddProductBtn);
         imageBitmap=BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
 
+        productImage.setOnClickListener(btn->{
+            openGallery();
+        });
 
         add_product.setOnClickListener(btn->{
             createProduct();
-            Toast.makeText(this,"Product Successfully Added",Toast.LENGTH_SHORT).show();
-            finish();
+//            Toast.makeText(this,"Product Successfully Added",Toast.LENGTH_SHORT).show();
+
         });
     }
 
@@ -58,27 +61,34 @@ public class AddService extends AppCompatActivity {
         String item= productName.getText().toString();
         String price= productPrice.getText().toString();
 
+        if(!item.isEmpty()  && !(price.contains("[a-zA-Z]+") )&& !(price.isEmpty())) {
 
-        Product newProduct= new Product(item,Double.parseDouble(price),0);
+            Product newProduct = new Product(item, Double.parseDouble(price), 0);
 
 
-        DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Products");
-        eventsReference.child(newProduct.getItem()).setValue(newProduct);
+            DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Products");
+            eventsReference.child(newProduct.getItem()).setValue(newProduct);
+            Toast.makeText(this,"Product Successfully Added!",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+
+            Toast.makeText(this,"Invalid Entries",Toast.LENGTH_SHORT).show();
+        }
     }
-//    private void openGallery() {
-//        Intent intent= new Intent();
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//        startActivityForResult(intent,GO_TO_GALLERY);
-//    }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if(requestCode==GO_TO_GALLERY && resultCode==RESULT_OK && data !=null){
-//            Bitmap image= (Bitmap) data.getExtras().get("data");
-//            productImage.setImageBitmap(image);
-//            imageBitmap=image;
-//        }
-//    }
+    private void openGallery() {
+        Intent intent= new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent,GO_TO_GALLERY);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==GO_TO_GALLERY && resultCode==RESULT_OK && data !=null){
+            Bitmap image= (Bitmap) data.getExtras().get("data");
+            productImage.setImageBitmap(image);
+            imageBitmap=image;
+        }
+    }
 }

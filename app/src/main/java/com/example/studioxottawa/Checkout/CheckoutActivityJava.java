@@ -130,6 +130,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 }
             });
         }
+        adapter.notifyDataSetChanged();
     }
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
@@ -166,14 +167,6 @@ public class CheckoutActivityJava extends AppCompatActivity {
             if (params != null) {
                 ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);
                 stripe.confirmPayment(this, confirmParams);
-
-
-//                                                   FIX WHAT'S IN THE BOX. ITS THROWING A NULL EXCEPTION. Do more research
-//                                                   -----------------------------------------------------------------------
-//               -----------------------------------------------------------------------------------------------------------------------------------------------------------|
-//              |  ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);            |
-//              |  stripe.confirmPayment(this, confirmParams);                                                                                                              |
-//              | -----------------------------------------------------------------------------------------------------------------------------------------------------------
             }
         });
     }
@@ -267,7 +260,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
                     eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
                     Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
-                    startActivity(schedule);
+                    setResult(1000);
+                    finish();
                 }else if(!isEvent){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -276,7 +270,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
                     Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
-                    startActivity(schedule);
+                    setResult(1000);
+                    finish();
                 }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method

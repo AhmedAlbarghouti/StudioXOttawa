@@ -1,8 +1,10 @@
 package com.example.studioxottawa.services;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -51,28 +54,24 @@ public class ServicesActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private NumberFormat formatter = new DecimalFormat("#0.00");
     private Bitmap i1;
-
+    private SharedPreferences prefs=null;
     private ArrayList<Product> productList = new ArrayList<>();
     private ArrayList<String> stringList=new ArrayList<>();
-   private ListView servicesView;
+    private ListView servicesView;
     private ImageButton goToCart;
-
-
-//    private ArrayList<Product> productList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
-//        final DatabaseReference rootRef;
+
 
         loadServices();
-//        thumbnailView = (ImageView) view.findViewById(R.id.serviceImage);
-//        itemView = (TextView) view.findViewById(R.id.serviceTitle);
-//        priceView = (TextView) view.findViewById(R.id.servicePrice);
+        loadCart();
+
         goToCart=findViewById(R.id.cartButton);
         goToCart.setOnClickListener(btn->{
-            if(productList.isEmpty()) {
+            if(productList.isEmpty() && stringList.isEmpty()) {
                 Toast.makeText(ServicesActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
             }else {
 
@@ -83,7 +82,7 @@ public class ServicesActivity extends AppCompatActivity {
             }
         });
 
-
+        updateCartIcon();
 
         builder = new AlertDialog.Builder(this);
         servicesView = findViewById(R.id.serviceContainer);
@@ -93,6 +92,7 @@ public class ServicesActivity extends AppCompatActivity {
 
                builder.setTitle("Add "+productList.get(position).getItem()+" to Cart?");
                builder.setPositiveButton("Add",(dialogInterface, i) -> {
+                   saveSharedPrefs(productList.get(position).getItem()+"::");
                    stringList.add(productList.get(position).getItem());
                    updateCartIcon();
                });
@@ -102,56 +102,52 @@ public class ServicesActivity extends AppCompatActivity {
 
            });
 
-
-//                 myList = findViewById(R.id.ListyView);
-//            myList.setAdapter( myAdapter = new MyListAdapter());
-//            myList.setOnItemClickListener( (parent, view, pos, id) -> {
-//
-//                myAdapter.notifyDataSetChanged();
-//            }   );
-//
-//        } });
-
-
-
-
-
-
           i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
 
-//
-//        Product p1 = new Product( "T-Shirt", 42.50);
-//        Product p2 = new Product("Towel", 10.00);
-//        Product p3 = new Product("Bottled Water", 3.50);
-//        Product p4 = new Product("Dance Shoes", 80.00);
-
-//        productList.add(p1);
-//        productList.add(p2);
-//        productList.add(p3);
-//        productList.add(p4);
-
-//        rootRef=FirebaseDatabase.getInstance().getReference().child("Products");
-//                for (Product p : productList) {
-//
-////                        rootRef.child("Products").child(p.getItem()).setValue(p);
-//
-//
-//
-//                }
-//            }
 
 
     }
 
-
+    private void loadCart(){
+        prefs= getSharedPreferences("Cart",Context.MODE_PRIVATE);
+        String items= prefs.getString("Items","");
+        if(!items.isEmpty()) {
+            String[] savedItems=items.split("::");
+            for(String product: savedItems){
+                stringList.add(product);
+            }
+        }
+    }
+    private void deleteSharedPrefs() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear().apply();
+    }
+    private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("Items", stringToSave);
+        editor.commit();
+    }
     public void updateCartIcon(){
-        if(!productList.isEmpty()){
+        if(!productList.isEmpty() || !stringList.isEmpty()){
             goToCart.setImageResource(R.drawable.shopping_cart_with_item);
         }else{
             goToCart.setImageResource(R.drawable.shopping_cart_empty);
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(resultCode==1000) {
+            productList.clear();
+            stringList.clear();
+            deleteSharedPrefs();
+            loadServices();
+            updateCartIcon();
+
+                 }
+
+        }
 
     public void loadServices(){
         DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
