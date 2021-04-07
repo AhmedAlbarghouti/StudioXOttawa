@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button contactBtn=findViewById(R.id.contactButton);
-        Button logoutBtn=findViewById(R.id.logoutButton);
-        adminTasksButton =findViewById(R.id.adminTasksButton);
+
 
 
 
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 User signInUser = snapshot.getValue(User.class);
                 String username = signInUser.fullName;
 //                userTV.setText(username);
-                loadnotifActivity(username);
+//                loadnotifActivity(username);
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
                     adminTasksButton.setVisibility(View.VISIBLE);
@@ -97,96 +95,6 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        Button contactbtn=findViewById(R.id.contactButton);
-        contactbtn.setOnClickListener(click -> {
-                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
-                    startActivity(contact);
-
-        });
-
-
-        adminTasksButton.setOnClickListener(click -> {
-            Intent adminTasks = new Intent(this, com.example.studioxottawa.staff.StaffMenu.class);
-            startActivity(adminTasks);
-        });
-        contactBtn.setOnClickListener(btn-> {
-                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
-                    startActivity(contact);
-
-
-        });
-
-
-
-
-
-        logoutBtn.setOnClickListener(click->{
-            DBHelper mydb;
-            mydb = new DBHelper(this);
-            SQLiteDatabase db = mydb.getWritableDatabase();
-            db.execSQL("delete from notiftab2");
-            db.close();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        });
-
-
-
-        Button loginBtn2 = (Button)findViewById(R.id.newsButton);
-        loginBtn2.setOnClickListener(click -> {
-            Intent goToProfile = new Intent(MainActivity.this, NewsActivity.class);
-            startActivity(goToProfile);
-        });
-
-
-        Button loginBtn3 = (Button)findViewById(R.id.aboutusButton);
-        loginBtn3.setOnClickListener(click -> {
-            Intent goToProfile = new Intent(MainActivity.this, AboutusActivity.class);
-            startActivity(goToProfile);
-        });
-
-
-
-
-        Button schedulebtn = findViewById(R.id.scheduleButton);
-        schedulebtn.setOnClickListener(click -> {
-            Intent schedule = new Intent(this, Schedule.class);
-            startActivity(schedule);
-        });
-
-
-        Button vodButton = findViewById(R.id.vodsButton);
-        vodButton.setOnClickListener(v-> {
-            loadVodLibrary();
-        });
-
-        Button serviceButton = findViewById(R.id.servicesButton);
-        serviceButton.setOnClickListener(v-> {
-            loadServices();
-        });
-
-        //xiaoxi {
-
-        // get the reference of Button's
-        Button aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
-
-        aboutusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //loads aboutus activity by calling local method
-                loadAboutusActivity();
-            }
-
-        });  //xiaoxi }
-
-//        notifBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //load aboutus activity by calling local method
-//                loadnotifActivity();
-//            }
-//        });  //xiaoxi }
 
 
     }

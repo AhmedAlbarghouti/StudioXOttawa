@@ -9,15 +9,16 @@
         app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
 
 
-<!--    <item android:id="@+id/search_item"-->
-<!--        android:orderInCategory="50"-->
-<!--        app:actionViewClass="android.widget.SearchView"-->
-<!--        android:icon="@android:drawable/ic_search_category_default"-->
-<!--        app:showAsAction="always|collapseActionView"-->
-<!--        android:title="@string/search"/>    &lt;!&ndash; This uses showAsAction=always, so look at icon= parameter &ndash;&gt;-->
+    <!--    <item android:id="@+id/search_item"-->
+    <!--        android:orderInCategory="50"-->
+    <!--        app:actionViewClass="android.widget.SearchView"-->
+    <!--        android:icon="@android:drawable/ic_search_category_default"-->
+    <!--        app:showAsAction="always|collapseActionView"-->
+    <!--        android:title="@string/search"/>    &lt;!&ndash; This uses showAsAction=always, so look at icon= parameter &ndash;&gt;-->
 
 
-    <item android:id="@+id/contact_nav_latin_dance"
+    <item
+        android:id="@+id/contact_nav_latin_dance"
         android:title="Services"
         app:showAsAction="always"
         android:orderInCategory="2"/> <!-- This uses showAsAction=never, so look at title= parameter -->

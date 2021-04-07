@@ -1,17 +1,26 @@
 package com.example.studioxottawa.news;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.studioxottawa.R;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -27,7 +36,8 @@ public class DetailsFragment extends Fragment {
     private Bundle dataFromActivity;
     private long id;
     private AppCompatActivity parentActivity;
-    private String getText;
+    private String url;
+    private ImageView imageView;
 
     /**
      * @param inflater - instantiates layout XML file into its corresponding view object
@@ -44,29 +54,23 @@ public class DetailsFragment extends Fragment {
 
         View result =  inflater.inflate(R.layout.fragment_details_news, container, false);
 
-        Thread thread = new TestThread();
-        thread.start();
-        try {
-            thread.join();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        TextView text = (TextView)result.findViewById(R.id.FragmentText);
-        text.setText(getText);
-
         TextView title = (TextView)result.findViewById(R.id.FragmentTitle);
-        title.setText("TITLE: " +dataFromActivity.getString(NewsActivity.NEWS_TITLE));
+        title.setText(dataFromActivity.getString(NewsActivity.NEWS_TITLE).replace("_b","\n"));
 
         TextView description = (TextView)result.findViewById(R.id.FragmentDescription);
-        description.setText("DESCRIPTION: " +dataFromActivity.getString(NewsActivity.NEWS_DESCRIPTION));
+        description.setText(dataFromActivity.getString(NewsActivity.NEWS_DESCRIPTION).replace("_b","\n"));
 
-        TextView link = (TextView)result.findViewById(R.id.FragmentLink);
-        link.setText("LINK: " +dataFromActivity.getString(NewsActivity.NEWS_LINK));
+        url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
+        imageView = (ImageView)result.findViewById(R.id.FragmentImage);
+        Log.i("gycimage", url);
+        if(url.equals("null") || url.isEmpty()){
+            imageView.setImageResource(R.drawable.studioxottawa3);
+        }else{
+            new ImageLoadTask(url, imageView).execute();
+        }
 
         TextView date = (TextView)result.findViewById(R.id.FragmentDate);
-        date.setText("DATE: " +dataFromActivity.getString(NewsActivity.NEWS_DATE));
+        date.setText(dataFromActivity.getString(NewsActivity.NEWS_DATE).replace("_b","\n"));
 
         Button hideButton = (Button)result.findViewById(R.id.hideButton);
         hideButton.setOnClickListener( clk -> {
@@ -79,21 +83,6 @@ public class DetailsFragment extends Fragment {
         return result;
     }
 
-    /**
-     * inner class that deals with thread synchronization
-     */
-    private class TestThread extends Thread{
-
-        public void run(){
-            String html;
-
-            String url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
-            html = OkHttpUtils.OkGetArt(url);
-
-            getText = GetText.spiderArticle(html);
-
-        }
-    }
 
     /**
      * callback function, called when the fragment is added to the Activity
@@ -105,4 +94,44 @@ public class DetailsFragment extends Fragment {
 
         parentActivity = (AppCompatActivity)context;
     }
+
+    /**
+     * Inner class used to load images from website
+     */
+    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+
+        private String url;
+        private ImageView imageView;
+
+        public ImageLoadTask(String url, ImageView imageView) {
+            this.url = url;
+            this.imageView = imageView;
+        }
+
+        // Load the image in background
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+                URL urlConnection = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) urlConnection
+                        .openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            imageView.setImageBitmap(result);
+        }
+
+    }
+
 }
