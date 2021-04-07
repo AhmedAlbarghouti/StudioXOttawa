@@ -37,7 +37,7 @@ public class Cart extends AppCompatActivity {
 
     private ArrayList<Product> products = new ArrayList<>();
     private ArrayList<String> forPay;
-    private NumberFormat formatter = new DecimalFormat("#0.00");
+    private final NumberFormat formatter = new DecimalFormat("#0.00");
     private double price = 0;
     private CartAdapter myAdapter;
     private TextView priceTv;
@@ -65,10 +65,6 @@ public class Cart extends AppCompatActivity {
         cancel.setOnClickListener(e -> {
             finish();
         });
-
-//        Log.e("Product",product.toString());
-        Log.e("service", isEvent.toString());
-
 
         if (isEvent) {
             loadEvent();

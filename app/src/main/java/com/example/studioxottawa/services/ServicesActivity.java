@@ -45,6 +45,7 @@ import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class ServicesActivity extends AppCompatActivity {
 
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
-    private NumberFormat formatter = new DecimalFormat("#0.00");
+    private final NumberFormat formatter = new DecimalFormat("#0.00");
     private Bitmap i1;
     private SharedPreferences prefs=null;
     private ArrayList<Product> productList = new ArrayList<>();
@@ -65,13 +66,20 @@ public class ServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
+        builder = new AlertDialog.Builder(this);
+        servicesView = findViewById(R.id.serviceContainer);
+        servicesView.setAdapter(adapter = new MyListAdapter());
+        goToCart=findViewById(R.id.cartButton);
+        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
 
         loadServices();
         loadCart();
 
-        goToCart=findViewById(R.id.cartButton);
+
+        Log.e("PRODUCT LIST SIZE", productList.size()+"");
+        Log.e("STRING LIST SIZE", stringList.size()+"");
         goToCart.setOnClickListener(btn->{
-            if(productList.isEmpty() && stringList.isEmpty()) {
+            if(stringList.size()==0) {
                 Toast.makeText(ServicesActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
             }else {
 
@@ -84,28 +92,20 @@ public class ServicesActivity extends AppCompatActivity {
 
         updateCartIcon();
 
-        builder = new AlertDialog.Builder(this);
-        servicesView = findViewById(R.id.serviceContainer);
-        servicesView.setAdapter(adapter = new MyListAdapter());
+
 
            servicesView.setOnItemClickListener((parent, view, position, id) -> {
-
                builder.setTitle("Add "+productList.get(position).getItem()+" to Cart?");
+
                builder.setPositiveButton("Add",(dialogInterface, i) -> {
+
                    saveSharedPrefs(productList.get(position).getItem()+"::");
                    stringList.add(productList.get(position).getItem());
                    updateCartIcon();
                });
                builder.setNegativeButton("Cancel",(dialogInterface, i) -> dialogInterface.cancel()).create().show();
-
                adapter.notifyDataSetChanged();
-
            });
-
-          i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
-
-
-
     }
 
     private void loadCart(){
@@ -113,9 +113,7 @@ public class ServicesActivity extends AppCompatActivity {
         String items= prefs.getString("Items","");
         if(!items.isEmpty()) {
             String[] savedItems=items.split("::");
-            for(String product: savedItems){
-                stringList.add(product);
-            }
+            stringList.addAll(Arrays.asList(savedItems));
         }
     }
     private void deleteSharedPrefs() {
@@ -125,7 +123,7 @@ public class ServicesActivity extends AppCompatActivity {
     private void saveSharedPrefs(String stringToSave) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Items", stringToSave);
-        editor.commit();
+        editor.apply();
     }
     public void updateCartIcon(){
         if(!productList.isEmpty() || !stringList.isEmpty()){
@@ -185,15 +183,14 @@ public class ServicesActivity extends AppCompatActivity {
         }
 
         public View getView(int position, View old, ViewGroup parent) {
-            Log.i("gycreport", " getview ");
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.service_layout, parent, false);
-            Product u = getItem(position);
+            Product product = getItem(position);
             TextView item = newView.findViewById(R.id.serviceTitle);
-            item.setText("  "+u.getItem());
+            item.setText(String.valueOf(product.getItem()));
             TextView price = newView.findViewById(R.id.servicePrice);
-            price.setText("  "+formatter.format(u.getPrice()));
+            price.setText(String.valueOf(formatter.format(product.getPrice())));
             ImageView thumbnail = newView.findViewById(R.id.serviceImage);
             thumbnail.setImageBitmap(i1);
             //return it to be put in the table
