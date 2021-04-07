@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:text="Client Weekly Report"
         android:id="@+id/title"
         android:textAlignment="center"
@@ -23,6 +23,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Attendance Percentage:88%"
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
@@ -58,6 +59,18 @@
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:textSize="14sp"
+        android:textStyle="normal"/>
+
+    <TextView
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Client Information: "
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="normal"/>
 
     <TextView
