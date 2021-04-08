@@ -90,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
+                }if (item.getItemId()==R.id.nav_store){
+                    selectedFragment= new ServicesActivity();
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
                 return true;
             }
+
         };
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 

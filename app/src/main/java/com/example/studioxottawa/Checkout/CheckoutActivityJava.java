@@ -260,7 +260,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
                     eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
-                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+
                     setResult(1000);
                     finish();
                 }else if(!isEvent){
@@ -270,7 +270,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     for(Product p: products) {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
-                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+
                     setResult(1000);
                     finish();
                 }

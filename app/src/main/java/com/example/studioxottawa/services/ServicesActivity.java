@@ -18,8 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class ServicesActivity extends AppCompatActivity {
+public class ServicesActivity extends Fragment {
 
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
@@ -45,55 +48,57 @@ public class ServicesActivity extends AppCompatActivity {
     private ListView servicesView;
     private ImageButton goToCart;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_services, container, false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_services);
+//        setContentView(R.layout.activity_services);
 
-        builder = new AlertDialog.Builder(this);
-        servicesView = findViewById(R.id.serviceContainer);
+        builder = new AlertDialog.Builder(root.getContext());
+        servicesView = root.findViewById(R.id.serviceContainer);
         servicesView.setAdapter(adapter = new MyListAdapter());
-        goToCart=findViewById(R.id.cartButton);
-        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+        goToCart = root.findViewById(R.id.cartButton);
+        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo_studioxottawa);
 
         loadServices();
         loadCart();
 
 
-        Log.e("PRODUCT LIST SIZE", productList.size()+"");
-        Log.e("STRING LIST SIZE", stringList.size()+"");
-        goToCart.setOnClickListener(btn->{
-            if(stringList.size()==0) {
-                Toast.makeText(ServicesActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
-            }else {
+        Log.e("PRODUCT LIST SIZE", productList.size() + "");
+        Log.e("STRING LIST SIZE", stringList.size() + "");
+        goToCart.setOnClickListener(btn -> {
+            if (stringList.size() == 0) {
+                Toast.makeText(root.getContext(), "Cart is Empty", Toast.LENGTH_SHORT).show();
+            } else {
 
-                Intent viewCart = new Intent(ServicesActivity.this, Cart.class);
+                Intent viewCart = new Intent(root.getContext(), Cart.class);
 
-                viewCart.putStringArrayListExtra("List",stringList);
-                startActivityForResult(viewCart,1);
+                viewCart.putStringArrayListExtra("List", stringList);
+                startActivityForResult(viewCart, 1);
             }
         });
 
         updateCartIcon();
 
 
+        servicesView.setOnItemClickListener((parent, view, position, id) -> {
+            builder.setTitle("Add " + productList.get(position).getItem() + " to Cart?");
 
-           servicesView.setOnItemClickListener((parent, view, position, id) -> {
-               builder.setTitle("Add "+productList.get(position).getItem()+" to Cart?");
+            builder.setPositiveButton("Add", (dialogInterface, i) -> {
 
-               builder.setPositiveButton("Add",(dialogInterface, i) -> {
-
-                   saveSharedPrefs(productList.get(position).getItem()+"::");
-                   stringList.add(productList.get(position).getItem());
-                   updateCartIcon();
-               });
-               builder.setNegativeButton("Cancel",(dialogInterface, i) -> dialogInterface.cancel()).create().show();
-               adapter.notifyDataSetChanged();
-           });
+                saveSharedPrefs(productList.get(position).getItem() + "::");
+                stringList.add(productList.get(position).getItem());
+                updateCartIcon();
+            });
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel()).create().show();
+            adapter.notifyDataSetChanged();
+        });
+        return root;
     }
 
-    private void loadCart(){
-        prefs= getSharedPreferences("Cart",Context.MODE_PRIVATE);
+    public void loadCart(){
+        prefs=  this.getActivity().getSharedPreferences("Cart",Context.MODE_PRIVATE);
         String items= prefs.getString("Items","");
         if(!items.isEmpty()) {
             String[] savedItems=items.split("::");
@@ -117,7 +122,7 @@ public class ServicesActivity extends AppCompatActivity {
         }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode==1000) {

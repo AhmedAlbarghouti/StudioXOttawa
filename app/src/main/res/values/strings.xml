@@ -156,5 +156,49 @@
     <string name="reset_password">Reset Password</string>
     <string name="welcomeHeader">Studio X Ottawa</string>
     <string name="user">User</string>
+
+
+
+
     <string name="add_class_button">add event</string>
+    <string name="cancel">cancel</string>
+    <string name="place_order">place order</string>
+    <string name="total_price">Total Price</string>
+    <string name="purchaseSummary">Purchase Summary</string>
+    <string name= "pay">pay</string>
+    <string name="amount">amount</string>
+
+    --------------------------------DELETE-----------------------------
+    <string name="time_hint" translatable="false"></string>
+    <string name="new_event"></string>
+    <string name="fitness_hint"></string>
+    <string name="no_date"></string>
+    <string name= "create_event"></string>
+    <string name="create_news"></string>
+    <string name="news_title_hint"></string>
+    <string name="description"></string>
+    <string name="image_url_hint"></string>
+    <string name="add_product"></string>
+    <string name="product_name_hint"/>
+    <string name="product_price_hint"/>
+    <string name="book_event"/>
+    <string name="forgot"></string>
+    <string name="call"></string>
+    <string name="report"></string>
+    <string name="add_event"></string>
+    <string name="add_news"></string>
+    -----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>
