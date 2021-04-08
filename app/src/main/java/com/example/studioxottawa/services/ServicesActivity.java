@@ -22,9 +22,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.news.NewsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +56,7 @@ public class ServicesActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_services, container, false);
-        super.onCreate(savedInstanceState);
+//        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_services);
 
         builder = new AlertDialog.Builder(root.getContext());
@@ -70,14 +72,24 @@ public class ServicesActivity extends Fragment {
         Log.e("PRODUCT LIST SIZE", productList.size() + "");
         Log.e("STRING LIST SIZE", stringList.size() + "");
         goToCart.setOnClickListener(btn -> {
+
             if (stringList.size() == 0) {
                 Toast.makeText(root.getContext(), "Cart is Empty", Toast.LENGTH_SHORT).show();
             } else {
-
-                Intent viewCart = new Intent(root.getContext(), Cart.class);
-
+//                Fragment selectedFragment= new Cart();
+//
+//                Bundle bundle= new Bundle();
+//                bundle.putStringArrayList("List",stringList);
+//                selectedFragment.setArguments(bundle);
+//                getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
+////
+                 Intent viewCart = new Intent(root.getContext(), Cart.class);
                 viewCart.putStringArrayListExtra("List", stringList);
                 startActivityForResult(viewCart, 1);
+
+
+
+
             }
         });
 

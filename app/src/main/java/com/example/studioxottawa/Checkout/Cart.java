@@ -17,7 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
@@ -48,13 +50,11 @@ public class Cart extends AppCompatActivity {
     private Bitmap i1;
     ListView myList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
-        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo_studioxottawa);
         forPay = new ArrayList<String>();
         product = getIntent().getExtras().getStringArrayList("List");
         eventKey = getIntent().getExtras().getString("UID");
