@@ -92,6 +92,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         checkoutListView.setAdapter(adapter= new MyListAdapter());
         i1= BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
+
         price = getIntent().getExtras().getDouble("Total Price");
         productsPurchase = getIntent().getStringArrayListExtra("forPay");
 
