@@ -15,9 +15,9 @@ public class Product implements Parcelable{
     int quantity;
 
     public Product(String item, Double price, int quantity) {
-        this.item = item;
-        this.price = price;
-        this.quantity = quantity;
+        setItem(item);
+        setPrice(price);
+        setQuantity(quantity);
     }
 
     protected Product(Parcel in) {
