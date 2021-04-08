@@ -21,7 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
-import com.example.studioxottawa.schedule.Schedule;
+
 import com.example.studioxottawa.services.Product;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

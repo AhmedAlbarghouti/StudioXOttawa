@@ -62,7 +62,7 @@
             android:id="@+id/addEventButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_toRightOf="@id/scheduleButton"
+            android:layout_toRightOf="@id/addServiceButton"
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
@@ -78,6 +78,17 @@
         android:layout_below="@id/firstRow"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/addNews"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="ADD NEWS"
+            android:backgroundTint="@color/StudioXPink"
+            />
+
 
         <Button
             android:id="@+id/reportButton"
@@ -88,8 +99,6 @@
             android:layout_marginLeft="10dp"
             android:text="Report"
             android:backgroundTint="@color/StudioXPink"
-
-
             />
 
 

@@ -12,16 +12,27 @@ public class User {
     private ArrayList<Event> eventsPurchased = new ArrayList<>();
     private ArrayList<Product> productsPurchased = new ArrayList<>();
 
-
+    /**
+     * Default constructor
+     */
     public User(){
 
     }
 
-    public User(String fullName,  String email,String phoneNumber) {
+    /**
+     * Chained constructor
+     */
+    public User(String fullName,  String email, String phoneNumber) {
+        this(fullName, email, phoneNumber, null, null);
+    }
+
+    public User(String fullName,  String email, String phoneNumber, ArrayList<Event> eventsPurchased, ArrayList<Product> productsPurchased){
         this.fullName = fullName;
         PhoneNumber = phoneNumber;
         this.email = email;
         this.staff = false;
+        this.eventsPurchased.addAll(eventsPurchased);
+        this.productsPurchased.addAll(productsPurchased);
     }
 
     public ArrayList<Event> getEventsPurchased() {

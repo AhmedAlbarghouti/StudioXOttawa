@@ -3,6 +3,7 @@ package com.example.studioxottawa.welcome;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -16,6 +17,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,19 +26,20 @@ import android.widget.TextView;
 
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
-import com.example.studioxottawa.news.GetData;
+
 import com.example.studioxottawa.news.News;
-import com.example.studioxottawa.news.OkHttpUtils;
-import com.example.studioxottawa.schedule.Event;
+
+import com.example.studioxottawa.news.NewsFragment;
+import com.example.studioxottawa.schedule.ScheduleFragment;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.VODPlayer.VODActivity;
 import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
 import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.notification.notifActivity;
-import com.example.studioxottawa.schedule.Schedule;
 
 
-import com.example.studioxottawa.news.NewsActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private Button adminTasksButton;
 
 
-    public static ArrayList<News> elements = new ArrayList<>();
 
 
     @Override
@@ -65,9 +67,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button contactBtn=findViewById(R.id.contactButton);
-        Button logoutBtn=findViewById(R.id.logoutButton);
-        adminTasksButton =findViewById(R.id.adminTasksButton);
+        BottomNavigationView bottomNav = findViewById(R.id.menuBottomNav);
+
+
+
 
 
 
@@ -76,8 +79,24 @@ public class MainActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        Thread thread = new NewsThread();
-        thread.start();
+        BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+
+                if (item.getItemId() == R.id.nav_news){
+                    selectedFragment = new NewsFragment();
+                }
+                if(item.getItemId() == R.id.nav_schedule){
+                    selectedFragment = new ScheduleFragment();
+                }
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
+                return true;
+            }
+        };
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 User signInUser = snapshot.getValue(User.class);
                 String username = signInUser.fullName;
 //                userTV.setText(username);
-                loadnotifActivity(username);
+//                loadnotifActivity(username);
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
                     adminTasksButton.setVisibility(View.VISIBLE);
@@ -98,98 +117,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button contactbtn=findViewById(R.id.contactButton);
-        contactbtn.setOnClickListener(click -> {
-                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
-                    startActivity(contact);
-
-        });
-
-
-        adminTasksButton.setOnClickListener(click -> {
-            Intent adminTasks = new Intent(this, com.example.studioxottawa.staff.StaffMenu.class);
-            startActivity(adminTasks);
-        });
-        contactBtn.setOnClickListener(btn-> {
-                    Intent contact = new Intent(this, com.example.studioxottawa.contact.contact.class);
-                    startActivity(contact);
-
-
-        });
-
-
-
-
-
-        logoutBtn.setOnClickListener(click->{
-            DBHelper mydb;
-            mydb = new DBHelper(this);
-            SQLiteDatabase db = mydb.getWritableDatabase();
-            db.execSQL("delete from notiftab2");
-            db.close();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        });
-
-
-
-        Button loginBtn2 = (Button)findViewById(R.id.newsButton);
-        loginBtn2.setOnClickListener(click -> {
-            Intent goToProfile = new Intent(MainActivity.this, NewsActivity.class);
-            startActivity(goToProfile);
-        });
-
-
-        Button loginBtn3 = (Button)findViewById(R.id.aboutusButton);
-        loginBtn3.setOnClickListener(click -> {
-            Intent goToProfile = new Intent(MainActivity.this, AboutusActivity.class);
-            startActivity(goToProfile);
-        });
-
-
-
-
-        Button schedulebtn = findViewById(R.id.scheduleButton);
-        schedulebtn.setOnClickListener(click -> {
-            Intent schedule = new Intent(this, Schedule.class);
-            startActivity(schedule);
-        });
-
-
-        Button vodButton = findViewById(R.id.vodsButton);
-        vodButton.setOnClickListener(v-> {
-            loadVodLibrary();
-        });
-
-        Button serviceButton = findViewById(R.id.servicesButton);
-        serviceButton.setOnClickListener(v-> {
-            loadServices();
-        });
-
-        //xiaoxi {
-
-        // get the reference of Button's
-        Button aboutusBtn = (Button) findViewById(R.id.aboutusButton);  //xiaoxi
-
-        aboutusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //loads aboutus activity by calling local method
-                loadAboutusActivity();
-            }
-
-        });  //xiaoxi }
-
-//        notifBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //load aboutus activity by calling local method
-//                loadnotifActivity();
-//            }
-//        });  //xiaoxi }
-
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,new NewsFragment()).commit();
     }
+
+
 
 
 
@@ -215,16 +146,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(vodPlayback);
     }
 
-    private class NewsThread extends Thread{
-        public void run(){
-            String html;
-            for(int i=1; i<9; i++){
-                String url = "https://www.studioxottawa.com/news/page/"+i+"/";
-                html = OkHttpUtils.OkGetArt(url);
-                elements.addAll(GetData.spiderArticle(html));
-            }
-        }
-    }
+
 
     //xiaoxi {
 

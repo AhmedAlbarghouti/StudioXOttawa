@@ -25,6 +25,7 @@
         <activity android:name=".aboutus.AboutusActivity" />
         <activity android:name=".schedule.BookAppointments" />
         <activity android:name=".staff.AddEvent" />
+        <activity android:name=".staff.AddNews" />
         <activity
             android:name=".notification.notifActivity"
             android:label="@string/title_activity_notif" />

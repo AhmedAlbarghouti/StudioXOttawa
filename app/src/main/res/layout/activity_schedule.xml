@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".schedule.Schedule">
+    android:background="@drawable/gradient1"
+    tools:context=".schedule.ScheduleFragment">
 
     <LinearLayout
         android:id="@+id/topRow"
@@ -13,13 +14,14 @@
         android:orientation="horizontal">
 
 
-
         <TextView
-            android:textSize="23sp"
             android:id="@+id/pickedDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
 
         <ImageButton
             android:id="@+id/dateButton"
@@ -27,6 +29,9 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:src="@drawable/ic_baseline_date_range_24"
+            android:tint="@color/white"
+            android:background="@drawable/gradient1"
+
             />
     </LinearLayout>
 
