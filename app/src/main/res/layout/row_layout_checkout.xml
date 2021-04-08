@@ -77,35 +77,8 @@
             android:layout_toRightOf="@id/quantityET"
             android:scaleType="fitXY"/>
 
-        <ImageButton
-            android:id="@+id/removeItemBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="4dp"
 
-            android:cropToPadding="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/red_x" />
-
-
-        <!--    <TextView-->
-        <!--        android:layout_width="40dp"-->
-        <!--        android:layout_height="40dp"-->
-        <!--        android:outlineProvider="bounds"-->
-        <!--        android:textAlignment="center"-->
-        <!--        android:id="@+id/quantityET"-->
-        <!--        android:background="@drawable/square_rec"-->
-        <!--        android:text=""/>-->
     </RelativeLayout>
-    <!--    <TextView-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="fill"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:text="150.00"-->
-    <!--        android:layout_weight="1"-->
-    <!--        android:id="@+id/check_item_price"/>-->
+
 
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,6 @@ import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.schedule.Schedule;
 import com.example.studioxottawa.services.Product;
-import com.example.studioxottawa.services.ServicesActivity;
-import com.example.studioxottawa.welcome.MainActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,19 +36,29 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.stripe.android.ApiResultCallback;
 import com.stripe.android.PaymentIntentResult;
+import com.stripe.android.PaymentSessionConfig;
 import com.stripe.android.Stripe;
+import com.stripe.android.model.Address;
 import com.stripe.android.model.ConfirmPaymentIntentParams;
 import com.stripe.android.model.PaymentIntent;
+import com.stripe.android.model.PaymentMethod;
 import com.stripe.android.model.PaymentMethodCreateParams;
+import com.stripe.android.model.ShippingInformation;
+import com.stripe.android.model.ShippingMethod;
 import com.stripe.android.view.CardInputWidget;
+import com.stripe.android.view.ShippingInfoWidget;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import okhttp3.Call;
@@ -63,41 +70,32 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CheckoutActivityJava extends AppCompatActivity {
-    // 10.0.2.2 is the Android emulator's alias to localhost
     private static final String BACKEND_URL = "https://still-everglades-60303.herokuapp.com/";
     private OkHttpClient httpClient = new OkHttpClient();
     private String paymentIntentClientSecret = "sk_test_51ILUoQJBRyYbLiOnRqvcjq1l6erjzTKcz7FpqnM1AZ6Phfh2NM4r8wjA0kqSldEHhjwUyTLnAB0qHRlwLxtUKoaQ00YSQCu08T";
     private Stripe stripe;
-
     private double price = 0;
-//    private static Intent intent= getIntent().getParcelableExtra("EventObj");
-
-
     private ArrayList<Product> products= new ArrayList<>();
-    ArrayList<String> productsPurchase;
+    private  ArrayList<String> productsPurchase;
     private NumberFormat formatter = new DecimalFormat("#0.00");
-//
-//    private  static ArrayList<String> products= new ArrayList<String>();
-//    private MyListAdapter myAdapter;
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
-    private ListView servicesView;
+    private ListView checkoutListView;
     private Bitmap i1;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_java);
+        checkoutListView=findViewById(R.id.ItemPurchView);
+        checkoutListView.setAdapter(adapter= new MyListAdapter());
+        i1= BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
+
         price = getIntent().getExtras().getDouble("Total Price");
-
         productsPurchase = getIntent().getStringArrayListExtra("forPay");
-        servicesView = findViewById(R.id.ItemPurchView);
-        servicesView.setAdapter(adapter = new MyListAdapter());
-        i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
 
-        servicesView.setOnItemClickListener((parent, view, position, id) -> {
-            adapter.notifyDataSetChanged();
-        });
 
 
         loadProducts();
@@ -126,6 +124,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
                 }
 
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -133,7 +132,6 @@ public class CheckoutActivityJava extends AppCompatActivity {
             });
         }
         adapter.notifyDataSetChanged();
-
     }
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
@@ -164,19 +162,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
         // Hook up the pay button to the card widget and stripe instance
         Button payButton = findViewById(R.id.payButton);
         payButton.setOnClickListener((View view) -> {
+
             CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
             PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
             if (params != null) {
                 ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);
                 stripe.confirmPayment(this, confirmParams);
-
-
-//                                                   FIX WHAT'S IN THE BOX. ITS THROWING A NULL EXCEPTION. Do more research
-//                                                   -----------------------------------------------------------------------
-//               -----------------------------------------------------------------------------------------------------------------------------------------------------------|
-//              |  ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);            |
-//              |  stripe.confirmPayment(this, confirmParams);                                                                                                              |
-//              | -----------------------------------------------------------------------------------------------------------------------------------------------------------
             }
         });
     }
@@ -268,9 +259,10 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    eventsReference.child(user.getUid()).child("Events Purchased").child(event.getUid()).setValue(event);
-                    Intent schedule = new Intent(CheckoutActivityJava.this, MainActivity.class);
-                    startActivity(schedule);
+                    eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
+                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+                    setResult(1000);
+                    finish();
                 }else if(!isEvent){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -278,8 +270,9 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     for(Product p: products) {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
-                    Intent mainAct = new Intent(CheckoutActivityJava.this, MainActivity.class);
-                    startActivity(mainAct);
+                    Intent schedule = new Intent(CheckoutActivityJava.this, Schedule.class);
+                    setResult(1000);
+                    finish();
                 }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
@@ -301,7 +294,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
     }
 
-    private class MyListAdapter extends BaseAdapter {
+private class MyListAdapter extends BaseAdapter {
 
         public int getCount() {
             return products.size();
@@ -314,20 +307,19 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
 
         public View getView(int position, View old, ViewGroup parent) {
-            Log.i("gycreport", " getview ");
+
             View newView = null;
             LayoutInflater inflater = getLayoutInflater();
-            newView = inflater.inflate(R.layout.service_layout, parent, false);
+            newView = inflater.inflate(R.layout.payment_layout, parent, false);
             Product u = getItem(position);
-            TextView item = newView.findViewById(R.id.serviceTitle);
+            TextView item = newView.findViewById(R.id.paymentTitle);
             item.setText("  "+u.getItem());
-            TextView price = newView.findViewById(R.id.servicePrice);
+            TextView price = newView.findViewById(R.id.paymentPrice);
             price.setText("  "+formatter.format(u.getPrice()));
-            ImageView thumbnail = newView.findViewById(R.id.serviceImage);
+            ImageView thumbnail = newView.findViewById(R.id.paymentImage);
             thumbnail.setImageBitmap(i1);
             //return it to be put in the table
             return newView;
         }
-    }
-
-}
+    }//adapter class end
+}//class end
