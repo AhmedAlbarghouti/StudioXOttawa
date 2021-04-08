@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.news.NewsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         lostPassword = findViewById(R.id.lostpassTV);
         signUpTV = findViewById(R.id.signupTV);
         mAuth = FirebaseAuth.getInstance();
+        NewsFragment.loadNews();
 
         signButton.setOnClickListener(click-> {
             userLogin();

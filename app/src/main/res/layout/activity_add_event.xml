@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/add_Product_title"
-        android:text="Create New Event"
+        android:text="@string/new_event"
         android:textSize="40sp"
         android:gravity="center"
         android:textStyle="bold"
@@ -20,7 +20,7 @@
         android:layout_marginTop="100dp"
         android:layout_below="@id/add_Product_title"
         android:id="@+id/new_product_name"
-        android:hint="Fitness Class"
+        android:hint="@string/fitness_hint"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_name"
-        android:text="No Date Selected"
+        android:text="@string/no_date"
         android:textSize="18sp"
         android:layout_toRightOf="@id/new_product_image"
         />
@@ -47,7 +47,7 @@
     <EditText
         android:layout_below="@id/new_product_image"
         android:id="@+id/new_product_price"
-        android:hint="6:00PM - 6:55PM"
+        android:hint="@string/time_hint"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -55,7 +55,7 @@
 
     <Button
         android:id="@+id/AddProductBtn"
-        android:text="Create Event"
+        android:text="@string/create_event"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_price"

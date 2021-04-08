@@ -56,7 +56,7 @@
         android:textSize="25sp" />
 
     <Button
-        android:text="Book Event"
+        android:text="@string/book_event"
         android:id="@+id/bookEventButton"
         android:layout_below="@id/bookEventStaff"
         android:layout_width="match_parent"

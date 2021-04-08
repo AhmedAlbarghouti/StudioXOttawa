@@ -144,7 +144,7 @@
     <string name="PurchaseTitle">Would you like to purchase this?</string>
     <string name="PurchaseConfirm">Thank you for your purchase</string>
     <string name="free_vids">Free</string>
-    <string name="youtube_button">Youtube</string>
+    <string name="youtube_button" translatable="false">Youtube</string>
     <string name="prem_vids">Premium</string>
     <string name="register">Register</string>
     <string name="email_hint">Email</string>

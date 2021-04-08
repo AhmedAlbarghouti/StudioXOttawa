@@ -8,7 +8,7 @@
 
 
     <Button
-        android:text="cancel"
+        android:text="@string/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cancelButton"
@@ -16,7 +16,7 @@
         android:backgroundTint="@color/StudioXPink"
         android:layout_alignParentBottom="true"/>
     <Button
-        android:text="Place Order"
+        android:text="@string/place_order"
         android:layout_width="100dp"
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/StudioXPink"
@@ -46,7 +46,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Price"
+        android:text="@string/total_price"
         android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="@color/black"

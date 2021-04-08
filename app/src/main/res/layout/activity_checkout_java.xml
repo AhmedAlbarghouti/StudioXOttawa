@@ -22,12 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/summaryOfPurchase"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_above="@id/ItemPurchView"
         android:layout_marginBottom="10dp"
-        android:text="Purchase Summary"/>
+        android:text="@string/purchaseSummary"/>
+
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
         android:layout_above="@id/payButton"
         android:layout_marginRight="20dp"/>
     <Button
-        android:text="Pay"
+        android:text="@string/pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/payButton"
@@ -53,15 +54,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Amount: "
+        android:text="@string/amount"
         android:layout_above="@id/cardInputWidget"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toStartOf="@id/symbol"
+        android:textColor="@color/black"
         android:id="@+id/labelText"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/amountText"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/black"
         android:layout_above="@id/cardInputWidget"
+        android:layout_centerHorizontal="true"
         android:text="0.00"
+        android:layout_marginRight="140dp"
         android:hint="$$$"
         android:layout_toRightOf="@+id/labelText"/>
 
@@ -73,6 +84,30 @@
         android:layout_above="@id/cardInputWidget"
         android:text="$"
         />
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:text="Amount: "-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:id="@+id/labelText"/>-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/amountText"-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:text="0.00"-->
+    <!--        android:hint="$$$"-->
+    <!--        android:layout_toRightOf="@+id/labelText"/>-->
+
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/symbol"-->
+    <!--        android:layout_toRightOf="@+id/amountText"-->
+    <!--        android:layout_above="@id/cardInputWidget"-->
+    <!--        android:text="$"-->
+    <!--        />-->
 
 
 </RelativeLayout>

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private String userID;
     private TextView userTV;
-    private Button adminTasksButton;
+
 
 
 
@@ -107,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
 //                userTV.setText(username);
 //                loadnotifActivity(username);
                 Boolean isStaff = signInUser.staff;
-                if (isStaff) {
-                    adminTasksButton.setVisibility(View.VISIBLE);
-                }
+
             }
 
             @Override

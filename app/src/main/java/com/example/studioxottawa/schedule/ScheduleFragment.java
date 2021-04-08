@@ -107,7 +107,7 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
         listAdapter.notifyDataSetChanged();
     }
 
-    private void loadEvents() {
+    public void loadEvents() {
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
