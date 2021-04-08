@@ -65,7 +65,7 @@
                         android:id="@+id/buttonCall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="call Studio X Ottawa" />
+                        android:text="@string/call" />
 
                 <TextView
                     android:id="@+id/notif2"

@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Add Event"
+            android:text="@string/add_event"
             android:backgroundTint="@color/StudioXPink"
             />
     </LinearLayout>
@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="ADD NEWS"
+            android:text="@string/add_news"
             android:backgroundTint="@color/StudioXPink"
             />
 
@@ -97,7 +97,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Report"
+            android:text="@string/report"
             android:backgroundTint="@color/StudioXPink"
             />
 

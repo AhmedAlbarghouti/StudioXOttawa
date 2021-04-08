@@ -27,7 +27,7 @@
         android:textColor="@color/black"
         android:layout_above="@id/ItemPurchView"
         android:layout_marginBottom="10dp"
-        android:text="Purchase Summary"/>
+        android:text="@string/purchaseSummary"/>
 
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
@@ -37,7 +37,7 @@
         android:layout_above="@id/payButton"
         android:layout_marginRight="20dp"/>
     <Button
-        android:text="Pay"
+        android:text="@string/pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/payButton"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Amount: "
+        android:text="@string/amount"
         android:layout_above="@id/cardInputWidget"
         android:textSize="16sp"
         android:textStyle="bold"
