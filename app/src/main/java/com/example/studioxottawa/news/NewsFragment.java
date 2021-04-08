@@ -46,7 +46,7 @@ public class NewsFragment extends Fragment {
 
         Log.i("gycreport", "MyList Ready");
         ListView myList = (ListView) root.findViewById(R.id.newsListView);
-        loadNews();
+
         myList.setAdapter( myAdapter );
 
         myList.setOnItemClickListener( (list, item, position, id) -> {
@@ -74,7 +74,7 @@ public class NewsFragment extends Fragment {
         return root;
     }
 
-    public void loadNews() {
+    public static void loadNews() {
         // Connect with Firebase database
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
 
@@ -107,7 +107,6 @@ public class NewsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        myAdapter.notifyDataSetChanged();
     }
 
     /**
