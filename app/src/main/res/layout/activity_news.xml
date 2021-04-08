@@ -6,13 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".news.NewsActivity"
+    tools:context=".news.NewsFragment"
     android:background="@drawable/gradient1">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,10 +29,7 @@
             android:textSize="25sp"
             android:textStyle="normal"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar1"/>
+
 
         <ListView
             android:id="@+id/newsListView"
@@ -44,16 +38,7 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/goBack"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="0"
-        android:text="Go Back"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="normal"/>
+
 
 
 </LinearLayout>

@@ -9,7 +9,8 @@ import android.widget.Toast;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.news.News;
-import com.example.studioxottawa.news.NewsActivity;
+
+import com.example.studioxottawa.news.NewsFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,8 +50,8 @@ public class AddNews extends AppCompatActivity{
         String createDate = formatter.format(curDate);
 
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("News");
-        long id = NewsActivity.maxNewsID + 1;
-        NewsActivity.maxNewsID = id;
+        long id = NewsFragment.maxNewsID + 1;
+        NewsFragment.maxNewsID = id;
         News addNews = new News(newsTitle, newsDescription, newsImageURL, createDate, id);
         eventsReference.child(String.valueOf(UUID.randomUUID())).setValue(addNews);
 

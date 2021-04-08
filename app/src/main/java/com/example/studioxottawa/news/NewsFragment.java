@@ -1,18 +1,20 @@
 package com.example.studioxottawa.news;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.welcome.MainActivity;
@@ -24,12 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class NewsActivity extends AppCompatActivity {
-
+public class NewsFragment extends Fragment {
     private static ArrayList<News> allNews = new ArrayList<>();
     public static long maxNewsID;
-    private ListView myList;
-    private MyListAdapter myAdapter;
+    public MyListAdapter myAdapter = new MyListAdapter();
 
     public static final String NEWS_TITLE = "TITLE";
     public static final String NEWS_DESCRIPTION = "DESCRIPTION";
@@ -37,22 +37,18 @@ public class NewsActivity extends AppCompatActivity {
     public static final String NEWS_DATE = "DATE";
     public static final String NEWS_POSITION = "POSITION";
     public static final String NEWS_ID = "ID";
-    DetailsFragment dFragment;
     private static final String TAG = "GetData";
 
-    /**
-     * @param savedInstanceState - the Bundle object that is passed into the onCreate method
-     */
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
-
-        boolean isTablet = findViewById(R.id.frameLayout) != null;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_news,container,false);
 
         Log.i("gycreport", "MyList Ready");
-        myList = findViewById(R.id.newsListView);
-        myList.setAdapter( myAdapter = new MyListAdapter());
+        ListView myList = (ListView) root.findViewById(R.id.newsListView);
+        loadNews();
+        myList.setAdapter( myAdapter );
+
         myList.setOnItemClickListener( (list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
@@ -65,38 +61,20 @@ public class NewsActivity extends AppCompatActivity {
             dataToPass.putInt(NEWS_POSITION, position);
             dataToPass.putLong(NEWS_ID, id);
 
-            if(isTablet)
-            {
-                dFragment = new DetailsFragment();
-                dFragment.setArguments( dataToPass );
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frameLayout, dFragment)
-                        .commit();
-            }
-            else //isPhone
-            {
-                Intent nextActivity = new Intent(NewsActivity.this, EmptyActivity.class);
-                nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivity(nextActivity); //make the transition
-            }
+
+            Intent nextActivity = new Intent(getActivity(), EmptyActivity.class);
+            nextActivity.putExtras(dataToPass); //send data to next activity
+            startActivity(nextActivity); //make the transition
+
 
             myAdapter.notifyDataSetChanged();
         }   );
 
-        Button returnButton = (Button)findViewById(R.id.goBack);
-        returnButton.setOnClickListener( new View.OnClickListener()
-        {  public void onClick(View v){
-            Intent nextActivity = new Intent(NewsActivity.this, MainActivity.class);
-            startActivity(nextActivity);
-        } });
 
+        return root;
     }
 
-    /**
-     * Used to load news from Firebase database
-     */
-    public static void loadNews() {
+    public void loadNews() {
         // Connect with Firebase database
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
 
@@ -104,7 +82,7 @@ public class NewsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Refresh news contents
-                allNews = new ArrayList<>();
+                allNews.clear();
 
                 // Retrieve each news from database and add to Arraylist
                 for(DataSnapshot ds : snapshot.getChildren()){
@@ -122,15 +100,15 @@ public class NewsActivity extends AppCompatActivity {
                     Log.i("link", "link is empty?"+(link.isEmpty()));
                     allNews.add(new News(title, description, link, date, id));
                     Log.i("gycreport", title+" "+description+" "+link+" "+ allNews.size());
+
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
+        myAdapter.notifyDataSetChanged();
     }
-
 
     /**
      * the adapter inner class that provide data for the listView
@@ -167,9 +145,8 @@ public class NewsActivity extends AppCompatActivity {
          * @return a View object to go in a row of the ListView
          */
         public View getView(int position, View old, ViewGroup parent) {
-            View newView = null;
             LayoutInflater inflater = getLayoutInflater();
-            newView = inflater.inflate(R.layout.row_layout_news, parent, false);
+            View newView = inflater.inflate(R.layout.row_layout_news, parent, false);
 //            News n = (News)getItem(position);
             News n = (News)getItem(position);
             TextView tView = newView.findViewById(R.id.newsTitle);
@@ -180,3 +157,5 @@ public class NewsActivity extends AppCompatActivity {
         }
     }
 }
+
+

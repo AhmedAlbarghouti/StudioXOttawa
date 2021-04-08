@@ -1,8 +1,5 @@
 package com.example.studioxottawa.schedule;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -18,6 +15,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import com.example.studioxottawa.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,30 +32,27 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private ArrayList<Event> allEvents = new ArrayList<>();
     private ArrayList<Event> events = new ArrayList<>();
     TextView pickedDate;
     ImageButton dateButton;
-    private ListView eventList;
     EventListAdapter listAdapter = new EventListAdapter();
 
 
 
     private FirebaseUser user;
     private Calendar c;
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_schedule,container,false);
 
-//       loadEventsToCloud();
-        eventList = findViewById(R.id.eventList);
+        ListView eventList = root.findViewById(R.id.eventList);
         eventList.setAdapter(listAdapter);
-        pickedDate = findViewById(R.id.pickedDate);
-        dateButton = findViewById(R.id.dateButton);
+        pickedDate = root.findViewById(R.id.pickedDate);
+        dateButton = root.findViewById(R.id.dateButton);
 
         c = Calendar.getInstance();
         loadEvents();
@@ -66,14 +65,14 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onClick(View v) {
                 events.clear();
                 DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getSupportFragmentManager(),"Date Picker");
+                datePicker.show(getChildFragmentManager(),"Date Picker");
 
             }
         });
 
 
 
-        eventList.setOnItemClickListener((list,item,position,id) -> {
+        eventList.setOnItemClickListener((list, item, position, id) -> {
             Bundle eventToPass = new Bundle();
             eventToPass.putString("EVENT_UID",events.get(position).getUid());
             eventToPass.putString("EVENT_NAME",events.get(position).getName());
@@ -81,45 +80,32 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
             eventToPass.putString("EVENT_TIME",events.get(position).getTime());
             eventToPass.putString("EVENT_STAFF",events.get(position).getStaff());
 
-            Intent bookingIntent = new Intent(Schedule.this, BookAppointments.class);
+            Intent bookingIntent = new Intent(getActivity(), BookAppointments.class);
             bookingIntent.putExtras(eventToPass);
             startActivity(bookingIntent);
         });
 
+        return root;
     }
 
-    private void loadEventsToCloud() {
-        DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Events");
-
-        Event event1 = new Event("Zumba with Nadege & Soul","16/3/2021","6:30PM - 7:15PM","Soul & Nadege");
-        Log.i("uid",event1.getUid());
-        eventsReference.child(event1.getUid()).setValue(event1);
-
-        Event event2 = new Event("Virtual Zumba with Nadege & Soul","16/3/2021","6:30PM - 7:15PM","Soul & Nadege");
-        eventsReference.child(event2.getUid()).setValue(event2);
-
-        Event event3 = new Event("Yoga with Nadège & Soul","17/3/2021","6:00PM - 6:55PM","Soul & Nadege");
-        eventsReference.child(event3.getUid()).setValue(event3);
-
-        Event event4 = new Event("Virtual Yoga with Nadège & Soul","17/3/2021","6:00PM - 6:55PM","Soul & Nadege");
-        eventsReference.child(event4.getUid()).setValue(event4);
-
-        Event event5 = new Event("Bachata for couples (Intermediate)","18/3/2021","7:00PM - 7:55PM","Soul & Nadege");
-        eventsReference.child(event5.getUid()).setValue(event5);
-
-        Event event6 = new Event("Virtual Bachata for couples (Intermediate)","18/3/2021","7:00PM - 7:55PM","Soul & Nadege");
-        eventsReference.child(event6.getUid()).setValue(event6);
-
-        Event event7 = new Event("Bachata technique & footworks (Intermediate and up solo class)","19/3/2021","8:10PM - 9:10PM","Soul & Nadege");
-        eventsReference.child(event7.getUid()).setValue(event7);
-
-        Event event8 = new Event("Virtual Bachata technique & footworks (Intermediate and up solo class)","19/3/2021","8:10PM - 9:10PM","Soul & Nadege");
-        eventsReference.child(event8.getUid()).setValue(event8);
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        pickedDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
 
 
+        String currentDateString = (dayOfMonth+"/"+(month+1)+"/"+year);
+        for (Event e : allEvents){
+            String x = e.getDate();
+
+            if(currentDateString.contentEquals(x)) {
+                events.add(e);
+            }
+        }
+        listAdapter.notifyDataSetChanged();
     }
-
-
 
     private void loadEvents() {
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
@@ -164,28 +150,7 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
 
     }
 
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        pickedDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
-
-
-        String currentDateString = (dayOfMonth+"/"+(month+1)+"/"+year);
-        for (Event e : allEvents){
-            String x = e.getDate();
-
-            if(currentDateString.contentEquals(x)) {
-                events.add(e);
-            }
-        }
-        listAdapter.notifyDataSetChanged();
-    }
-
-    public class EventListAdapter extends BaseAdapter{
+    public class EventListAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -210,15 +175,12 @@ public class Schedule extends AppCompatActivity implements DatePickerDialog.OnDa
             Event event = events.get(position);
             View eView = inflater.inflate(R.layout.event_row, parent, false);
 
-                ImageView img = eView.findViewById(R.id.eventImage);
-                TextView nTxt = eView.findViewById(R.id.eventName);
-                TextView tTxt = eView.findViewById(R.id.eventTime);
-                nTxt.setText(event.getName());
-                tTxt.setText(event.getTime());
-                 return eView;
+            ImageView img = eView.findViewById(R.id.eventImage);
+            TextView nTxt = eView.findViewById(R.id.eventName);
+            TextView tTxt = eView.findViewById(R.id.eventTime);
+            nTxt.setText(event.getName());
+            tTxt.setText(event.getTime());
+            return eView;
         }
     }
-
-
-
 }

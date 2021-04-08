@@ -50,17 +50,17 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         dataFromActivity = getArguments();
-        id = dataFromActivity.getLong(NewsActivity.NEWS_ID );
+        id = dataFromActivity.getLong(NewsFragment.NEWS_ID );
 
         View result =  inflater.inflate(R.layout.fragment_details_news, container, false);
 
         TextView title = (TextView)result.findViewById(R.id.FragmentTitle);
-        title.setText(dataFromActivity.getString(NewsActivity.NEWS_TITLE).replace("_b","\n"));
+        title.setText(dataFromActivity.getString(NewsFragment.NEWS_TITLE).replace("_b","\n"));
 
         TextView description = (TextView)result.findViewById(R.id.FragmentDescription);
-        description.setText(dataFromActivity.getString(NewsActivity.NEWS_DESCRIPTION).replace("_b","\n"));
+        description.setText(dataFromActivity.getString(NewsFragment.NEWS_DESCRIPTION).replace("_b","\n"));
 
-        url = dataFromActivity.getString(NewsActivity.NEWS_LINK);
+        url = dataFromActivity.getString(NewsFragment.NEWS_LINK);
         imageView = (ImageView)result.findViewById(R.id.FragmentImage);
         Log.i("gycimage", url);
         if(url.equals("null") || url.isEmpty()){
@@ -70,7 +70,7 @@ public class DetailsFragment extends Fragment {
         }
 
         TextView date = (TextView)result.findViewById(R.id.FragmentDate);
-        date.setText(dataFromActivity.getString(NewsActivity.NEWS_DATE).replace("_b","\n"));
+        date.setText(dataFromActivity.getString(NewsFragment.NEWS_DATE).replace("_b","\n"));
 
         Button hideButton = (Button)result.findViewById(R.id.hideButton);
         hideButton.setOnClickListener( clk -> {

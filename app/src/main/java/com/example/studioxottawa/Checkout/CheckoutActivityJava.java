@@ -22,7 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
-import com.example.studioxottawa.schedule.Schedule;
+
 import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.welcome.MainActivity;
