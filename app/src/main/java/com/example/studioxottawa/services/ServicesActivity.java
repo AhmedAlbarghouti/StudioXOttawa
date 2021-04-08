@@ -47,6 +47,8 @@ public class ServicesActivity extends Fragment {
     private ArrayList<String> stringList=new ArrayList<>();
     private ListView servicesView;
     private ImageButton goToCart;
+    private String stringToSave="";
+    private StringBuilder sb= new StringBuilder(stringToSave);
 
     @Nullable
     @Override
@@ -87,7 +89,9 @@ public class ServicesActivity extends Fragment {
 
             builder.setPositiveButton("Add", (dialogInterface, i) -> {
 
-                saveSharedPrefs(productList.get(position).getItem() + "::");
+                sb.append(productList.get(position).getItem());
+                sb.append( "::");
+                saveSharedPrefs(sb.toString());
                 stringList.add(productList.get(position).getItem());
                 updateCartIcon();
             });
