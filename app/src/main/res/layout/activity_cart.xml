@@ -15,16 +15,19 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/StudioXPink"
         android:layout_alignParentBottom="true"/>
-    <Button
-        android:text="@string/place_order"
-        android:layout_width="100dp"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="@color/StudioXPink"
-        android:layout_height="wrap_content"
 
+    <Button
         android:id="@+id/checkoutButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
         android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-4dp"
+        android:backgroundTint="@color/StudioXPink"
+        android:text="@string/place_order" />
 
     <ListView
         android:layout_width="match_parent"

@@ -156,49 +156,39 @@
     <string name="reset_password">Reset Password</string>
     <string name="welcomeHeader">Studio X Ottawa</string>
     <string name="user">User</string>
-
-
-
-
     <string name="add_class_button">add event</string>
-    <string name="cancel">cancel</string>
-    <string name="place_order">place order</string>
-    <string name="total_price">Total Price</string>
+    <string name="new_event">Add New Event</string>
+    <string name="fitness_hint">Fitness Class</string>
+    <string name="no_date">No Date Selected</string>
+    <string name="time_hint" translatable="false">6:00PM - 6:55PM</string>
+    <string name="create_event">Create Event</string>
+    <string name="create_news">Create News</string>
+    <string name="news_title_hint">News Title</string>
+    <string name="description">Description</string>
+    <string name="image_url_hint">Image URL</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_name_hint">Product Name</string>
+    <string name="product_price_hint">Product Price</string>
+    <string name="schedule">Schedule</string>
+    <string name="services">Services</string>
+    <string name="vod">Video On Demand</string>
+    <string name="news">News</string>
+    <string name="contact">Contact Us</string>
+    <string name="aboutus">About Us</string>
+    <string name="logout">Logout</string>
+    <string name="admin">Admin Tasks</string>
+    <string name="forgot">Forgot Password</string>
     <string name="purchaseSummary">Purchase Summary</string>
-    <string name= "pay">pay</string>
-    <string name="amount">amount</string>
-
-    --------------------------------DELETE-----------------------------
-    <string name="time_hint" translatable="false"></string>
-    <string name="new_event"></string>
-    <string name="fitness_hint"></string>
-    <string name="no_date"></string>
-    <string name= "create_event"></string>
-    <string name="create_news"></string>
-    <string name="news_title_hint"></string>
-    <string name="description"></string>
-    <string name="image_url_hint"></string>
-    <string name="add_product"></string>
-    <string name="product_name_hint"/>
-    <string name="product_price_hint"/>
-    <string name="book_event"/>
-    <string name="forgot"></string>
-    <string name="call"></string>
-    <string name="report"></string>
-    <string name="add_event"></string>
-    <string name="add_news"></string>
-    -----------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="amount">Amount:</string>
+    <string name="pay">Pay</string>
+    <string name="back">Go Back</string>
+    <string name="call">Call StudioX Ottawa</string>
+    <string name="add_service">Add Services</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_news">ADD NEWS</string>
+    <string name="report">Report</string>
+    <string name="total_price">Total Price</string>
+    <string name="cancel">cancel</string>
+    <string name="place_order">Place Order</string>
+    <string name="book_event">Book Event</string>
 </resources>
