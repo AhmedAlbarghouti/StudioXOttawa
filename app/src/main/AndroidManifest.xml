@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.LoginActivity"></activity>
+        <activity android:name=".welcome.AccountFragment"></activity>
+        <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />
@@ -39,7 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".VODPlayer.VODLibraryActivity" />
         <activity android:name=".VODPlayer.VODActivity" />
         <activity android:name=".schedule.Schedule" />
