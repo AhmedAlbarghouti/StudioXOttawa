@@ -73,14 +73,33 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Stripe Checkout
+ * This class implements stripe payment to allow user to purchase products on the app.
+ *
+ * Variables
+ *     private static final String BACKEND_URL
+ *     private OkHttpClient httpClient
+ *     private String paymentIntentClientSecret
+ *     private Stripe stripe
+ *     private double price
+ *     private ArrayList<Product> products
+ *     private NumberFormat formatter
+ *     private MyListAdapter adapter
+ *     private AlertDialog.Builder builder
+ *     private ListView checkoutListView
+ *     private Bitmap i1
+ * @Author: Stripe,Inc.
+ */
 public class CheckoutActivityJava extends AppCompatActivity {
+
     private static final String BACKEND_URL = "https://still-everglades-60303.herokuapp.com/";
     private OkHttpClient httpClient = new OkHttpClient();
-    private String paymentIntentClientSecret = "sk_test_51ILUoQJBRyYbLiOnRqvcjq1l6erjzTKcz7FpqnM1AZ6Phfh2NM4r8wjA0kqSldEHhjwUyTLnAB0qHRlwLxtUKoaQ00YSQCu08T";
+    // configure with stripe secret key
+    private String paymentIntentClientSecret;
     private Stripe stripe;
     private double price = 0;
     private ArrayList<Product> products= new ArrayList<>();
-    private  ArrayList<String> productsPurchase;
     private NumberFormat formatter = new DecimalFormat("#0.00");
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
@@ -92,56 +111,26 @@ public class CheckoutActivityJava extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_java);
+        //
         checkoutListView=findViewById(R.id.ItemPurchView);
         checkoutListView.setAdapter(adapter= new MyListAdapter());
         i1= BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
-        // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
 
         price = getIntent().getExtras().getDouble("Total Price");
         load();
-//        productsPurchase = getIntent().getStringArrayListExtra("forPay");
-
-
-
-//        loadProducts();
+        // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
         stripe = new Stripe(
                 getApplicationContext(),
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
         );
 
-
         startCheckout();
     }
-
-    public void loadProducts(){
-        for (String s : productsPurchase) {
-            DatabaseReference referenceProduct = FirebaseDatabase.getInstance().getReference().child("Products").child(s);
-            referenceProduct.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    String item = String.valueOf(snapshot.child("item").getValue());
-                    String price = String.valueOf(snapshot.child("price").getValue());
-                    String quantity = String.valueOf(snapshot.child("quantity").getValue());
-                    Product temp = new Product( item, Double.parseDouble(price), 1);
-
-                    products.add(temp);
-
-                }
-
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        adapter.notifyDataSetChanged();
-    }
-
+    /**
+     * This method loads the products that is in the current user's cart from the Firebase realtime database  and load it into an arraylist of products
+     */
     public void load(){
         DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
-//                    DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
         referenceServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -159,32 +148,37 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 }
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
-
-
         });
-//                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
     }
-    private void startCheckout() {
-        // Create a PaymentIntent by calling the server's endpoint.
 
+    /***
+     * This method create the PaymentIntent and add send the transactional information to
+     * the backend to make a Stripe Payment
+     */
+    private void startCheckout() {
+
+        // Create a PaymentIntent by calling the server's endpoint.
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         Map<String, Object> payMap = new HashMap<>();
         Map<String, Object> itemMap = new HashMap<>();
+        // list of map objects to be sent to the backend.
         List<Map<String, Object>> itemList = new ArrayList<>();
-        payMap.put("currency", "usd");
-        itemMap.put("id", "photo_subscription");
+        //Adding the Currency to the payMap
+        payMap.put("currency", "cad");
         TextView amountText = findViewById(R.id.amountText);
+
 
         amountText.setText(String.valueOf(formatter.format(price)));
         double amount = price * 100;
+        //adding the total amount to the itemMap
         itemMap.put("amount", amount);
         itemMap.put("email", "jamesRunnings@gmail.com");
         itemList.add(itemMap);
+//        sending the list of Map objects to the backend.
         payMap.put("items", itemList);
 
         String json = new Gson().toJson(payMap);
@@ -244,7 +238,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 return;
             }
             activity.runOnUiThread(() ->
-                    Toast.makeText(activity, "Error: " + e.toString(), Toast.LENGTH_LONG).show());
+                    Toast.makeText(activity, getString(R.string.onFailureError) + e.toString(), Toast.LENGTH_LONG).show());
         }
 
         @Override
@@ -256,7 +250,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
             }
             if (!response.isSuccessful()) {
                 activity.runOnUiThread(() ->
-                        Toast.makeText(activity, "Error: " + response.toString(), Toast.LENGTH_LONG).show());
+                        Toast.makeText(activity, getString(R.string.onFailureError) + response.toString(), Toast.LENGTH_LONG).show());
             } else {
                 activity.onPaymentSuccess(response);
             }
@@ -291,21 +285,23 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         "Payment completed", "Payment Successful! Thank you"
 //                        gson.toJson(paymentIntent)
                 );
-//                Cart.forPay.clear();
-                Cart.products.clear();
 
-                Intent intent = new Intent(activity,  MainActivity.class);
 
+                      // creating intent to send user back to main page once payment is successful
+                     Intent intent = new Intent(activity,  MainActivity.class);
+                     // grabbing the current logged on user from the database
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    //grabbing database reference to nodes in Users table
                     DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
+                    // saving each product and events that the current user purchased under 'Products Purchased' and 'Events Purchased' section of the Users table.
                     for(Product p: products) {
-                        productReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
+                        productReference.child(Objects.requireNonNull(user).getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                         if(p.getItem().contains("\\d+\\/\\d+\\/\\d+")){
-                            eventsReference.child(user.getUid()).child("Events Purchased").setValue(p);
+                            productReference.child(user.getUid()).child("Events Purchased").setValue(p);
                         }
                     }
+                    // removing purchased items from the cart
                     productReference.child(MainActivity.userID).child("Cart").removeValue();
 
                     startActivity(intent);
@@ -330,7 +326,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
     }
 
-private class MyListAdapter extends BaseAdapter {
+    /**
+     * Checkout Activity MyListAdapter
+     *  its purpose is to keep track of the items of the productlist as they scroll into and out of view on screen,
+     *  inflate the layout xml file for ServiceActivity and populate the appropriate Textviews accordingly.
+     */
+    private class MyListAdapter extends BaseAdapter {
 
         public int getCount() {
             return products.size();
@@ -349,9 +350,9 @@ private class MyListAdapter extends BaseAdapter {
             newView = inflater.inflate(R.layout.payment_layout, parent, false);
             Product u = getItem(position);
             TextView item = newView.findViewById(R.id.paymentTitle);
-            item.setText("  "+u.getItem());
+            item.setText(String.valueOf(u.getItem()));
             TextView price = newView.findViewById(R.id.paymentPrice);
-            price.setText("  "+formatter.format(u.getPrice()));
+            price.setText(String.valueOf(formatter.format(u.getPrice())));
             ImageView thumbnail = newView.findViewById(R.id.paymentImage);
             thumbnail.setImageBitmap(i1);
             //return it to be put in the table

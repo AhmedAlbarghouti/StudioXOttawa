@@ -191,4 +191,12 @@
     <string name="cancel">cancel</string>
     <string name="place_order">Place Order</string>
     <string name="book_event">Book Event</string>
+    <string name="sa_cancel">Cancel</string>
+    <string name="sa_add">Add</string>
+    <string name="sa_toCart">to Cart?</string>
+    <string name="sa_dialog_add">Add </string>
+    <string name="EmptyCart">Cart is Empty</string>
+    <string name="onFailureError">Error: </string>
+    <string name="successful_product_adding">Product Successfully Added!</string>
+    <string name="invalid_input">Invalid inputs</string>
 </resources>

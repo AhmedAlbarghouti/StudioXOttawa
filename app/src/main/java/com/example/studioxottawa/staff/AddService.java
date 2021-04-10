@@ -22,6 +22,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 
+/***
+ * Add Service Class
+ * this class allows admin to the add new products and services to the database.
+ * Variables
+ *     private EditText productName
+ *     private EditText productPrice
+ *     private Button add_product
+ *     private ImageView productImage
+ *     private Bitmap imageBitmap
+ *     private static final int GO_TO_GALLERY
+ */
 public class AddService extends AppCompatActivity {
     private EditText productName,productPrice;
     private Button add_product;
@@ -57,6 +68,10 @@ public class AddService extends AppCompatActivity {
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
+
+    /***
+     * this method accepts the admin inputs and uses them to create a new product in the database.
+     */
     public void  createProduct(){
         String item= productName.getText().toString();
         String price= productPrice.getText().toString();
@@ -68,19 +83,28 @@ public class AddService extends AppCompatActivity {
 
             DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Products");
             eventsReference.child(newProduct.getItem()).setValue(newProduct);
-            Toast.makeText(this,"Product Successfully Added!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.successful_product_adding),Toast.LENGTH_SHORT).show();
             finish();
         }else{
 
-            Toast.makeText(this,"Invalid Entries",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.invalid_input),Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * this method opens the phone gallery and allows user to select an image to be used for
+     * the product being adapted
+     */
     private void openGallery() {
         Intent intent= new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent,GO_TO_GALLERY);
     }
+
+    /***
+     * this method upon returning to the app  after the image is selected it sets the image.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

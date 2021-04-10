@@ -22,6 +22,15 @@ import android.widget.Toast;
 import com.example.studioxottawa.R;
 import com.google.android.material.navigation.NavigationView;
 
+/***
+ * Contact class
+ * this class allows the current user to send an email to Studio X Ottawa.
+ *
+ * Variable
+ *     private static String[] ADDRESS
+ *     private EditText subject
+ *     private EditText message
+ */
 public class contact extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
 
@@ -32,16 +41,18 @@ public class contact extends AppCompatActivity  implements NavigationView.OnNavi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
-
+         //initializing the Views the subject , message textfield.
          subject = findViewById(R.id.subjectEditText);
          message = findViewById(R.id.message_editText);
 
+        Toolbar tBar = findViewById(R.id.toolbar);
+        setSupportActionBar(tBar);
+
+         // initializing the send button
          Button send = findViewById(R.id.sendButton);
 
          send.setOnClickListener(view -> sendEmail());
 
-         Toolbar tBar = findViewById(R.id.toolbar);
-         setSupportActionBar(tBar);
 
          DrawerLayout drawer = findViewById(R.id.drawer_layout);
          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, tBar, R.string.Open, R.string.Close);
@@ -54,12 +65,20 @@ public class contact extends AppCompatActivity  implements NavigationView.OnNavi
 
     }//on create
 
+    /***
+     * this message retrieves all the information entered in the textfields,
+     * launches an Email client and populates the necessary fields with the information
+     * entered by the user in the fields.
+     */
      public void sendEmail(){
-
+            // initializing intent to open an email client.
             Intent intent=new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:"));
+            //passing along the email address to be used.
             intent.putExtra(Intent.EXTRA_EMAIL,ADDRESS);
+            // passing along the subject line of the email.
             intent.putExtra(Intent.EXTRA_SUBJECT,subject.getText().toString());
+           // passing along the message body of the email.
             intent.putExtra(Intent.EXTRA_TEXT,message.getText().toString());
 
             startActivity(Intent.createChooser(intent,"Choose one application"));

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 >
 
@@ -23,15 +24,23 @@
         android:id="@+id/summaryOfPurchase"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:layout_below="@id/CheckoutStudioXLogo"
+        android:textColor="@color/white"
         android:layout_above="@id/ItemPurchView"
         android:layout_marginBottom="10dp"
         android:text="@string/purchaseSummary"/>
+
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:layout_above="@id/payButton"
         android:layout_marginRight="20dp"/>
     <Button
@@ -39,6 +48,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/payButton"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-light"
+        android:textSize="15sp"
         android:backgroundTint="@color/StudioXPink"
         android:layout_marginTop="20dp"
         android:layout_alignParentBottom="true"/>
@@ -49,23 +61,32 @@
         android:layout_below="@id/CheckoutStudioXLogo"
         android:layout_above="@id/amountText"
         android:id="@+id/ItemPurchView"/>
+
     <TextView
+        android:id="@+id/labelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/amount"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_above="@id/cardInputWidget"
-        android:id="@+id/labelText"/>
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginBottom="0dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/amount"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/amountText"
-        android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:layout_above="@id/cardInputWidget"
         android:text="0.00"
         android:layout_toRightOf="@+id/labelText"/>
@@ -79,7 +100,9 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginEnd="10sp"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:text="$"
         />
 

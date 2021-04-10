@@ -18,9 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/paymentImage"
-        android:textSize="16sp"
-        android:textColor="@color/StudioXPink"
+
         android:textStyle="bold|italic"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:text="Title" />
 
     <TextView
@@ -28,13 +31,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textColor="@color/black"
         android:layout_toRightOf="@id/paymentImage"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/paymentTitle"
         android:text="80.50"
-        android:textSize="14sp"
         android:textStyle="bold|italic"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         />
 
     <TextView
@@ -50,9 +55,12 @@
         android:layout_toRightOf="@id/paymentImage"
         android:text="$"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        />
 
 
 </RelativeLayout>

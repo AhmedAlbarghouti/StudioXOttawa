@@ -37,7 +37,20 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-//public class Cart extends AppCompatActivity {
+/***
+ * Cart  class
+ * This Class allows the current user to manipulate the items in their cart.
+ * Variables
+ *     public static ArrayList<Product> products = new ArrayList<>();
+ *     private final NumberFormat formatter
+ *     private double price
+ *     private CartAdapter myAdapter
+ *     private TextView priceTv
+ *     private Boolean isEvent = false
+ *     private Bitmap i1
+ *     private FragmentActivity fragmentActivity
+ *     ListView myList
+ */
 public class Cart extends Fragment {
     public static ArrayList<Product> products = new ArrayList<>();
     public static ArrayList<String> forPay;
@@ -45,19 +58,13 @@ public class Cart extends Fragment {
     private double price = 0;
     private CartAdapter myAdapter;
     private TextView priceTv;
-    private ArrayList<String> product;
     private Boolean isEvent = false;
-    private String eventKey;
     private String eventName;
     private Event event;
     private Bitmap i1;
     private FragmentActivity fragmentActivity;
     ListView myList;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_cart);
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class Cart extends Fragment {
         cancel.setOnClickListener(e -> {
             fragmentActivity.finish();
         });
-        load();
+
 
 
 
@@ -89,7 +96,7 @@ public class Cart extends Fragment {
             myAdapter.notifyDataSetChanged();
             return true;
         });
-
+            load();
 
         placeOrder.setOnClickListener(btn -> {
 
@@ -102,42 +109,12 @@ public class Cart extends Fragment {
         });
         return root;
     }
-
-
-
-    public void loadEvent() {
-
-        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events").child(eventKey);
-        referenceEvents.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                String name = String.valueOf(snapshot.child("name").getValue());
-                String date = String.valueOf(snapshot.child("date").getValue());
-                String time = String.valueOf(snapshot.child("time").getValue());
-                String staff = String.valueOf(snapshot.child("staff").getValue());
-                String uid = String.valueOf(snapshot.child("uid").getValue());
-
-                event=new Event(name,date,time,staff,uid);
-                eventName= name+" "+date+" "+time+" with "+staff;
-                Product temp = new Product(eventName,25.00,1);
-                products.add(temp);
-                calculatePrice();
-                Log.i("value", name);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
+    /**
+     * This method loads the products that is in the current user's cart from the Firebase realtime database  and load it into an arraylist of products
+     */
     public void load(){
         DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
-//                    DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
+
                     referenceServices.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -165,7 +142,7 @@ public class Cart extends Fragment {
 
 
                     });
-//                    myAdapter.notifyDataSetChanged();
+                    myAdapter.notifyDataSetChanged();
                 }
     public void  calculatePrice(){
         price=0;
