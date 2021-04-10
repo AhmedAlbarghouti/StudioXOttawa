@@ -68,12 +68,7 @@ public class Cart extends Fragment {
         if(!products.isEmpty()) {
             products.clear();
         }
-//        product = getArguments().getStringArrayList("List");
 
-//        product = getIntent().getExtras().getStringArrayList("List");
-//
-//        eventKey = getIntent().getExtras().getString("UID");
-//        isEvent = getIntent().getExtras().getBoolean("isService");
         priceTv = root.findViewById(R.id.amountText);
         myList = root.findViewById(R.id.ItemPurchView);
         Button placeOrder = root.findViewById(R.id.checkoutButton);
@@ -84,11 +79,7 @@ public class Cart extends Fragment {
             fragmentActivity.finish();
         });
         load();
-//        if (isEvent) {
-//            loadEvent();
-//        } else {
-//            loadProducts();
-//        }
+
 
 
 
@@ -113,18 +104,7 @@ public class Cart extends Fragment {
     }
 
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode==1000) {
-//            forPay.clear();
-//            products.clear();
-//            myAdapter.notifyDataSetChanged();
-//            fragmentActivity.setResult(1000);
-//            fragmentActivity.finish();
-//        }
-//
-//}
+
     public void loadEvent() {
 
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events").child(eventKey);
@@ -154,34 +134,7 @@ public class Cart extends Fragment {
             }
         });
     }
-//    public void loadProducts(){
-//        for (String s : product) {
-//            DatabaseReference referenceProduct = FirebaseDatabase.getInstance().getReference().child("Products").child(s);
-//            referenceProduct.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                    String item = String.valueOf(snapshot.child("item").getValue());
-//                    String price = String.valueOf(snapshot.child("price").getValue());
-//                    String quantity = String.valueOf(snapshot.child("quantity").getValue());
-//                    Product temp = new Product( item, Double.parseDouble(price), 1);
-//
-//
-//                    if(!(forPay.contains(item))){
-//                        forPay.add(item);
-//                    }
-//                    products.add(temp);
-//                    calculatePrice();
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//        }
-//
-//    }
+
     public void load(){
         DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
 //                    DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
@@ -193,7 +146,9 @@ public class Cart extends Fragment {
                                 String item= String.valueOf(ds.child("item").getValue());
                                 String price= String.valueOf(ds.child("price").getValue());
                                 String quantity= String.valueOf(ds.child("quantity").getValue());
-
+                                if(item.contains("\\d+\\/\\d+\\/\\d+")){
+                                    isEvent=true;
+                                }
                                 Log.e("Item",item);
                                 Log.e("price",price);
                                 Log.e("quantity",quantity);
@@ -280,7 +235,7 @@ public class Cart extends Fragment {
             holder.thumbnail.setImageBitmap(i1);
             holder.price.setText(formatter.format(product.getPrice()));
             holder.quantity.setText(String.valueOf(product.getQuantity()));
-//            DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
 
             holder.btn_plus.setOnClickListener(view1 -> {
@@ -289,7 +244,7 @@ public class Cart extends Fragment {
                 holder.quantity.setText(String.valueOf(product.getQuantity()));
                 DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-//                eventsReference.child(product.getItem()).child("Cart").child(productInCa.getItem()).setValue(product);
+
                 eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).setValue(product);
                 calculatePrice();
             });
@@ -304,17 +259,18 @@ public class Cart extends Fragment {
                     holder.quantity.setText(String.valueOf(product.getQuantity()));
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-//                eventsReference.child(product.getItem()).child("Cart").child(productInCa.getItem()).setValue(product);
+
                     eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).setValue(product);
                     calculatePrice();
                 }
                 // removing Item from cart
                 if(qty==0){
-
-                    products.remove(product); //new
-//                    forPay.remove(product.getItem());//new
+//
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
                     eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).removeValue();
+                    products.remove(product); //new
+                    myAdapter.notifyDataSetChanged();
+
                 }
             });
 

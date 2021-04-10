@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.welcome.MainActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class BookAppointments extends AppCompatActivity {
 
@@ -37,9 +41,14 @@ public class BookAppointments extends AppCompatActivity {
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
 
+
+
         //Universally Unique Event ID
         String Uid = passedEvent.getString("EVENT_UID");
-
+        String itemName= eventName+" "+eventDate+" "+eventTime+" with "+eventStaff;
+        Product productInCart = new Product(itemName,25.00,1);
+        DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        eventsReference.child(MainActivity.userID).child("Cart").child(productInCart.getItem()).setValue(productInCart);
         bookbtn.setOnClickListener(click-> {
             //Change second argument to goto class
             Intent bookingIntent = new Intent(BookAppointments.this, Cart.class);

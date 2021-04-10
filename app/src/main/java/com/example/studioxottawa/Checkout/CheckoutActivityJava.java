@@ -295,25 +295,21 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 Cart.products.clear();
 
                 Intent intent = new Intent(activity,  MainActivity.class);
-                if(isEvent){
+
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
+                    DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-
-                    startActivity(intent);
-                }else if(!isEvent){
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
                     for(Product p: products) {
-                        eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
+                        productReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
+                        if(p.getItem().contains("\\d+\\/\\d+\\/\\d+")){
+                            eventsReference.child(user.getUid()).child("Events Purchased").setValue(p);
+                        }
                     }
-                    eventsReference.child(MainActivity.userID).child("Cart").removeValue();
+                    productReference.child(MainActivity.userID).child("Cart").removeValue();
 
                     startActivity(intent);
-                }
+
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
