@@ -68,11 +68,12 @@ public class VODLibraryFragment extends Fragment {
     private final int PREMIUM_LIBRARY = 2;
     private final int YOUTUBE_LIBRARY = 1;
     private final int FREE_LIBRARY = 0;
-
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
-
+    private TextView pageNum;
+    private ImageButton nextPage;
+    private ImageButton prevPage;
     //Checks User Authorization via Firebase to enable/disable video types as necessary
     private void authorize(Button premButton) {
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -135,7 +136,7 @@ public class VODLibraryFragment extends Fragment {
         //Does nothing if already on Free Video tab
         if (currLibrary != FREE_LIBRARY) {
             currLibrary = FREE_LIBRARY;
-            TextView pageNum = getActivity().findViewById(R.id.pageNum);
+
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
@@ -238,7 +239,9 @@ public class VODLibraryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_vod_library,container,false);
 
-
+        pageNum = root.findViewById(R.id.pageNum);
+        prevPage = root.findViewById(R.id.prevPage);
+        nextPage = root.findViewById(R.id.nextPage);
         ListView vodDisplay = root.findViewById(R.id.vod_list);
         vodDisplay.setAdapter(adapter);
 
@@ -281,7 +284,6 @@ public class VODLibraryFragment extends Fragment {
 
     //Method to dynamically disable the next page button
     private void disableNextPage() {
-        ImageButton nextPage = getActivity().findViewById(R.id.nextPage);
 
         nextPage.setAlpha((float) 0.3);
         nextPage.setClickable(false);
@@ -289,7 +291,6 @@ public class VODLibraryFragment extends Fragment {
     }
     //Method to dynamically disable the previous page button
     private void disablePrevPage() {
-        ImageButton prevPage =  getActivity().findViewById(R.id.prevPage);
 
         prevPage.setEnabled(false);
         prevPage.setClickable(false);
