@@ -40,7 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".VODPlayer.VODLibraryActivity" />
-        <activity android:name=".VODPlayer.VODActivity" />
+        <activity android:name=".VODPlayer.VODActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"/>
         <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
         <activity android:name=".welcome.MainActivity" />
