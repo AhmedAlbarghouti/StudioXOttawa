@@ -260,10 +260,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 );
                 Cart.forPay.clear();
                 Cart.products.clear();
-                ServicesActivity.productList.clear();
-                ServicesActivity.stringList.clear();
-                ServicesActivity.deleteSharedPrefs();
-                ServicesActivity.updateCartIcon();
+
                 Intent intent = new Intent(activity,  MainActivity.class);
                 if(isEvent){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

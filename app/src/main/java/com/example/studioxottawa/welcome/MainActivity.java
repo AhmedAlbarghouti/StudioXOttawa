@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID;
+    public static String userID;
     private TextView userTV;
 
 
@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ScheduleFragment();
                 }if (item.getItemId()==R.id.nav_store){
                     selectedFragment= new ServicesActivity();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("UID",userID);
+                    selectedFragment.setArguments(bundle);
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
