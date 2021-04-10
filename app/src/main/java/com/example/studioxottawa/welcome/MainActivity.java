@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
                 if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
                 }
+                if(item.getItemId() == R.id.nav_account){
+                    selectedFragment = new AccountFragment();
+                }
+
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
                 return true;
