@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_checkout_java"
-    tools:context=".Checkout.CheckoutActivityJava">
+>
 
     <ImageView
         android:layout_width="150dp"
@@ -22,13 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/summaryOfPurchase"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_above="@id/ItemPurchView"
         android:layout_marginBottom="10dp"
         android:text="@string/purchaseSummary"/>
-
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
         android:layout_width="match_parent"
@@ -41,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/payButton"
+        android:backgroundTint="@color/StudioXPink"
         android:layout_marginTop="20dp"
         android:layout_alignParentBottom="true"/>
 
@@ -55,25 +54,20 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/amount"
-        android:layout_above="@id/cardInputWidget"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_toStartOf="@id/symbol"
         android:textColor="@color/black"
+        android:layout_above="@id/cardInputWidget"
         android:id="@+id/labelText"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/amountText"
-        android:layout_alignParentEnd="true"
-        android:textStyle="bold"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_above="@id/cardInputWidget"
-        android:layout_centerHorizontal="true"
         android:text="0.00"
-        android:layout_marginRight="140dp"
-        android:hint="$$$"
         android:layout_toRightOf="@+id/labelText"/>
 
     <TextView
@@ -82,32 +76,12 @@
         android:id="@+id/symbol"
         android:layout_toRightOf="@+id/amountText"
         android:layout_above="@id/cardInputWidget"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="10sp"
+        android:textColor="@color/black"
         android:text="$"
         />
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:text="Amount: "-->
-    <!--        android:layout_above="@id/cardInputWidget"-->
-    <!--        android:id="@+id/labelText"/>-->
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:id="@+id/amountText"-->
-    <!--        android:layout_above="@id/cardInputWidget"-->
-    <!--        android:text="0.00"-->
-    <!--        android:hint="$$$"-->
-    <!--        android:layout_toRightOf="@+id/labelText"/>-->
-
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:id="@+id/symbol"-->
-    <!--        android:layout_toRightOf="@+id/amountText"-->
-    <!--        android:layout_above="@id/cardInputWidget"-->
-    <!--        android:text="$"-->
-    <!--        />-->
 
 
 </RelativeLayout>

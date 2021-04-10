@@ -20,10 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.services.ServicesActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,10 +36,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class Cart extends AppCompatActivity {
-
-    private ArrayList<Product> products = new ArrayList<>();
-    private ArrayList<String> forPay;
+//public class Cart extends AppCompatActivity {
+public class Cart extends Fragment {
+    public static ArrayList<Product> products = new ArrayList<>();
+    public static ArrayList<String> forPay;
     private final NumberFormat formatter = new DecimalFormat("#0.00");
     private double price = 0;
     private CartAdapter myAdapter;
@@ -48,25 +50,34 @@ public class Cart extends AppCompatActivity {
     private String eventName;
     private Event event;
     private Bitmap i1;
+    private FragmentActivity fragmentActivity;
     ListView myList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_cart);
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_cart, container, false);
+        fragmentActivity=this.getActivity();
         i1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo_studioxottawa);
         forPay = new ArrayList<String>();
-        product = getIntent().getExtras().getStringArrayList("List");
-        eventKey = getIntent().getExtras().getString("UID");
-        isEvent = getIntent().getExtras().getBoolean("isService");
-        priceTv = findViewById(R.id.amountText);
-        myList = findViewById(R.id.ItemPurchView);
-        Button placeOrder = findViewById(R.id.checkoutButton);
-        Button cancel = findViewById(R.id.cancelButton);
+        product = getArguments().getStringArrayList("List");
+
+//        product = getIntent().getExtras().getStringArrayList("List");
+//
+//        eventKey = getIntent().getExtras().getString("UID");
+//        isEvent = getIntent().getExtras().getBoolean("isService");
+        priceTv = root.findViewById(R.id.amountText);
+        myList = root.findViewById(R.id.ItemPurchView);
+        Button placeOrder = root.findViewById(R.id.checkoutButton);
+        Button cancel = root.findViewById(R.id.cancelButton);
 
 
         cancel.setOnClickListener(e -> {
-            finish();
+            fragmentActivity.finish();
         });
 
         if (isEvent) {
@@ -77,7 +88,7 @@ public class Cart extends AppCompatActivity {
 
 
 
-        myList.setAdapter(myAdapter = new CartAdapter(this));
+        myList.setAdapter(myAdapter = new CartAdapter(root.getContext()));
         myList.setOnItemLongClickListener((parent, view, position, id) -> {
             products.remove(position);
             myAdapter.notifyDataSetChanged();
@@ -86,25 +97,27 @@ public class Cart extends AppCompatActivity {
 
 
         placeOrder.setOnClickListener(btn -> {
-            Intent pay = new Intent(this, CheckoutActivityJava.class);
+
+            Intent pay = new Intent(root.getContext(), CheckoutActivityJava.class);
             pay.putExtra("isService", isEvent);
             pay.putExtra("EventObj", event);
             pay.putExtra("Total Price", price);
             pay.putStringArrayListExtra("forPay", forPay);
             startActivityForResult(pay, 1);
         });
+        return root;
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1000) {
             forPay.clear();
             products.clear();
             myAdapter.notifyDataSetChanged();
-            setResult(1000);
-            finish();
+            fragmentActivity.setResult(1000);
+            fragmentActivity.finish();
         }
 
 }
@@ -260,10 +273,14 @@ public class Cart extends AppCompatActivity {
 
                     products.remove(product); //new
                     forPay.remove(product.getItem());//new
-
+                    ServicesActivity.stringToSave=ServicesActivity.stringToSave.replace(product.getItem()+"::","");
+                    ServicesActivity.saveSharedPrefs(ServicesActivity.stringToSave);
                     if(products.size()==0){
-                        setResult(1000);
-                        finish();
+                        ServicesActivity.productList.clear();
+                        ServicesActivity.stringList.clear();
+                        ServicesActivity.deleteSharedPrefs();
+                        ServicesActivity.updateCartIcon();
+
                     }
                 }
             });

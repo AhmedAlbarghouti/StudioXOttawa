@@ -44,13 +44,13 @@ public class ServicesActivity extends Fragment {
     private AlertDialog.Builder builder;
     private final NumberFormat formatter = new DecimalFormat("#0.00");
     private Bitmap i1;
-    private SharedPreferences prefs=null;
-    private ArrayList<Product> productList = new ArrayList<>();
-    private ArrayList<String> stringList=new ArrayList<>();
+    public static SharedPreferences prefs=null;
+    public static ArrayList<Product> productList = new ArrayList<>();
+    public static ArrayList<String> stringList=new ArrayList<>();
     private ListView servicesView;
-    private ImageButton goToCart;
-    private String stringToSave="";
-    private StringBuilder sb= new StringBuilder(stringToSave);
+    public static ImageButton goToCart;
+    public static String stringToSave="";
+//    private StringBuilder sb= new StringBuilder(stringToSave);
 
     @Nullable
     @Override
@@ -76,16 +76,16 @@ public class ServicesActivity extends Fragment {
             if (stringList.size() == 0) {
                 Toast.makeText(root.getContext(), "Cart is Empty", Toast.LENGTH_SHORT).show();
             } else {
-//                Fragment selectedFragment= new Cart();
+                Fragment selectedFragment= new Cart();
+
+                Bundle bundle= new Bundle();
+                bundle.putStringArrayList("List",stringList);
+                selectedFragment.setArguments(bundle);
+                getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
 //
-//                Bundle bundle= new Bundle();
-//                bundle.putStringArrayList("List",stringList);
-//                selectedFragment.setArguments(bundle);
-//                getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
-////
-                 Intent viewCart = new Intent(root.getContext(), Cart.class);
-                viewCart.putStringArrayListExtra("List", stringList);
-                startActivityForResult(viewCart, 1);
+//                 Intent viewCart = new Intent(root.getContext(), Cart.class);
+//                viewCart.putStringArrayListExtra("List", stringList);
+//                startActivityForResult(viewCart, 1);
 
 
 
@@ -101,9 +101,8 @@ public class ServicesActivity extends Fragment {
 
             builder.setPositiveButton("Add", (dialogInterface, i) -> {
 
-                sb.append(productList.get(position).getItem());
-                sb.append( "::");
-                saveSharedPrefs(sb.toString());
+                stringToSave+=productList.get(position).getItem()+"::";
+                saveSharedPrefs(stringToSave);
                 stringList.add(productList.get(position).getItem());
                 updateCartIcon();
             });
@@ -114,6 +113,7 @@ public class ServicesActivity extends Fragment {
     }
 
     public void loadCart(){
+        stringList.clear();
         prefs=  this.getActivity().getSharedPreferences("Cart",Context.MODE_PRIVATE);
         String items= prefs.getString("Items","");
         if(!items.isEmpty()) {
@@ -121,23 +121,23 @@ public class ServicesActivity extends Fragment {
             stringList.addAll(Arrays.asList(savedItems));
         }
     }
-    private void deleteSharedPrefs() {
+    public static void deleteSharedPrefs() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear().apply();
     }
-    private void saveSharedPrefs(String stringToSave) {
+    public static void saveSharedPrefs(String stringToSave) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Items", stringToSave);
         editor.apply();
     }
-    public void updateCartIcon(){
+    public static void updateCartIcon(){
         if(!productList.isEmpty() || !stringList.isEmpty()){
             goToCart.setImageResource(R.drawable.shopping_cart_with_item);
         }else{
             goToCart.setImageResource(R.drawable.shopping_cart_empty);
         }
     }
-    @Override
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

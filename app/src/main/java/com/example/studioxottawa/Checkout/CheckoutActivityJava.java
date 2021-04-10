@@ -23,6 +23,9 @@ import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
 
 import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.services.ServicesActivity;
+import com.example.studioxottawa.welcome.MainActivity;
+import com.example.studioxottawa.welcome.WelcomePage;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -255,14 +258,21 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         "Payment completed", "Payment Successful! Thank you"
 //                        gson.toJson(paymentIntent)
                 );
+                Cart.forPay.clear();
+                Cart.products.clear();
+                ServicesActivity.productList.clear();
+                ServicesActivity.stringList.clear();
+                ServicesActivity.deleteSharedPrefs();
+                ServicesActivity.updateCartIcon();
+                Intent intent = new Intent(activity,  MainActivity.class);
                 if(isEvent){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
                     eventsReference.child(user.getUid()).child("Events Purchased").setValue(event);
 
-                    setResult(1000);
-                    finish();
+
+                    startActivity(intent);
                 }else if(!isEvent){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -271,8 +281,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
 
-                    setResult(1000);
-                    finish();
+                    startActivity(intent);
                 }
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
