@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 
+import com.example.studioxottawa.VODPlayer.VODLibraryFragment;
 import com.example.studioxottawa.news.News;
 
 import com.example.studioxottawa.news.NewsFragment;
@@ -88,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.nav_news){
                     selectedFragment = new NewsFragment();
                 }
-                if(item.getItemId() == R.id.nav_schedule){
+                else if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
+                }
+                else if(item.getItemId() == R.id.nav_vod) {
+                    selectedFragment = new VODLibraryFragment();
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();

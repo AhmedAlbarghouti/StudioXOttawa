@@ -1,8 +1,5 @@
 package com.example.studioxottawa.VODPlayer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,8 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.studioxottawa.R;
-import com.example.studioxottawa.welcome.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +53,7 @@ import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
 
-public class VODLibraryActivity extends AppCompatActivity {
+public class VODLibraryFragment extends Fragment {
     YoutubeAPIConnector connection;
     ArrayList<Video> videoLibrary = new ArrayList<>();
     ArrayList<Video> currentPage = new ArrayList<>();
@@ -101,7 +102,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         if (currLibrary != PREMIUM_LIBRARY) {
 
             currLibrary = PREMIUM_LIBRARY;
-            TextView pageNum = findViewById(R.id.pageNum);
+            TextView pageNum = getActivity().findViewById(R.id.pageNum);
             //If the current video library page contains videos, wipe the data in preparation for new data
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
@@ -109,8 +110,8 @@ public class VODLibraryActivity extends AppCompatActivity {
             }
 
             if (premiumLibrary.size() == 0) { //Test Section, adds videos if no videos are present, adds them to the premiumLibrary
-                Video meditationVid = new Video("Deep Breathing Meditation", "breathing_meditation.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.meditation), Video.PREMIUM_MODIFIER);
-                Video lionsVid = new Video("Hearts & Colors: Lions", "hearts_and_colors_lions.mp4", BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.lions), Video.PREMIUM_MODIFIER);
+                Video meditationVid = new Video("Deep Breathing Meditation", "breathing_meditation.mp4", BitmapFactory.decodeResource(getActivity().getBaseContext().getResources(),R.drawable.meditation), Video.PREMIUM_MODIFIER);
+                Video lionsVid = new Video("Hearts & Colors: Lions", "hearts_and_colors_lions.mp4", BitmapFactory.decodeResource(getActivity().getBaseContext().getResources(),R.drawable.lions), Video.PREMIUM_MODIFIER);
                 premiumLibrary.add(meditationVid);
                 premiumLibrary.add(lionsVid);
             }
@@ -134,7 +135,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         //Does nothing if already on Free Video tab
         if (currLibrary != FREE_LIBRARY) {
             currLibrary = FREE_LIBRARY;
-            TextView pageNum = findViewById(R.id.pageNum);
+            TextView pageNum = getActivity().findViewById(R.id.pageNum);
             if (videoLibrary.size() != 0) {
                 videoLibrary.clear();
                 currentPage.clear();
@@ -162,9 +163,9 @@ public class VODLibraryActivity extends AppCompatActivity {
         if (currLibrary != YOUTUBE_LIBRARY) {
             //Sets current library to youtube Library
             currLibrary = YOUTUBE_LIBRARY;
-            TextView pageNum = findViewById(R.id.pageNum);
-            ImageButton nextPage = findViewById(R.id.nextPage);
-            ImageButton prevPage = findViewById(R.id.prevPage);
+            TextView pageNum = getActivity().findViewById(R.id.pageNum);
+            ImageButton nextPage = getActivity().findViewById(R.id.nextPage);
+            ImageButton prevPage = getActivity().findViewById(R.id.prevPage);
 
             //Clears current Library in preparation for new data to prevent merging
             if (videoLibrary.size() != 0) {
@@ -234,17 +235,16 @@ public class VODLibraryActivity extends AppCompatActivity {
 
     //Start point of activity. Sets up listeners for the menu, and loads the free videos to start.
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vod_library);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_vod_library,container,false);
 
 
-        ListView vodDisplay = findViewById(R.id.vod_list);
+        ListView vodDisplay = root.findViewById(R.id.vod_list);
         vodDisplay.setAdapter(adapter);
 
-        Button freeButton = findViewById(R.id.freeVidsButton);
-        Button youtubeButton = findViewById(R.id.youtubeButton);
-        Button premiumButton = findViewById(R.id.premiumVids);
+        Button freeButton = root.findViewById(R.id.freeVidsButton);
+        Button youtubeButton = root.findViewById(R.id.youtubeButton);
+        Button premiumButton = root.findViewById(R.id.premiumVids);
 
         authorize(premiumButton);
 
@@ -256,13 +256,14 @@ public class VODLibraryActivity extends AppCompatActivity {
 
         loadFreeLibrary();
 
-        TextView pageNum = findViewById(R.id.pageNum);
+        TextView pageNum = root.findViewById(R.id.pageNum);
         pageNum.setText(String.valueOf(getPageNum()));
+        return root;
     }
 
     //Method to dynamically enable the next page button
     private void enableNextPage() {
-        ImageButton nextPage = findViewById(R.id.nextPage);
+        ImageButton nextPage = getActivity().findViewById(R.id.nextPage);
 
         nextPage.setAlpha((float) 1.0);
         nextPage.setClickable(true);
@@ -271,7 +272,7 @@ public class VODLibraryActivity extends AppCompatActivity {
 
     //Method to dynamically enable the previous page button
     private void enablePrevPage() {
-        ImageButton prevPage =  findViewById(R.id.prevPage);
+        ImageButton prevPage =  getActivity().findViewById(R.id.prevPage);
 
         prevPage.setAlpha((float) 1.0);
         prevPage.setClickable(true);
@@ -280,7 +281,7 @@ public class VODLibraryActivity extends AppCompatActivity {
 
     //Method to dynamically disable the next page button
     private void disableNextPage() {
-        ImageButton nextPage = findViewById(R.id.nextPage);
+        ImageButton nextPage = getActivity().findViewById(R.id.nextPage);
 
         nextPage.setAlpha((float) 0.3);
         nextPage.setClickable(false);
@@ -288,7 +289,7 @@ public class VODLibraryActivity extends AppCompatActivity {
     }
     //Method to dynamically disable the previous page button
     private void disablePrevPage() {
-        ImageButton prevPage =  findViewById(R.id.prevPage);
+        ImageButton prevPage =  getActivity().findViewById(R.id.prevPage);
 
         prevPage.setEnabled(false);
         prevPage.setClickable(false);
@@ -398,14 +399,14 @@ public class VODLibraryActivity extends AppCompatActivity {
                                 image = BitmapFactory.decodeStream(imageConnection.getInputStream());
                             }
 
-                            FileOutputStream outputStream = openFileOutput(vidId + ".jpg", Context.MODE_PRIVATE);
+                            FileOutputStream outputStream = getActivity().openFileOutput(vidId + ".jpg", Context.MODE_PRIVATE);
                             image.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
                             outputStream.flush();
                             outputStream.close();
                         } else {
                             FileInputStream fis = null;
                             try {
-                                fis = openFileInput(vidId + ".jpg");
+                                fis = getActivity().openFileInput(vidId + ".jpg");
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -418,12 +419,12 @@ public class VODLibraryActivity extends AppCompatActivity {
                         if (i <= 10)
                             currentPage.add(newVideo); //Adds first 10 results to the current page listing
                     }
-                    runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         //Update the library dataset, page number and next button opacity.
                         @Override
                         public void run() {
                             adapter.notifyDataSetChanged();
-                            TextView pageNumView = findViewById(R.id.pageNum);
+                            TextView pageNumView = getActivity().findViewById(R.id.pageNum);
                             pageNumView.setText(String.valueOf(getPageNum()));
 
                         }
@@ -443,7 +444,7 @@ public class VODLibraryActivity extends AppCompatActivity {
         }
 
         public boolean fileExistance(String fname){
-            File file = getBaseContext().getFileStreamPath(fname);
+            File file = getActivity().getBaseContext().getFileStreamPath(fname);
             return file.exists();
         }
 
@@ -542,11 +543,11 @@ public class VODLibraryActivity extends AppCompatActivity {
                 iv.setImageBitmap(currVideo.getThumbnail());
             }
             newView.setOnClickListener(v -> {//Handler for when a video is clicked on
-                if (currVideo.getType()==Video.YOUTUBE_MODIFIER) { //Runs the code to pull youtube video data, pass it through the encryption api and loads it to player
+                if (currVideo.getType()== Video.YOUTUBE_MODIFIER) { //Runs the code to pull youtube video data, pass it through the encryption api and loads it to player
                     Log.d(ACTIVITY_NAME, "Starting extraction of youtube video URL");
                     Log.d(ACTIVITY_NAME, "URL to be extracted is: "+currVideo.getURL());
                     connection.terminate();
-                    new YouTubeExtractor(getBaseContext()) {
+                    new YouTubeExtractor(getActivity().getBaseContext()) {
                         @Override
                         public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
                             if (ytFiles != null) {
@@ -584,7 +585,7 @@ public class VODLibraryActivity extends AppCompatActivity {
     }
 
     private void onExtractionFailed() {
-        Toast playbackError = Toast.makeText(getBaseContext(), "A video playback error has occurred", Toast.LENGTH_SHORT);
+        Toast playbackError = Toast.makeText(getActivity().getBaseContext(), "A video playback error has occurred", Toast.LENGTH_SHORT);
         playbackError.show();
         Log.e(ACTIVITY_NAME, "A video playback error has occurred");
     }
@@ -592,7 +593,7 @@ public class VODLibraryActivity extends AppCompatActivity {
     //Launches the video player with the desired video URI
     private void launchVOD(String url) {
         Log.d(ACTIVITY_NAME, "Launching VOD");
-        Intent vodPlayback = new Intent(VODLibraryActivity.this, VODActivity.class);
+        Intent vodPlayback = new Intent(getActivity(), VODActivity.class);
         vodPlayback.putExtra("playbackURI", url);
         startActivity(vodPlayback);
     }
@@ -620,7 +621,7 @@ public class VODLibraryActivity extends AppCompatActivity {
 
     //Populates the current page on returning to the activity
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
             resetList();
