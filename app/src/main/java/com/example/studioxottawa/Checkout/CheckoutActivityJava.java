@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,11 +98,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
         // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
 
         price = getIntent().getExtras().getDouble("Total Price");
-        productsPurchase = getIntent().getStringArrayListExtra("forPay");
+        load();
+//        productsPurchase = getIntent().getStringArrayListExtra("forPay");
 
 
 
-        loadProducts();
+//        loadProducts();
         stripe = new Stripe(
                 getApplicationContext(),
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
@@ -135,6 +137,37 @@ public class CheckoutActivityJava extends AppCompatActivity {
             });
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public void load(){
+        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
+//                    DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
+        referenceServices.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                products.clear();
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    String item= String.valueOf(ds.child("item").getValue());
+                    String price= String.valueOf(ds.child("price").getValue());
+                    String quantity= String.valueOf(ds.child("quantity").getValue());
+
+                    Log.e("Item",item);
+                    Log.e("price",price);
+                    Log.e("quantity",quantity);
+                    Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                    products.add(temp);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
+//                    adapter.notifyDataSetChanged();
     }
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
@@ -258,7 +291,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         "Payment completed", "Payment Successful! Thank you"
 //                        gson.toJson(paymentIntent)
                 );
-                Cart.forPay.clear();
+//                Cart.forPay.clear();
                 Cart.products.clear();
 
                 Intent intent = new Intent(activity,  MainActivity.class);
@@ -277,6 +310,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     for(Product p: products) {
                         eventsReference.child(user.getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
                     }
+                    eventsReference.child(MainActivity.userID).child("Cart").removeValue();
 
                     startActivity(intent);
                 }
