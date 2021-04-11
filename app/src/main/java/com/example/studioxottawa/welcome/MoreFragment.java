@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MoreFragment extends Fragment {
 
-    private Button accountInfoBtn,eventsBtn,productsBtn,contactBtn,aboutBtn,signOutBtn,adminBtn;
+    private Button accountInfoBtn,eventsBtn,productsBtn,contactBtn,aboutBtn,signOutBtn,adminBtn,websiteBtn;
     private FirebaseUser user;
     private DatabaseReference reference;
 
@@ -41,6 +42,7 @@ public class MoreFragment extends Fragment {
         aboutBtn = root.findViewById(R.id.about_us_button);
         signOutBtn = root.findViewById(R.id.logout_button);
         adminBtn = root.findViewById(R.id.admin_portal_button);
+        websiteBtn = root.findViewById(R.id.website_Button);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -86,6 +88,13 @@ public class MoreFragment extends Fragment {
 
         adminBtn.setOnClickListener(click ->{
             goToAdminPortal();
+        });
+
+        websiteBtn.setOnClickListener(click -> {
+            Intent website = new Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.studioxottawa.com/"));
+                    startActivity(website);
         });
 
 

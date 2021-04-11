@@ -27,7 +27,6 @@ public class ViewAccountDetails extends AppCompatActivity {
         String userID = user.getUid();
 
         TextView FNameTV = findViewById(R.id.UserFName);
-        TextView LNameTV = findViewById(R.id.UserLName);
         TextView emailTV = findViewById(R.id.UserEmail);
         TextView phoneTV = findViewById(R.id.UserPhone);
 
@@ -36,13 +35,9 @@ public class ViewAccountDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User signInUser = snapshot.getValue(User.class);
                 String fullname = signInUser.fullName;
-                String[] split = fullname.split("\\s+");
-                String first = split[0];
-                String last = split[1];
                 String email = signInUser.email;
                 String phone = signInUser.PhoneNumber;
-                FNameTV.setText(first);
-                LNameTV.setText(last);
+                FNameTV.setText(fullname);
                 emailTV.setText(email);
                 phoneTV.setText(phone);
 

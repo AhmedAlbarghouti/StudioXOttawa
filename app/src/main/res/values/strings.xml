@@ -186,4 +186,8 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="our_latest_news">Our Latest News</string>
     <string name="calender_icon">Calender Icon</string>
+    <string name="website">Website</string>
+    <string name="account_details">Account Details</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_minus_colon">Email</string>
 </resources>
