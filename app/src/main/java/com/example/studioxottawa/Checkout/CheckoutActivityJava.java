@@ -299,15 +299,15 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 );
 
 
-                DatabaseReference prodRef= FirebaseDatabase.getInstance().getReference().child("Products Purchased").child(user.getUid());
-                DatabaseReference eventRef= FirebaseDatabase.getInstance().getReference().child("Events Purchased").child(user.getUid());
+                DatabaseReference prodRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Products Purchased");
+                DatabaseReference eventRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Events Purchased");
                 Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
                 for(Product p : products){
 
                     Matcher matcher=pattern.matcher(p.getItem());
                     isEvent=matcher.find();
                     if(isEvent){
-                        eventRef.child(p.getItem()).setValue(p);
+                        eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(p);
                     }else{
                         prodRef.child(p.getItem()).setValue(p);
                     }
