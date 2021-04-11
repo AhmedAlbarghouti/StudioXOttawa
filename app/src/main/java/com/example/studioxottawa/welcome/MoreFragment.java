@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.contact.ContactUs;
+import com.example.studioxottawa.staff.Report;
 import com.example.studioxottawa.staff.StaffMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +53,7 @@ public class MoreFragment extends Fragment {
                 Boolean isStaff = signInUser.staff;
                 if (isStaff) {
                     adminBtn.setVisibility(View.VISIBLE);
+                    Report.loadUsers();
                 }
             }
 
@@ -76,8 +78,16 @@ public class MoreFragment extends Fragment {
             goToAdminPortal();
         });
 
+        accountInfoBtn.setOnClickListener(click ->{
+            goToAccountInfo();
+        });
 
         return root;
+    }
+
+    private void goToAccountInfo(){
+        Intent accoutInfo = new Intent(getActivity(), UserInfo.class);
+        startActivity(accoutInfo);
     }
 
     private void goToAdminPortal() {
@@ -87,6 +97,7 @@ public class MoreFragment extends Fragment {
 
     private void signOutUser() {
         FirebaseAuth.getInstance().signOut();
+        LoginActivity.currentUser = null;
         startActivity(new Intent(getActivity(),LoginActivity.class));
     }
 

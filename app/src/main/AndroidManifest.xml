@@ -21,7 +21,8 @@
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
         <activity android:name=".contact.ContactUs" />
-        <activity android:name=".news.NewsActivity" />
+        <activity android:name=".staff.ReportDetail" />
+        <activity android:name=".welcome.UserInfo" />
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".aboutus.AboutusActivity" />
         <activity android:name=".schedule.BookAppointments" />
