@@ -232,25 +232,21 @@
     <string name="event_name">Event Name</string>
     <string name="call_studio_x_ottawa">Contact Studio X Ottawa</string>
     <string name="EventCreated">Event Created Successfully!</string>
-    <string name="no_date_selected">No Date Selected</string>
-    <string name="_6_00pm_6_55pm">6:00PM - 6:55PM</string>
-    <string name="fitness_class">Fitness Class</string>
-    <string name="create_new_event">Create New Event</string>
-    <string name="create_event">Create Event</string>
-    <string name="button_that_starts_up_datepickerdialog">Button that starts up DatePickerDialog</string>
     <string name="studioxlogo">StudioXLogo</string>
+    <string name="create_new_event">Create Event</string>
+    <string name="fitness_class">Fitness Class</string>
+    <string name="button_that_starts_up_datepickerdialog">Calender Icon</string>
+    <string name="no_date_selected">No Date Selected</string>
+    <string name="_6_00pm_6_55pm">6:00pm-6:55pm</string>
     <string name="forgot_password">Forgot Password</string>
-    <string name="our_latest_news">Our Latest News</string>
-    <string name="calender_icon">Calender Icon</string>
     <string name="website">Website</string>
+    <string name="our_latest_news">Our Latest News!</string>
+    <string name="calender_icon">Calender Icon</string>
+    <string name="administrator">Administrator</string>
     <string name="account_details">Account Details</string>
     <string name="full_name">Full Name</string>
     <string name="email_minus_colon">Email</string>
-    <string name="administrator">Administrator</string>
-    <string name="add_service">Add Service</string>
-    <string name="add_event">Add Event</string>
-    <string name="add_news">ADD NEWS</string>
-    <string name="report">Report</string>
-    <string name="clients">Clients:</string>
     <string name="staff_report">Staff Report</string>
+    <string name="clients">Clients</string>
+
 </resources>
