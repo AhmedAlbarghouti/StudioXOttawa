@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.ViewAccountDetails"></activity>
+        <activity android:name=".welcome.EventsBooked"></activity>
+        <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
@@ -41,7 +42,6 @@
         </activity>
         <activity android:name=".VODPlayer.VODLibraryActivity" />
         <activity android:name=".VODPlayer.VODActivity" />
-
         <activity android:name=".staff.Report" />
         <activity android:name=".welcome.MainActivity" />
         <activity android:name=".staff.StaffMenu" />

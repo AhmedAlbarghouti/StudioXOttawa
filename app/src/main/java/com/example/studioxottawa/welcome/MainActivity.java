@@ -44,6 +44,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Purpose Main Activity that will hold all 5 fragments that offer all of the app's functionality. can be traversed with Navigation Bar
+ * @Date April 2021
+ */
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
@@ -53,13 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.menuBottomNav);
+        BottomNavigationView bottomNav = findViewById(R.id.menuBottomNav); // bottom navigation bar init
         lv_ctxt = this;   //xiao
 
 
@@ -67,13 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser(); //gets the current logged in user
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
 
-            @Override
+            @Override // if nav item is selected then user will be redirected the selected fragment activity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
 

@@ -64,6 +64,14 @@ public class MoreFragment extends Fragment {
             goToAccountInfo();
         });
 
+        eventsBtn.setOnClickListener(click -> {
+            goToEventsBooked();
+        });
+
+        productsBtn.setOnClickListener(click ->{
+            goToProductsPurchased();
+        });
+
         aboutBtn.setOnClickListener(click -> {
             goToAboutUs();
         });
@@ -82,6 +90,16 @@ public class MoreFragment extends Fragment {
 
 
         return root;
+    }
+
+    private void goToProductsPurchased() {
+        Intent products = new Intent(getActivity(), EventsBooked.class);
+        startActivity(products);
+    }
+
+    private void goToEventsBooked() {
+        Intent events = new Intent(getActivity(), EventsBooked.class);
+        startActivity(events);
     }
 
     private void goToAccountInfo() {

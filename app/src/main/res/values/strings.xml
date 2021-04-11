@@ -174,5 +174,16 @@
     <string name="event_time">Event Time</string>
     <string name="event_date">Event Date</string>
     <string name="event_name">Event Name</string>
-    <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
+    <string name="call_studio_x_ottawa">Contact Studio X Ottawa</string>
+    <string name="EventCreated">Event Created Successfully!</string>
+    <string name="no_date_selected">No Date Selected</string>
+    <string name="_6_00pm_6_55pm">6:00PM - 6:55PM</string>
+    <string name="fitness_class">Fitness Class</string>
+    <string name="create_new_event">Create New Event</string>
+    <string name="create_event">Create Event</string>
+    <string name="button_that_starts_up_datepickerdialog">Button that starts up DatePickerDialog</string>
+    <string name="studioxlogo">StudioXLogo</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="our_latest_news">Our Latest News</string>
+    <string name="calender_icon">Calender Icon</string>
 </resources>

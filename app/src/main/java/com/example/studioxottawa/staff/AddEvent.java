@@ -53,7 +53,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         createNewEventButton.setOnClickListener(click -> {
             createNewEvent();
-            Toast.makeText(AddEvent.this, "Event Created Successfully!",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddEvent.this, getString(R.string.EventCreated),Toast.LENGTH_LONG).show();
             finish();
         });
     }
