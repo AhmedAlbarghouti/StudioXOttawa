@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     tools:context=".staff.AddEvent">
 
     <TextView
         android:id="@+id/add_Product_title"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
         android:text="@string/new_event"
         android:textSize="40sp"
         android:gravity="center"
-        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         />
@@ -24,6 +26,9 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         />
 
     <ImageButton
@@ -32,6 +37,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_name"
+        android:background="@color/Transparent"
         />
     <TextView
         android:id="@+id/newEventDateTV"
@@ -41,7 +47,10 @@
         android:layout_below="@id/new_product_name"
         android:text="@string/no_date"
         android:textSize="18sp"
-        android:layout_toRightOf="@id/new_product_image"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@id/new_product_image"
         />
 
     <EditText
@@ -51,6 +60,9 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -60,6 +72,8 @@
         android:layout_height="80dp"
         android:layout_below="@id/new_product_price"
         android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
         android:backgroundTint="@color/StudioXPink"
         />
 

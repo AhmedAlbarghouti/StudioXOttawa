@@ -15,25 +15,43 @@ import com.example.studioxottawa.welcome.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * @Author: Ahmed Albarghouti
+ * @Date: Feb 2021
+ * @Purpose: Displaying clicked event's details and offering to book it now
+ */
 public class BookAppointments extends AppCompatActivity {
 
+    /*
+    Needed TextViews & Buton
+     */
     TextView eventName;
     TextView eventDate;
     TextView eventTime;
     TextView eventStaff;
     Button bookbtn;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appointments);
 
+        /**
+         * Finding View by IDS for elements
+         */
         eventName = findViewById(R.id.bookEventName);
         eventDate = findViewById(R.id.bookEventDate);
         eventTime = findViewById(R.id.bookEventTime);
         eventStaff = findViewById(R.id.bookEventStaff);
         bookbtn = findViewById(R.id.bookEventButton);
 
+        /**
+         * Getting Bundle containing event clicked information
+         */
         Intent in = getIntent();
         Bundle passedEvent = in.getExtras();
         eventName.setText(passedEvent.getString("EVENT_NAME"));
@@ -50,7 +68,9 @@ public class BookAppointments extends AppCompatActivity {
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
         eventsReference.child(MainActivity.userID).child("Cart").child(productInCart.getItem()).setValue(productInCart);
         bookbtn.setOnClickListener(click-> {
-            //Change second argument to goto class
+            /**
+             * If book is clicked, new intent will redirect user to checkout to pay for the selected event
+             */
             Intent bookingIntent = new Intent(BookAppointments.this, Cart.class);
             bookingIntent.putExtra("UID",Uid);
             bookingIntent.putExtra("isService",true);

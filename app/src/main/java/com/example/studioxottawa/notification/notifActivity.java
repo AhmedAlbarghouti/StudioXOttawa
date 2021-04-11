@@ -1,31 +1,32 @@
 package com.example.studioxottawa.notification;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.welcome.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class notifActivity extends AppCompatActivity {
@@ -33,102 +34,136 @@ public class notifActivity extends AppCompatActivity {
     TextView textView2;
     TextView textView3;
     Button button;
-    DBHelper mydb;
     TableLayout tabaptlayout;
+    public static Context lv_ctxt2 ;
+    String loggedusername = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
-//for call studio x ottawa button
-        button = (Button) findViewById(R.id.buttonCall);
-        button.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View arg0) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:6139125083"));
-                startActivity(callIntent);
-            }
+        lv_ctxt2 = this;
+
+        //for call studio x ottawa button
+        button = (Button) findViewById(R.id.buttonCall);
+        button.setOnClickListener(click -> {
+
+            Intent contact = new Intent(this, com.example.studioxottawa.contact.ContactUs.class);
+            startActivity(contact);
+
         });
 
 
         textView = (TextView) findViewById(R.id.notif1);
-        //getting the notification message
-        //get the logged on user name passed from mainActivity to this intent
-        String loggedusername=getIntent().getStringExtra("username");
+        //get full name of the logged on user from data base
+        FirebaseUser user1;
+        DatabaseReference userRef1 = FirebaseDatabase.getInstance().getReference("Users");
+        user1 = FirebaseAuth.getInstance().getCurrentUser();
+        String uid1 = user1.getUid();
 
-        String   msg = loggedusername+','+"\n\n"+
-                "This is a friendly reminder that you have following events with Studio X Ottawa on: \n";
-        textView.setText(msg);
+        userRef1.child(uid1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User signInUser = snapshot.getValue(User.class);
+                loggedusername = signInUser.fullName;
 
-        textView3 = (TextView) findViewById(R.id.notif3);
-        msg =  "\n"+"If you have any questions, please click to call us:";
-        textView3.setText(msg);
+                String   msg = loggedusername+','+"\n\n"+
+                        "This is a friendly reminder that you have following events with Studio X Ottawa on: \n";
+                textView.setText(msg);
 
-        textView2 = (TextView) findViewById(R.id.notif2);
-        msg = "\n" + "Thanks and see you soon!"+"\n\n" + "Sincerely,"+"\n\n"+"Studio X Ottawa";
-        textView2.setText(msg);
+                textView3 = (TextView) findViewById(R.id.notif3);
+                msg =  "\n"+"If you have any questions, please click to contact us:";
+                textView3.setText(msg);
 
-        //////////////////////////////////////////
-        mydb = new DBHelper(this);
+                textView2 = (TextView) findViewById(R.id.notif2);
+                msg = "\n" + "Thanks and see you soon!"+"\n\n" + "Sincerely,"+"\n\n"+"Studio X Ottawa";
+                textView2.setText(msg);
 
-        String str_lesson = "";
-        String str_apt = "";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
+            }
+        });
+
+        //table data strings
         String str_date = "";
         String str_time = "";
         String str_event = "";
 
-        Cursor res = mydb.getcursor(loggedusername);
-
         tabaptlayout=(TableLayout)findViewById(R.id.tabaptmnt);
-//creating column headings
+
+        //creating column headings
         View tableRowapt = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
         TextView col11  = (TextView) tableRowapt.findViewById(R.id.c1);
         TextView col21  = (TextView) tableRowapt.findViewById(R.id.c2);
         TextView col31  = (TextView) tableRowapt.findViewById(R.id.c3);
 
-        col11.setText("Event");
-        col21.setText("Date");
-        col31.setText("Time");
+        col11.setText("EVENT");
+        col21.setText("DATE");
+        col31.setText("TIME");
         tabaptlayout.addView(tableRowapt);
 
-        res.moveToFirst();
+        //get events data from database
+        userRef1.child(uid1).child("Events Purchased").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    //get each column's value
+                    String name = String.valueOf(ds.child("name").getValue());
+                    String date = String.valueOf(ds.child("date").getValue());
+                    String time = String.valueOf(ds.child("time").getValue());
 
-        while(res.isAfterLast() == false){
+                    View tableRow = LayoutInflater.from(lv_ctxt2).inflate(R.layout.tabrow, null, false);
+                    TextView col1 = (TextView) tableRow.findViewById(R.id.c1);
+                    col1.setPaintFlags(col11.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                    TextView col2 = (TextView) tableRow.findViewById(R.id.c2);
+                    TextView col3 = (TextView) tableRow.findViewById(R.id.c3);
 
-            View tableRow = LayoutInflater.from(this).inflate(R.layout.tabrow,null,false);
-            TextView col1  = (TextView) tableRow.findViewById(R.id.c1);
-            TextView col2  = (TextView) tableRow.findViewById(R.id.c2);
-            TextView col3  = (TextView) tableRow.findViewById(R.id.c3);
+                    //set column value
+                    col1.setText(name);
 
-            str_lesson = ""; str_apt = ""; str_date = ""; str_time = "";
+                    //text view link to list activity
+                    col1.setOnClickListener(new View.OnClickListener() {
 
-            str_lesson = res.getString(res.getColumnIndex("lesson"));
-            str_apt = res.getString(res.getColumnIndex("aptment"));
-            str_date = res.getString(res.getColumnIndex("date"));
-            str_time = res.getString(res.getColumnIndex("time"));
-            if (str_lesson.equals("")) {
-                str_event = "Appointment";
-            } else {
-                str_event = str_lesson;
+                        @Override
+                        public void onClick(View v) {
+                            Intent contact = new Intent(lv_ctxt2, com.example.studioxottawa.contact.ContactUs.class);
+                            startActivity(contact);
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+                    col2.setText(date);
+                    col3.setText(time);
+                    tabaptlayout.addView(tableRow);
+                }// end of for loop
+            } // end of onDataChange
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
-
-            col1.setText(str_event);
-            col2.setText(str_date);
-            col3.setText(str_time);
-            tabaptlayout.addView(tableRow);
-
-            res.moveToNext();
-
-        }
-
-        /////////////////////////////////////////
-
-    }
+        });
+    } //end of onCreate override method
 
     @Override
+    //the system is temporarily destroying this instance of the activity to save space
     protected void onDestroy() {
         super.onDestroy();
 
     }
+
+
+
+
 }

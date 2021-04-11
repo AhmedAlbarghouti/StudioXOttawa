@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
+    tools:context=".welcome.ViewAccountDetails">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/account_details_title"
+            android:fontFamily="sans-serif-light"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Details"
+            android:textAlignment="center"
+        />
+        <TextView
+
+            android:layout_marginTop="40dp"
+            android:id="@+id/UserFNameTV"
+            android:text="First Name"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="25sp"
+            android:layout_below="@id/account_details_title"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/UserFName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_below="@id/UserFNameTV"
+            android:textSize="35sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+
+            android:layout_marginTop="40dp"
+            android:id="@+id/UserLNameTV"
+            android:text="Last Name"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="25sp"
+            android:layout_below="@id/UserFName"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/UserLName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_below="@id/UserLNameTV"
+            android:textSize="35sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+
+            android:layout_marginTop="40dp"
+            android:id="@+id/UserEmailTV"
+            android:text="Email"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="25sp"
+            android:layout_below="@id/UserLName"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/UserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/UserEmailTV"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+
+            android:layout_marginTop="40dp"
+            android:id="@+id/UserPhoneTV"
+            android:text="Phone Number"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="25sp"
+            android:layout_below="@id/UserEmail"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/UserPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_below="@id/UserPhoneTV"
+            android:textSize="35sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            />
+
+
+    </RelativeLayout>
+
+</ScrollView>

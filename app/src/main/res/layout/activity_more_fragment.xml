@@ -17,7 +17,7 @@
             android:layout_height="83dp"
             android:layout_below="@id/logout_button"
             android:layout_centerVertical="false"
-
+            android:visibility="invisible"
             android:backgroundTint="@color/Transparent"
             android:fontFamily="sans-serif-light"
             android:text="@string/admin_portal"

@@ -2,6 +2,7 @@ package com.example.studioxottawa.schedule;
 
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Date Feb 2021
+ * @Purpose Extends fragment & inflates activity_schedule
+ *          Displays Schedule to user and allows for change of date to view schedule on a different day
+ */
 public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private ArrayList<Event> allEvents = new ArrayList<>();
@@ -42,31 +49,39 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
 
 
 
-    private FirebaseUser user;
-    private Calendar c;
+    private FirebaseUser user; // Firebase User Object
+    private Calendar c = Calendar.getInstance();
+
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return root
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_schedule,container,false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_schedule,container,false); // inflates activity_schedule into the fragment
 
         ListView eventList = root.findViewById(R.id.eventList);
         eventList.setAdapter(listAdapter);
         pickedDate = root.findViewById(R.id.pickedDate);
         dateButton = root.findViewById(R.id.dateButton);
-
-        c = Calendar.getInstance();
         loadEvents();
 
 
         pickedDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
 
+        /*
+          Set on click if user clicks schedule button to change the date of the displayed schedule
+         */
         dateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                events.clear();
+
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getChildFragmentManager(),"Date Picker");
-
             }
         });
 
@@ -90,6 +105,7 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        events.clear();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -106,6 +122,8 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
         }
         listAdapter.notifyDataSetChanged();
     }
+
+
 
     public void loadEvents() {
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
@@ -139,11 +157,12 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
                         events.add(e);
                     }
                 }
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listAdapter.notifyDataSetChanged();
             }
         });
         listAdapter.notifyDataSetChanged();
