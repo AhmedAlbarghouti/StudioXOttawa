@@ -16,10 +16,9 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
-//        ScheduleFragment sobj = new ScheduleFragment();
-        NewsFragment nobj = new NewsFragment();
-//        sobj.loadEvents();
-        nobj.loadNews();
+        ScheduleFragment sobj = new ScheduleFragment();
+        sobj.loadEvents();
+        NewsFragment.loadNews();
         int SPLASH_TIME_OUT = 4000;
         new Handler().postDelayed(new Runnable() {
             @Override

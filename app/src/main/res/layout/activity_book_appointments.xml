@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Event Name"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/event_name"
         android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
@@ -26,8 +26,8 @@
         android:layout_below="@id/bookEventName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Event Date"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/event_date"
         android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
@@ -38,8 +38,8 @@
         android:layout_below="@id/bookEventDate"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Event Time"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/event_time"
         android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
@@ -50,20 +50,20 @@
         android:layout_below="@id/bookEventTime"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Event Staff"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/event_staff"
         android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
     <Button
-        android:text="@string/book_event"
+        android:text="@string/book_now"
         android:id="@+id/bookEventButton"
         android:layout_below="@id/bookEventStaff"
         android:layout_width="match_parent"
         android:layout_marginTop="100dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:textSize="25sp"
         android:backgroundTint="@color/StudioXPink"
         />

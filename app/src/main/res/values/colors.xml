@@ -13,4 +13,6 @@
     <color name="aboutushdtxt">#00157d</color>
     <color name="color2">#D6BA55</color>
     <color name="color3">#11793E</color>
+    <color name="orangeColor">#fc7d32</color>
+    <color name="Transparent">#00000000</color>
 </resources>

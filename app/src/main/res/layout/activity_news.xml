@@ -22,9 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Studio X Ottawa News"
+            android:text="Our Latest News"
             android:fontFamily="sans-serif-light"
-            android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="normal"/>

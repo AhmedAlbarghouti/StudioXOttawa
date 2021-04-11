@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,82 +7,88 @@
     android:background="#ffffff"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".notification.notifActivity"
-    tools:deviceIds="wear">
+    android:orientation="vertical"
 
-        <LinearLayout
+    >
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        app:srcCompat="@drawable/big_logo"
+
+        />
+
+
+    <TextView
+        android:id="@+id/notif1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/StudioXPink"
+        android:fontFamily="sans-serif-light"
+
+        />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:id="@+id/layout"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/logo_studioxottawa"
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tabaptmnt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:orientation="vertical">
 
-                />
-
+            </TableLayout>
 
             <TextView
-                android:id="@+id/notif1"
+                android:id="@+id/notif3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textColor="@color/StudioXPink"
+                android:fontFamily="sans-serif-light"
 
                 />
 
-            <ScrollView
-                android:id="@+id/scrollView"
+            <Button
+                android:id="@+id/buttonCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/StudioXPink"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/call_studio_x_ottawa" />
+
+            <TextView
+                android:id="@+id/notif2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/StudioXPink"
+                android:fontFamily="sans-serif-light"
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-
-                    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/tabaptmnt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="5dp"
-                        android:orientation="vertical">
-                    </TableLayout>
-
-                    <TextView
-                        android:id="@+id/notif3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-
-                        />
-
-                    <Button
-                        android:id="@+id/buttonCall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/call" />
-
-                <TextView
-                    android:id="@+id/notif2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="#000000"
-
-                    />
-
-
-
-                </LinearLayout>
-            </ScrollView>
-
+                />
 
 
 
         </LinearLayout>
-</androidx.wear.widget.BoxInsetLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>
