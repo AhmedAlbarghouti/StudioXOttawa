@@ -60,6 +60,10 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        accountInfoBtn.setOnClickListener(click -> {
+            goToAccountInfo();
+        });
+
         aboutBtn.setOnClickListener(click -> {
             goToAboutUs();
         });
@@ -78,6 +82,11 @@ public class MoreFragment extends Fragment {
 
 
         return root;
+    }
+
+    private void goToAccountInfo() {
+        Intent account = new Intent(getActivity(), ViewAccountDetails.class);
+        startActivity(account);
     }
 
     private void goToAdminPortal() {

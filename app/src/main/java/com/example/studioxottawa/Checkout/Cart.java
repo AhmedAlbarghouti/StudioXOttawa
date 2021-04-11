@@ -137,7 +137,7 @@ public class Cart extends AppCompatActivity {
              String uid = String.valueOf(snapshot.child("uid").getValue());
              event=new Event(name,date,time,staff,uid);
              eventName= name+" "+date+" "+time+" with "+staff;
-             Product temp = new Product(eventName,25.00,1);
+             Product temp = new Product(eventName,15.00,1);
              products.add(temp);
              calculatePrice();
              Log.i("value", name);
