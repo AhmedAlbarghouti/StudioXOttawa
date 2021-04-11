@@ -4,11 +4,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /***
  * Add Service Class
@@ -39,6 +43,7 @@ public class AddService extends AppCompatActivity {
     private ImageView productImage;
     private Bitmap imageBitmap;
     private static final int GO_TO_GALLERY=1;
+    SharedPreferences preferences=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,9 @@ public class AddService extends AppCompatActivity {
         productPrice=(EditText)findViewById(R.id.new_product_price);
         productImage=(ImageView)findViewById(R.id.new_product_image);
         add_product=(Button)findViewById(R.id.AddProductBtn);
-        imageBitmap=BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
+        Button img= findViewById(R.id.imageSelectBtn);
+        img.setOnClickListener(click->{openGallery();});
+        imageBitmap=BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.big_logo);
 
         productImage.setOnClickListener(btn->{
             openGallery();
@@ -56,18 +63,12 @@ public class AddService extends AppCompatActivity {
 
         add_product.setOnClickListener(btn->{
             createProduct();
-//            Toast.makeText(this,"Product Successfully Added",Toast.LENGTH_SHORT).show();
+
 
         });
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
+
 
     /***
      * this method accepts the admin inputs and uses them to create a new product in the database.
@@ -79,7 +80,10 @@ public class AddService extends AppCompatActivity {
         if(!item.isEmpty()  && !(price.contains("[a-zA-Z]+") )&& !(price.isEmpty())) {
 
             Product newProduct = new Product(item, Double.parseDouble(price), 0);
+            if(!imageBitmap.equals(null)) {
 
+                newProduct.compress(imageBitmap);
+            }
 
             DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Products");
             eventsReference.child(newProduct.getItem()).setValue(newProduct);
@@ -97,7 +101,7 @@ public class AddService extends AppCompatActivity {
      */
     private void openGallery() {
         Intent intent= new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,GO_TO_GALLERY);
     }
@@ -106,13 +110,22 @@ public class AddService extends AppCompatActivity {
      * this method upon returning to the app  after the image is selected it sets the image.
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==GO_TO_GALLERY && resultCode==RESULT_OK && data !=null){
-            Bitmap image= (Bitmap) data.getExtras().get("data");
-            productImage.setImageBitmap(image);
-            imageBitmap=image;
+        Log.e("RESULT CODE",String.valueOf(resultCode));
+        if(resultCode==RESULT_OK ){
+             Uri image = data.getData();
+             InputStream imageStream=null;
+            try {
+                imageStream = getContentResolver().openInputStream(image);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            productImage.setImageBitmap(selectedImage);
+            imageBitmap=selectedImage;
         }
     }
+
 }

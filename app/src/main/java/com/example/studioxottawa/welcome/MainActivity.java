@@ -13,10 +13,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +36,7 @@ import com.example.studioxottawa.news.News;
 
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
+import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.VODPlayer.VODActivity;
 import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
@@ -49,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 else if(item.getItemId() == R.id.nav_vod) {
                     selectedFragment = new VODLibraryFragment();
                 }
-                if(item.getItemId() == R.id.nav_account){
-                    selectedFragment = new AccountFragment();
+                if(item.getItemId() == R.id.nav_more){
+                    selectedFragment = new MoreFragment();
                 }
 
 
@@ -131,10 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,new NewsFragment()).commit();
     }
-
-
-
-
 
     private void loadVodLibrary() {
         Intent vodLibrary = new Intent(MainActivity.this, VODLibraryActivity.class);

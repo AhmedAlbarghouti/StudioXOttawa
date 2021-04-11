@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,7 +115,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         //
         checkoutListView=findViewById(R.id.ItemPurchView);
         checkoutListView.setAdapter(adapter= new MyListAdapter());
-        i1= BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.logo_studioxottawa);
+        i1= BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.big_logo);
 
         price = getIntent().getExtras().getDouble("Total Price");
         load();
@@ -139,11 +140,13 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     String item= String.valueOf(ds.child("item").getValue());
                     String price= String.valueOf(ds.child("price").getValue());
                     String quantity= String.valueOf(ds.child("quantity").getValue());
-
-                    Log.e("Item",item);
-                    Log.e("price",price);
-                    Log.e("quantity",quantity);
+                    String bitmap= String.valueOf(ds.child("bitmap").getValue());
+//                   creating a Product object, and storing those Product objects in an ArrayList of Products.
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                    if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
+                        temp.setBitmap(bitmap);
+                    }
+
                     products.add(temp);
                 }
 
@@ -155,6 +158,10 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
     }
 
+    private Bitmap decodeFromStringToImage(String input){
+        byte[] decodingBytes= Base64.decode(input,0);
+        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
+    }
     /***
      * This method create the PaymentIntent and add send the transactional information to
      * the backend to make a Stripe Payment
@@ -352,9 +359,13 @@ public class CheckoutActivityJava extends AppCompatActivity {
             TextView item = newView.findViewById(R.id.paymentTitle);
             item.setText(String.valueOf(u.getItem()));
             TextView price = newView.findViewById(R.id.paymentPrice);
-            price.setText(String.valueOf(formatter.format(u.getPrice())));
+            price.setText("X "+u.getQuantity()+" @ "+String.valueOf(formatter.format(u.getPrice())));
             ImageView thumbnail = newView.findViewById(R.id.paymentImage);
-            thumbnail.setImageBitmap(i1);
+            if(u.getBitmap().isEmpty()) {
+                thumbnail.setImageBitmap(i1);
+            }else{
+                thumbnail.setImageBitmap(decodeFromStringToImage(u.getBitmap()));
+            }
             //return it to be put in the table
             return newView;
         }

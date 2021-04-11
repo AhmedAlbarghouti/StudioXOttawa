@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,11 +76,12 @@ public class ServicesActivity extends Fragment {
         //retrieving the user id of the current logged on user.
         UID=getArguments().getString("UID");
 
-        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo_studioxottawa);
+        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_logo);
         //load products available to purchase
         loadServices();
         //check if cart has item
         checkCart();
+
 
         goToCart.setOnClickListener(btn -> {
 
@@ -181,8 +183,13 @@ public class ServicesActivity extends Fragment {
                     String item= String.valueOf(ds.child("item").getValue());
                     String price= String.valueOf(ds.child("price").getValue());
                     String quantity= String.valueOf(ds.child("quantity").getValue());
-                    // creating a Product object, and storing those Product objects in an ArrayList of Products.
+                    String bitmap= String.valueOf(ds.child("bitmap").getValue());
+//                   creating a Product object, and storing those Product objects in an ArrayList of Products.
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                    //checking for an image associated with the product. If one exist set it the the product's bitmap;
+                    if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
+                        temp.setBitmap(bitmap);
+                    }
                     productList.add(temp);
                 }
                 // once all nodes are added to the ArrayList notifying MyListAdapter of changes.
@@ -196,6 +203,10 @@ public class ServicesActivity extends Fragment {
 
         });
 
+    }
+    private Bitmap decodeFromStringToImage(String input){
+        byte[] decodingBytes= Base64.decode(input,0);
+        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
     }
 
     /**
@@ -235,7 +246,12 @@ public class ServicesActivity extends Fragment {
             // populating the Price Textview with the current item price.
             price.setText(String.valueOf(formatter.format(product.getPrice())));
             ImageView thumbnail = newView.findViewById(R.id.serviceImage);
-            thumbnail.setImageBitmap(i1);
+            // if product bitmap is empty set thumbnail to the default i1. if not grab the product image and use it as the thumbnail
+            if(product.getBitmap().isEmpty()){
+                thumbnail.setImageBitmap(i1);
+            }else {
+                thumbnail.setImageBitmap(decodeFromStringToImage(product.getBitmap()));
+            }
             //return it to be put in the table
             return newView;
         }

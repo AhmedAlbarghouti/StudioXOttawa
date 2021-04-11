@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class Cart extends Fragment {
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_cart, container, false);
         fragmentActivity=this.getActivity();
-        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo_studioxottawa);
+        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_logo);
 
         if(!products.isEmpty()) {
             products.clear();
@@ -83,7 +84,8 @@ public class Cart extends Fragment {
 
 
         cancel.setOnClickListener(e -> {
-            fragmentActivity.finish();
+            Intent intent = new Intent(this.getActivity(),  MainActivity.class);
+            startActivity(intent);
         });
 
 
@@ -123,6 +125,7 @@ public class Cart extends Fragment {
                                 String item= String.valueOf(ds.child("item").getValue());
                                 String price= String.valueOf(ds.child("price").getValue());
                                 String quantity= String.valueOf(ds.child("quantity").getValue());
+                                String bitmap= String.valueOf(ds.child("bitmap").getValue());
                                 if(item.contains("\\d+\\/\\d+\\/\\d+")){
                                     isEvent=true;
                                 }
@@ -130,6 +133,9 @@ public class Cart extends Fragment {
                                 Log.e("price",price);
                                 Log.e("quantity",quantity);
                                 Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                                if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
+                                    temp.setBitmap(bitmap);
+                                }
                                 products.add(temp);
                             }
                             calculatePrice();
@@ -152,6 +158,10 @@ public class Cart extends Fragment {
         }
         priceTv.setText(formatter.format(price));
 
+    }
+    private Bitmap decodeFromStringToImage(String input){
+        byte[] decodingBytes= Base64.decode(input,0);
+        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
     }
     private class CartAdapter extends BaseAdapter{
 
@@ -209,7 +219,12 @@ public class Cart extends Fragment {
             Product product = (Product)getItem(i);
 
             holder.item.setText(product.getItem());
-            holder.thumbnail.setImageBitmap(i1);
+            if(product.getBitmap().isEmpty()){
+                holder.thumbnail.setImageBitmap(i1);
+            }else {
+                holder.thumbnail.setImageBitmap(decodeFromStringToImage(product.getBitmap()));
+            }
+//            holder.thumbnail.setImageBitmap(product.getBitmap());
             holder.price.setText(formatter.format(product.getPrice()));
             holder.quantity.setText(String.valueOf(product.getQuantity()));
 

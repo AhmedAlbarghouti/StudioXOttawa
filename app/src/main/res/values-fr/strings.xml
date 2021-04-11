@@ -185,4 +185,21 @@
     <string name="onFailureError">Error: </string>
     <string name="successful_product_adding">Product Successfully Added!</string>
     <string name="invalid_input">Invalid inputs</string>
+
+    <string name="sign_out">Sign out</string>
+    <string name="about_us">About Us</string>
+    <string name="products_purchased">Products Purchased</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="account_information">Account Information</string>
+    <string name="admin_portal">Admin Portal</string>
+    <string name="events_booked">Events Booked</string>
+
+    <string name="AboutusTitle">
+        "     Welcome to Studio X Ottawa Inc."</string>
+
+    <string name="Aboutus0">
+        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
+    <string name="choose_email_client">Choose one application</string>
+    <string name="type_subject_here">Subject</string>
+    <string name="select_image_btn">select image..</string>
 </resources>

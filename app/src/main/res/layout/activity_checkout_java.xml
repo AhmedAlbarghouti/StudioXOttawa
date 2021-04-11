@@ -15,7 +15,7 @@
         android:layout_marginTop="10dp"
         android:id="@+id/CheckoutStudioXLogo"
         android:scaleType="fitXY"
-        android:src="@drawable/logo_studioxottawa"
+        android:src="@drawable/big_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"/>
     <TextView
