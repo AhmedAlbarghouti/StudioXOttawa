@@ -2,7 +2,6 @@ package com.example.studioxottawa.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -14,8 +13,11 @@ import android.widget.Button;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.aboutus.AboutusActivity;
+import com.example.studioxottawa.contact.ContactUs;
+import com.example.studioxottawa.staff.StaffMenu;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class AccountFragment extends Fragment {
+public class MoreFragment extends Fragment {
 
     private Button accountInfoBtn,eventsBtn,productsBtn,contactBtn,aboutBtn,signOutBtn,adminBtn;
     @Nullable
@@ -35,8 +37,35 @@ public class AccountFragment extends Fragment {
             goToAboutUs();
         });
 
+        contactBtn.setOnClickListener(click -> {
+            goToContactUs();
+        });
+        
+        signOutBtn.setOnClickListener(click ->{
+            signOutUser();
+        });
+
+        adminBtn.setOnClickListener(click ->{
+            goToAdminPortal();
+        });
+
 
         return root;
+    }
+
+    private void goToAdminPortal() {
+        Intent admin = new Intent(getActivity(), StaffMenu.class);
+        startActivity(admin);
+    }
+
+    private void signOutUser() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getActivity(),LoginActivity.class));
+    }
+
+    private void goToContactUs() {
+        Intent contactus = new Intent(getActivity(), ContactUs.class);
+        startActivity(contactus);
     }
 
     private void goToAboutUs() {

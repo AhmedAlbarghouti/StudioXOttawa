@@ -3,18 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"/>
 
     <TextView
+        android:id="@+id/contactTitle"
+        android:layout_width="match_parent"
+        android:text="@string/contact_us"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:layout_below="@id/contactTitle"
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         android:id="@+id/subjectLabel"
         android:text="@string/subject"/>
     <EditText
@@ -22,13 +35,20 @@
         android:id="@+id/subjectEditText"
         android:layout_below="@+id/subjectLabel"
         android:inputType="textEmailSubject"
-        android:layout_height="wrap_content"/>
+        android:textColorHint="@color/white"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/type_subject_here"
+        android:layout_height="wrap_content"
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/messageLabel"
         android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
         android:layout_below="@id/subjectEditText"
         android:text="@string/your_message_question"/>
 
@@ -38,7 +58,10 @@
         android:layout_below="@id/messageLabel"
         android:id="@+id/message_editText"
         android:hint="@string/type_message_here"
-        android:inputType="textMultiLine" />
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:inputType="textMultiLine"
+        android:autofillHints="" />
 
 
     <Button
