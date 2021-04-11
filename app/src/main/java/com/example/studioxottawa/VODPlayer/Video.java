@@ -120,6 +120,7 @@ public class Video implements Parcelable {
     @Exclude
     public Bitmap getThumbnailImage() { return thumbnail; }
 
+    //Converts the thumbnail to a base64 string to store in the firebase database.
     public String getThumbnail() {
         if (thumbnail != null) {
             ByteArrayOutputStream bao = new ByteArrayOutputStream();

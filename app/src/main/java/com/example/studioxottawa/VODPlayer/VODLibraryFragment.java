@@ -51,7 +51,8 @@ public class VODLibraryFragment extends Fragment {
     private TextView pageNum;
     private ImageButton nextPage;
     private ImageButton prevPage;
-    //Checks User Authorization via Firebase to enable/disable video types as necessary
+
+    //Checks User Authorization via Firebase to enable/disable premium video types as necessary
     private void authorize(Button premButton) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -140,6 +141,7 @@ public class VODLibraryFragment extends Fragment {
                 videoLibrary.clear();
                 currentPage.clear();
             }
+            //Pulls firebase data on first run
             if (freeLibrary.size() == 0) {
                 DatabaseReference baseRef = FirebaseDatabase.getInstance().getReference().child("Videos");
 
@@ -184,7 +186,7 @@ public class VODLibraryFragment extends Fragment {
         }
     }
 
-    //Pulls youtube API data, and loads it into the on-screen library
+    //Loads data into the youtube library on first run, and subsequent runs pull data from the library to load onscreen
     private void loadYoutubeLibrary() {
         //Does nothing if youtube library is already selected
         if (currLibrary != YOUTUBE_LIBRARY) {
@@ -197,12 +199,8 @@ public class VODLibraryFragment extends Fragment {
                 currentPage.clear();
             }
 
-            //Creates the connection to the API, and begins pulling data if the youtube library is empty.
+            //Pulls data from the Firebase DB to populate the video list with all youtube videos, then loads the first page of youtube videos for first-run
             if (youtubeLibrary.size() == 0) {
-                //connection = new YoutubeAPIConnector();
-                //connection.execute();
-                /*updater = new UpdateLibrary();
-                updater.run();*/
                 DatabaseReference baseRef = FirebaseDatabase.getInstance().getReference().child("Videos");
 
                 ValueEventListener eventListener = new ValueEventListener() {
@@ -260,12 +258,12 @@ public class VODLibraryFragment extends Fragment {
 
             nextPage.setOnClickListener(v -> { //Handler for retrieving next pages of youtube videos.
 
-                if (getPageNum() == 1) {
+                if (getPageNum() == 1) {//Enable the previous page button in cases where it was previously disabled.
                     enablePrevPage();
                 }
-                resetList();
-                setPageNum(getPageNum()+1);
-                populate(getPageNum());
+                resetList();//Clear the current page
+                setPageNum(getPageNum()+1);//Increment page number
+                populate(getPageNum());//Populate the page with the new page number
                 if (((getPageNum()-1)*10 + adapter.getCount()) >= videoLibrary.size()) {
                     disableNextPage();
                 }

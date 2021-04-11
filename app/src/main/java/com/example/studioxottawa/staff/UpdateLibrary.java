@@ -33,7 +33,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
     //Handles youtube API calls to retreive video data.
-    //TODO: Refactor and move to an administrative task to populate database with video IDs, preventing api quota from being used up by regular users
     public class UpdateLibrary extends AsyncTask<String, Integer, String> {
         private final ReentrantLock lock = new ReentrantLock();
         private final Condition tryAgain = lock.newCondition();
@@ -92,6 +91,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
             try {
                 lock.lockInterruptibly();
+                //Gets a list of video ids for Youtube videos in the database to prevent repeat calls to the firebase connection
                 idList = new ArrayList<>();
                 DatabaseReference baseRef = FirebaseDatabase.getInstance().getReference().child("Videos");
                 baseRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -100,16 +100,17 @@ import java.util.concurrent.locks.ReentrantLock;
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             Video currVid = ds.getValue(Video.class);
                             if (currVid.getType()==Video.YOUTUBE_MODIFIER)
-                                idList.add(currVid.getURL());
+                                idList.add(currVid.getURL());//Adds the video ID to the ArrayList
                         }
-                        start = true;
+                        start = true; //Signals for the Async Task to contact the youtube API and begin parsing data
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-                //Wait for firebase to populate the ID list before
+
+                //Wait for firebase to populate the ID list before beginning calling the youtube API.
                 while (!start);
                 do {
                     String urlString;
@@ -123,6 +124,7 @@ import java.util.concurrent.locks.ReentrantLock;
                     else
                         urlString = generateNextURL(); //Default case for resuming
 
+                    //Creates a new URL, connects to that URL, and generates a JSONObject from the results of the connection containing the video data in the query
                     URL url = new URL(urlString);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream queryResponse = urlConnection.getInputStream();
@@ -136,6 +138,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
                     JSONObject jObject = new JSONObject(result);
 
+                    //Stores the token used to get the next set of results in a subsequent query
                     if (jObject.has("nextPageToken")) {
                         nextPageToken = jObject.getString("nextPageToken");
                     } else {
@@ -143,8 +146,6 @@ import java.util.concurrent.locks.ReentrantLock;
                     }
 
                     JSONArray videos = jObject.getJSONArray("items");
-                    Log.d("DEBUG - VIDEOS COUNT", "Videos has " + videos.length() + " Elements");
-
 
                     for (int i = 0; i < videos.length(); i++) {//Retrieves the current token's video IDs, titles and thumbnails
                             exists = false;
@@ -152,6 +153,7 @@ import java.util.concurrent.locks.ReentrantLock;
                             vidId = currVid.getJSONObject("id").getString("videoId");
                             title = currVid.getJSONObject("snippet").getString("title");
 
+                            //Generate a bitmap of the video thumbnail
                             URL imagePath = new URL("https://i.ytimg.com/vi/" + vidId + "/default.jpg");
                             HttpURLConnection imageConnection = (HttpURLConnection) imagePath.openConnection();
                             imageConnection.connect();
@@ -159,10 +161,11 @@ import java.util.concurrent.locks.ReentrantLock;
                             if (responseCode == 200) {
                                 image = BitmapFactory.decodeStream(imageConnection.getInputStream());
                             }
+                            //Check if the video is already in the DB from the populated ID list
                             if (idList.contains(vidId))
-                                setExists();
+                                setExists();//Video found, toggle the exists controller
                             if (!exists) {
-                                try {
+                                try {//Video does not exist. Create a new Video with the parsed data, and pass it to Firebase to store
                                     Video newVideo = new Video(title, vidId, image, Video.YOUTUBE_MODIFIER);
                                     DatabaseReference videosReference = FirebaseDatabase.getInstance().getReference().child("Videos");
 
@@ -177,9 +180,9 @@ import java.util.concurrent.locks.ReentrantLock;
                                 }
                             }
                     }
-                    if (getNextPageToken().isEmpty())
+                    if (getNextPageToken().isEmpty())//Toggle finished once it reaches the end of an iteration and has no nextPageToken
                         finished = true;
-                } while (!finished);
+                } while (!finished); //Controller to re-iterate as long as there's further query pages
             }
             catch (Exception e) {
                 Log.e("YoutubeAPIConnector", e.getMessage());
@@ -217,6 +220,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
         public String getNextPageToken() { return nextPageToken; }
 
+        //Create a success toast to alert the user it updated.
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
