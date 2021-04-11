@@ -24,7 +24,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Our Latest News"
             android:fontFamily="sans-serif-light"
-            android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="normal"/>

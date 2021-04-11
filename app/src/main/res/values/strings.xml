@@ -89,30 +89,31 @@
 
     <string name="Aboutus10">
         "2017-present\n"
-        "Fitness instructors for Bell Canada (corporate)\n"
-        "2013-present\n \n"
-        "Directors and Instructors at Studio X Ottawa\n"
-        "2011-Présent\n \n"
-        "Wedding dance choreographies\n"
-        "June 2019\n \n"
-        "Teaching Bachata and Salsa Intro workshops for Latin Sparks Festival\n"
-        "May 2019\n \n"
-        "Teaching Dominical Bachata Workshop at Montreal Salsa Convention\n"
-        "February 2019\n \n"
-        "Teaching Dominican Bachata Workshop at Ottawa Bachata Festival\n"
-        "November 2018\n \n"
-        "Teaching On2 Workshop at Montreal Salsa Convention\n"
-        "Summer 2018\n \n"
-        "Montreal Tour (shows at Moka, Baila Con Gusto and Bachata Fusion (Marina de Repentigny))\n"
-        "Summer 2017\n \n"
-        "Teaching Cha Cha Cha workshop at Ottawa Salsa Convention\n"
-        "2012-2014\n \n"
+        "Fitness instructors for Bell Canada (corporate)\n\n"
+        "2013-present\n"
+        "Directors and Instructors at Studio X Ottawa\n\n"
+        "2011-Présent\n"
+        "Wedding dance choreographies\n\n"
+        "June 2019\n"
+        "Teaching Bachata and Salsa Intro workshops for Latin Sparks Festival\n\n"
+        "May 2019\n"
+        "Teaching Dominical Bachata Workshop at Montreal Salsa Convention\n\n"
+        "February 2019\n"
+        "Teaching Dominican Bachata Workshop at Ottawa Bachata Festival\n\n"
+        "November 2018\n"
+        "Teaching On2 Workshop at Montreal Salsa Convention\n\n"
+        "Summer 2018\n"
+        "Montreal Tour (shows at Moka, Baila Con Gusto and Bachata Fusion (Marina de Repentigny))\n\n"
+        "Summer 2017\n"
+        "Teaching Cha Cha Cha workshop at Ottawa Salsa Convention\n\n"
+        "2012-2014\n"
         "YMCA fitness instructor\n"
         "City of Gatineau fitness instructor\n"
         "Old Town House Fitness instructor\n"
-        "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n"
-        "2010-2014\n \n"
+        "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n\n"
+        "2010-2014\n"
         "Blackanese Mambo Team Directors"
+        "\n\n\n\n      Copyright 2013 - Studio X Ottawa Inc. | All Rights Reserved |\n\n"
     </string>
     <string name="AboutusTitle">
         "     Welcome to Studio X Ottawa Inc."</string>
@@ -167,4 +168,5 @@
     <string name="account_information">Account Information</string>
     <string name="admin_portal">Admin Portal</string>
     <string name="events_booked">Events Booked</string>
+    <string name="type_subject_here">Type Subject Here</string>
 </resources>

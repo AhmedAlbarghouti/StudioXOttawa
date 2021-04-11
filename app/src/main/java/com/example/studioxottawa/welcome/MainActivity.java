@@ -12,22 +12,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import android.widget.TextView;
 
 
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
-
-import com.example.studioxottawa.news.News;
 
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
@@ -49,7 +43,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
                 }
-                if(item.getItemId() == R.id.nav_account){
-                    selectedFragment = new AccountFragment();
+                if(item.getItemId() == R.id.nav_more){
+                    selectedFragment = new MoreFragment();
                 }
 
 

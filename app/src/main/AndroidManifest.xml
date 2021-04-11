@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.AccountFragment"></activity>
+        <activity android:name=".welcome.MoreFragment"></activity>
         <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
-        <activity android:name=".contact.contact" />
+        <activity android:name=".contact.ContactUs" />
         <activity android:name=".news.NewsActivity" />
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".aboutus.AboutusActivity" />

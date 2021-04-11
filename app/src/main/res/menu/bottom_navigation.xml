@@ -22,9 +22,9 @@
         android:title="Video"/>
 
     <item
-        android:id="@+id/nav_account"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Account"/>
+        android:id="@+id/nav_more"
+        android:icon="@drawable/ic_baseline_dehaze_24"
+        android:title="More"/>
 
 
 </menu>
