@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.EventsBooked"></activity>
+        <activity android:name=".welcome.ProductsPurchased"></activity>
+        <activity android:name=".welcome.EventsBooked" />
         <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.Cart" />

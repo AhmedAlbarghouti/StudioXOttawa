@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        EventsBooked obj = new EventsBooked();
+        obj.loadBookedEvents();
 
 
         user = FirebaseAuth.getInstance().getCurrentUser(); //gets the current logged in user

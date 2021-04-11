@@ -50,7 +50,7 @@ public class AddNews extends AppCompatActivity{
         image = findViewById(R.id.add_image);
         addImageBtn = findViewById(R.id.add_image_btn);
         addImageBtn.setOnClickListener(click->{openGallery();});
-
+        imageBitmap = BitmapFactory.decodeResource(getBaseContext().getResources(),R.drawable.big_logo);
         createNews.setOnClickListener(click -> {
             createNews();
             Toast.makeText(AddNews.this, "News Created Successfully!",Toast.LENGTH_LONG).show();
