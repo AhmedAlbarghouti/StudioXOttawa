@@ -194,4 +194,5 @@
     <string name="select_image_btn">Sélectionnez une image ...</string>
     <string name="video_add_success">Nouvelle vidéo ajoutée</string>
     <string name="invalid_input">Données manquantes, impossible d\'ajouter</string>
+    <string name="updated_library">Vidéos Youtube actualisées</string>
 </resources>

@@ -216,4 +216,5 @@
     <string name="select_image_btn">Select Image...</string>
     <string name="video_add_success">New Video Added</string>
     <string name="invalid_input">Data missing, unable to add</string>
+    <string name="updated_library">Youtube Library updated</string>
 </resources>

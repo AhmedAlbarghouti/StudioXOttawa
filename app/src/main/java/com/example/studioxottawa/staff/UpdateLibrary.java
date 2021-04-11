@@ -1,12 +1,15 @@
 package com.example.studioxottawa.staff;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.studioxottawa.R;
 import com.example.studioxottawa.VODPlayer.Video;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,9 +23,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -34,7 +39,10 @@ import java.util.concurrent.locks.ReentrantLock;
         private final Condition tryAgain = lock.newCondition();
         private volatile boolean finished = false;
         private String nextPageToken = "";
-        private Boolean exists = false, next = false;
+        private Boolean exists = false, start = false;
+        ArrayList<String> idList;
+        String successMessage = "";
+        Context toastContext;
         private static final String CHANNEL_ID = "UC4RbMe6c61zSWZ2kfvDVXaw"; //Channel ID for StudioX Ottawa youtube channel
         //private static final String API_KEY = "AIzaSyB5ITzudZxRCaveKEfE4XbZO6V0y2NWS-8"; //API key to access youtube search APIs.
         private static final String API_KEY = "AIzaSyBYFnzWHuWti9WT5SG3QJIfYxNtHKxIHic"; //Backup API key for testing in case of quota limit exceeding
@@ -48,7 +56,13 @@ import java.util.concurrent.locks.ReentrantLock;
         String vidId = "";
         String title = "";
 
-        public void run() {
+        public UpdateLibrary(Context c) {
+            toastContext = c;
+        }
+
+        public void run(String success) {
+
+            successMessage = success;
             this.execute();
         }
 
@@ -75,8 +89,28 @@ import java.util.concurrent.locks.ReentrantLock;
         //Handles the actual calls to the API in the background thread.
         @Override
         protected String doInBackground(String... args) {
+
             try {
                 lock.lockInterruptibly();
+                idList = new ArrayList<>();
+                DatabaseReference baseRef = FirebaseDatabase.getInstance().getReference().child("Videos");
+                baseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            Video currVid = ds.getValue(Video.class);
+                            if (currVid.getType()==Video.YOUTUBE_MODIFIER)
+                                idList.add(currVid.getURL());
+                        }
+                        start = true;
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                //Wait for firebase to populate the ID list before
+                while (!start);
                 do {
                     String urlString;
 
@@ -111,10 +145,9 @@ import java.util.concurrent.locks.ReentrantLock;
                     JSONArray videos = jObject.getJSONArray("items");
                     Log.d("DEBUG - VIDEOS COUNT", "Videos has " + videos.length() + " Elements");
 
-                    DatabaseReference baseRef = FirebaseDatabase.getInstance().getReference().child("Videos");
+
                     for (int i = 0; i < videos.length(); i++) {//Retrieves the current token's video IDs, titles and thumbnails
                             exists = false;
-                            next = false;
                             JSONObject currVid = videos.getJSONObject(i);
                             vidId = currVid.getJSONObject("id").getString("videoId");
                             title = currVid.getJSONObject("snippet").getString("title");
@@ -126,42 +159,26 @@ import java.util.concurrent.locks.ReentrantLock;
                             if (responseCode == 200) {
                                 image = BitmapFactory.decodeStream(imageConnection.getInputStream());
                             }
+                            if (idList.contains(vidId))
+                                setExists();
+                            if (!exists) {
+                                try {
+                                    Video newVideo = new Video(title, vidId, image, Video.YOUTUBE_MODIFIER);
+                                    DatabaseReference videosReference = FirebaseDatabase.getInstance().getReference().child("Videos");
 
-                            baseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot ds : snapshot.getChildren()) {
-                                        Video currVid = ds.getValue(Video.class);
-                                        if (currVid.getURL().equals(vidId))
-                                            setExists();
+                                    videosReference.child(newVideo.getUID()).setValue(newVideo);
+                                } catch (Exception e) {
+                                    if (e != null) {
+                                        Log.d("DEBUG - ", "E is not null");
+                                        e.printStackTrace();
+                                        if (e.getMessage() != null)
+                                            Log.e("YoutubeAPIConnector", e.getMessage());
                                     }
-                                    if (!exists) {
-                                        try {
-                                            Video newVideo = new Video(title, vidId, image, Video.YOUTUBE_MODIFIER);
-                                            DatabaseReference videosReference = FirebaseDatabase.getInstance().getReference().child("Videos");
-
-                                            videosReference.child(newVideo.getUID()).setValue(newVideo);
-                                        } catch (Exception e) {
-                                            if (e != null) {
-                                                Log.d("DEBUG - ", "E is not null");
-                                                e.printStackTrace();
-                                                if (e.getMessage() != null)
-                                                    Log.e("YoutubeAPIConnector", e.getMessage());
-                                            }
-                                        }
-                                    }
-                                    next = true;
                                 }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                            while (!next);
+                            }
                     }
-                        if (getNextPageToken().isEmpty())
-                            finished = true;
+                    if (getNextPageToken().isEmpty())
+                        finished = true;
                 } while (!finished);
             }
             catch (Exception e) {
@@ -199,5 +216,13 @@ import java.util.concurrent.locks.ReentrantLock;
         }
 
         public String getNextPageToken() { return nextPageToken; }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            CharSequence success = successMessage;
+            Toast.makeText(toastContext, success, Toast.LENGTH_LONG);
+
+        }
     }
 

@@ -42,9 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".VODPlayer.VODActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"/>
+        <activity
+            android:name=".VODPlayer.VODActivity"
+            android:configChanges="orientation|screenSize|layoutDirection" />
         <activity android:name=".staff.Report" />
         <activity android:name=".welcome.MainActivity" />
         <activity android:name=".staff.StaffMenu" />

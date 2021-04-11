@@ -76,8 +76,8 @@ public class AddVideos extends AppCompatActivity {
     }
 
     public void updateLibrary() {
-        UpdateLibrary updater = new UpdateLibrary();
-        updater.run();
+        UpdateLibrary updater = new UpdateLibrary(getBaseContext());
+        updater.run(getString(R.string.updated_library));
     }
 
     private void openGallery() {
