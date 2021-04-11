@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Studio X Ottawa</string>
+    <string name="type_message_here">Tapez le message ici</string>
+    <string name="your_message_question">Votre message / question</string>
+    <string name="subject">Sujet:</string>
+    <string name="email">E-mail:</string>
+    <string name="your_email_required">Votre Email (requis):</string>
+    <string name="name">Nom:</string>
+    <string name="your_name_required">Votre Nom (requis):</string>
+    <string name="Open">Ouvrir</string>
+    <string name="Close">Fermer</string>
+    <string name="News_FragmentTitle">Titre:</string>
+    <string name="News_FragmentDescription">La description</string>
+    <string name="News_FragmentLink">Lien:</string>
+    <string name="News_FragmentDate">Date:</string>
+    <string name="News_close">Fermer</string>
+    <string name="lost_your_password"><u>Mot de passe perdu?</u></string>
+    <string name="don_t_have_an_account_sign_up_here">Vous n\'avez pas de compte? <u> Inscrivez-vous ici! </u></string>
+    <string name="sign_in">Connectez-vous</string>
+    <string name="password">Mot de passe</string>
+    <string name="username_email">Nom d\'utilisateur / email</string>
+    <string name="login">Login</string>
+    <string name="Aboutus1">
+       Bienvenue au Studio X Ottawa Inc. VOTRE espace de danse, de conditionnement physique et d\'espace éclectique «à guichet unique»
+         Centre de location!
+
+
+
+         Studio X Ottawa est une plaque tournante unique de professionnels locaux expérimentés de la danse et du fitness
+         comprend l’équipe du Studio ainsi que des instructeurs indépendants qui louent l’espace à
+         enseigner diverses classes.
+
+         Nous proposons des cours de danse latine (comme la salsa, bachata) et des cours de fitness
+         (Zumba, Zumba Sentao, Zumba Toning, Strong by Zumba, Pound Fitness, etc.).
+         Et nos locataires enseignent une variété de cours de danse et de fitness.
+
+         Nous louons également les studios / salles pour enseigner ou pour des pratiques, des répétitions,
+         fêtes (baby shower, douche nuptiale, sweet sixteen, etc.), réunions, séances photos,
+         expositions, rassemblements sociaux, etc. ainsi que des événements corporatifs.
+    </string>
+    <string name="Aboutus2">
+        QUALIFICATIONS DES PRINCIPAUX INSTRUCTEURS DU STUDIO X:
+    </string>
+    <string name="Aboutus3">
+        "Nous avons suivi des cours privés et des formations avec les danseurs et entraîneurs professionnels suivants:"
+    </string>
+    <string name="Aboutus4">
+        "- Adriano Ieropoli et Samantha Scali (champions du monde de Salsa On2)\n"
+        "- Corinne Tardieu et Victor Alexis (Champions canadiens de Salsa, Bachata et Hustle)\n"
+        "- David Zapeda et Paulina Posadas (6x champions du monde de salsa)\n"
+        "- Anya Katsevman (championne du monde de salsa et juge)\n"
+        "- Katie Marlow (directrice du World Salsa Summit, championne du monde des expositions de cabaret, juge)\n"
+        "- Edson Vallon (propriétaire et directeur de l'école de danse SaltiMambo à Montréal Canada)\n"
+        "- Caroline Paré (propriétaire et directrice de Caroline Paré Danse Latine)\n"
+        "- Carla Voconii (Compagnie Glam Mambo)\n"
+        "- Santo Rico\n"
+    </string>
+    <string name="Aboutus5">
+        "Bootcamps et ateliers:"
+    </string>
+    <string name="Aboutus6">
+         "- Master Class 2019 (Salsa On2 - Mambo) avec Eddie et Maria Torres \ n"
+         "- Master Class 2019 (Bachata dominicain) avec Alex Morel au World Salsa Summit \ n"
+         "- 2018 Bachata Intensif avec MG Latin Dance de Los Angeles \ n"
+         "- Master class 2018 avec Adolfo à Montréal \ n"
+         "- Master class 2018 avec Rodrigo Cortazar \ n"
+         "- Entraînement du week-end 2018 avec Yvonne Gutierez à Montréal \ n"
+         "- Entraînement du week-end 2017 à Montréal avec Eddie Torres et Yvonne Gutierez \ n"
+         "- Défi Karel Flores Weekend Bootcamp 2016 à Montréal \ n"
+         "- Entraînement brésilien de Zouk 2013 avec K-Yo du Brésil \ n"
+         "- Week-end culturel 2013 à New York (Harlem espagnol) avec Eddy Torres, Maria Torres, Mambo D, Yvonne Gutierez, etc. \ n"
+         "- Week-end de stylisme 2010 à Boston avec Karel Flores, Ana Masacote, Burju, Julissa Cruz et Shani Talmor \ n"
+         "- Retraite Masacote 2009 et 2011"
+    </string>
+    <string name="Aboutus7">
+        "Certifications de danse:"
+    </string>
+    <string name="Aboutus8">
+        "Certifications de maîtrise du monde (Adolfo, Alex et Desiree, Anita, Korke et Judith), My Salsa Online, Salsa Bachata Online"
+        "Certifications de fitness: \ n"
+        "YMCA, Canfitpro, CPR, Zumba (Or, Enfants, Junior, Sentao, Tonifiant, Fort), Zumbini, Livre"
+        "Fitness, Piyo, YogaFit, Qidance, Insanity, Piloxing"
+    </string>
+    <string name="Aboutus9">
+        "L'expérience professionnelle:"
+    </string>
+    <string name="Aboutus10">
+        "2017-présent \n"
+        "Instructeurs de conditionnement physique pour Bell Canada (entreprise) \n"
+        "2013-présent \n"
+        "Directeurs et instructeurs au Studio X Ottawa \n"
+        "2011-Présent \n"
+        "Chorégraphies de danse de mariage \n"
+        "Juin 2019 \n"
+        "Enseigner des ateliers d'introduction à la bachata et à la salsa pour le festival Latin Sparks \n"
+        "Mai 2019 \n"
+        "Atelier d'enseignement de la Bachata Dominical à la Convention de Salsa de Montréal \n"
+        "Février 2019 \n"
+        "Atelier d'enseignement de la bachata dominicaine au Festival de la bachata d'Ottawa \n"
+        «Novembre 2018 \n»
+        "Atelier Enseigner On2 à la Convention Salsa de Montréal \n"
+        «Été 2018 \n»
+        "Tournée de Montréal (spectacles à Moka, Baila Con Gusto et Bachata Fusion (Marina de Repentigny)) \n"
+        «Été 2017 \n»
+        "Atelier sur l'enseignement du Cha Cha Cha au congrès de salsa d'Ottawa \n"
+        «2012-2014 \n»
+        "Instructeur de conditionnement physique YMCA \n"
+        "Instructeur de conditionnement physique de la Ville de Gatineau \n"
+        "Instructeur de fitness Old Town House \n"
+        "Instructeur de conditionnement physique pour personnes âgées à l’Académie des retraités de l’Outaouais \n"
+        «2010-2014 \n»
+        "Directeurs d'équipe Blackanese Mambo"
+    </string>
+    <string name="SoulNadege">"Nos principaux instructeurs!"
+                              "Soul and Nadège (Danse depuis 1999)"
+    </string>
+    <string name="notifText">
+        "Ceci vous rappelle que vous avez un rendez-vous le: \n"
+        "\n"
+        "Studio X Ottawa\n"
+    </string>
+    <string name="title_activity_aboutus">"ActivitéÀProposDeNous "</string>
+    <string name="title_activity_notif">ActivitéDeNotification</string>
+    <string name="previous_button">Page précédente</string>
+    <string name="next_button">Page suivante</string>
+    <string name="thumbnail_preview">Miniature vidéo</string>
+    <string name="title_activity_services">Prestations de service</string>
+    <string name="hello_world">Bonjour Square World!</string>
+    <string name="PurchaseTitle">Souhaitez-vous acheter ceci?</string>
+    <string name="PurchaseConfirm">Merci pour votre achat</string>
+    <string name="free_vids">Gratuit</string>
+    <string name="prem_vids">Premium</string>
+    <string name="register">Registre</string>
+    <string name="email_hint">E-mail</string>
+    <string name="name_hint">Nom et prénom</string>
+    <string name="phone_hint">Numéro de téléphone</string>
+    <string name="createaccount">Créer un nouveau compte</string>
+    <string name="signinaccount">Déjà enregistré? <u> Connectez-vous </u></string>
+    <string name="enter_email_hint">Entrer votre Email</string>
+    <string name="reset_password">Réinitialiser le mot de passe</string>
+    <string name="welcomeHeader">Bienvenu</string>
+    <string name="user">Utilisateur</string>
+    <string name="add_class_button">Ajouter un Événement</string>
+    <string name="send">Envoyer</string>
+    <string name="new_event">Créer un nouvel événement</string>
+    <string name="fitness_hint">Classe de fitness</string>
+    <string name="no_date">Aucune date sélectionnée</string>
+    <string name="create_event">Créer un évènement</string>
+    <string name="create_news">Créer Nouvelles</string>
+    <string name="news_title_hint">Nouvelles Titre</string>
+    <string name="description">Description</string>
+    <string name="image_url_hint">URL de l\'image</string>
+    <string name="add_product">Ajouter un Produit</string>
+    <string name="product_name_hint">Nom du produit</string>
+    <string name="product_price_hint">Prix du produit</string>
+    <string name="schedule">Horaire</string>
+    <string name="services">Services</string>
+    <string name="vod">Vidéo sur demande</string>
+    <string name="news">Nouvelles</string>
+    <string name="contact">Contactez-nous</string>
+    <string name="aboutus">À propos de nous</string>
+    <string name="logout">Déconnexion</string>
+    <string name="admin">Tâches d\'administration</string>
+    <string name="forgot">Mot de passe oublié</string>
+    <string name="purchaseSummary">Achat Résumé</string>
+    <string name="amount">Totaliser:</string>
+    <string name="pay">Payer</string>
+    <string name="back">Retourner</string>
+    <string name="call">Appelez StudioX Ottawa</string>
+    <string name="add_service">Ajouter des services</string>
+    <string name="add_event">Ajouter un évènement</string>
+    <string name="add_news">AJOUTER DES NOUVELLES</string>
+    <string name="report">Rapport</string>
+    <string name="total_price">Prix total</string>
+    <string name="cancel">Annuler</string>
+    <string name="place_order">Acheter</string>
+    <string name="book_event">Réserver un événement</string>
+
+    <string name="sa_cancel">Cancel</string>
+    <string name="sa_add">Add</string>
+    <string name="sa_toCart">to Cart?</string>
+    <string name="sa_dialog_add">Add </string>
+    <string name="EmptyCart">Cart is Empty</string>
+    <string name="onFailureError">Error: </string>
+    <string name="successful_product_adding">Product Successfully Added!</string>
+    <string name="invalid_input">Invalid inputs</string>
+
+    <string name="sign_out">Sign out</string>
+    <string name="about_us">About Us</string>
+    <string name="products_purchased">Products Purchased</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="account_information">Account Information</string>
+    <string name="admin_portal">Admin Portal</string>
+    <string name="events_booked">Events Booked</string>
+
+    <string name="AboutusTitle">
+        "     Welcome to Studio X Ottawa Inc."</string>
+
+    <string name="Aboutus0">
+        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
+    <string name="choose_email_client">Choose one application</string>
+    <string name="type_subject_here">Subject</string>
+    <string name="select_image_btn">select image..</string>
+
+
+
+    <string name="book_now">Book Now</string>
+    <string name="event_staff">Event Staff</string>
+    <string name="event_time">Event Time</string>
+    <string name="event_date">Event Date</string>
+    <string name="event_name">Event Name</string>
+    <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
+</resources>

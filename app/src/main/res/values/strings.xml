@@ -25,17 +25,18 @@
     <string name="login">Login</string>
 
     <string name="Aboutus1">
-
+        "Welcome to Studio X Ottawa Inc. YOUR “one stop” eclectic dance, fitness and space "
+        "rental Centre!\n\n"
 
         "Studio X Ottawa is a unique hub of experienced local dance and fitness professionals "
         "comprise of the Studio’s team as well as independent instructors who rent the space to"
-        "teach various classes. \n \n \n"
+        "teach various classes.\n"
         "We offer Latin Dance classes (like Salsa, Bachata) And Fitness classes "
         "(Zumba, Zumba Sentao, Zumba Toning, Strong by Zumba, Pound Fitness, etc.). "
-        "And, our renters teach a variety of dance and fitness classes. \n \n \n "
+        "And, our renters teach a variety of dance and fitness classes. \n "
         "We also rent the studios/rooms to teach or for practices, rehearsals, "
         "parties (baby shower, bridal shower, sweet sixteen, etc.), meetings, photoshoots, "
-        "exhibitions, social gathering, etc. as well as Corporate events. \n \n "
+        "exhibitions, social gathering, etc. as well as Corporate events."
 
     </string>
     <string name="Aboutus2">
@@ -89,39 +90,34 @@
 
     <string name="Aboutus10">
         "2017-present\n"
-        "Fitness instructors for Bell Canada (corporate)\n\n"
-        "2013-present\n"
-        "Directors and Instructors at Studio X Ottawa\n\n"
-        "2011-Présent\n"
-        "Wedding dance choreographies\n\n"
-        "June 2019\n"
-        "Teaching Bachata and Salsa Intro workshops for Latin Sparks Festival\n\n"
-        "May 2019\n"
-        "Teaching Dominical Bachata Workshop at Montreal Salsa Convention\n\n"
-        "February 2019\n"
-        "Teaching Dominican Bachata Workshop at Ottawa Bachata Festival\n\n"
-        "November 2018\n"
-        "Teaching On2 Workshop at Montreal Salsa Convention\n\n"
-        "Summer 2018\n"
-        "Montreal Tour (shows at Moka, Baila Con Gusto and Bachata Fusion (Marina de Repentigny))\n\n"
-        "Summer 2017\n"
-        "Teaching Cha Cha Cha workshop at Ottawa Salsa Convention\n\n"
-        "2012-2014\n"
+        "Fitness instructors for Bell Canada (corporate)\n"
+        "2013-present\n \n"
+        "Directors and Instructors at Studio X Ottawa\n"
+        "2011-Présent\n \n"
+        "Wedding dance choreographies\n"
+        "June 2019\n \n"
+        "Teaching Bachata and Salsa Intro workshops for Latin Sparks Festival\n"
+        "May 2019\n \n"
+        "Teaching Dominical Bachata Workshop at Montreal Salsa Convention\n"
+        "February 2019\n \n"
+        "Teaching Dominican Bachata Workshop at Ottawa Bachata Festival\n"
+        "November 2018\n \n"
+        "Teaching On2 Workshop at Montreal Salsa Convention\n"
+        "Summer 2018\n \n"
+        "Montreal Tour (shows at Moka, Baila Con Gusto and Bachata Fusion (Marina de Repentigny))\n"
+        "Summer 2017\n \n"
+        "Teaching Cha Cha Cha workshop at Ottawa Salsa Convention\n"
+        "2012-2014\n \n"
         "YMCA fitness instructor\n"
         "City of Gatineau fitness instructor\n"
         "Old Town House Fitness instructor\n"
-        "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n\n"
-        "2010-2014\n"
+        "Fitness instructor for older adults at Académie des retraités de l’Outaouais\n"
+        "2010-2014\n \n"
         "Blackanese Mambo Team Directors"
         "\n\n\n\n      Copyright 2013 - Studio X Ottawa Inc. | All Rights Reserved |\n\n"
     </string>
-    <string name="AboutusTitle">
-        "     Welcome to Studio X Ottawa Inc."</string>
 
-    <string name="Aboutus0">
-        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
-    <string name="SoulNadege">"Our Main instructors!"
-                              "Soul and Nadège (Dancing since 1999)\n"</string>
+
     <string name="title_activity_aboutus">AboutusActivity</string>
 
     <string name="title_activity_notif">NotificationActivity</string>
@@ -148,7 +144,7 @@
     <string name="PurchaseTitle">Would you like to purchase this?</string>
     <string name="PurchaseConfirm">Thank you for your purchase</string>
     <string name="free_vids">Free</string>
-    <string name="youtube_button">Youtube</string>
+    <string name="youtube_button" translatable="false">Youtube</string>
     <string name="prem_vids">Premium</string>
     <string name="register">Register</string>
     <string name="email_hint">Email</string>
@@ -161,13 +157,73 @@
     <string name="welcomeHeader">Studio X Ottawa</string>
     <string name="user">User</string>
     <string name="add_class_button">add event</string>
-    <string name="sign_out">Sign out</string>
-    <string name="about_us">About Us</string>
-    <string name="products_purchased">Products Purchased</string>
-    <string name="contact_us">Contact Us</string>
-    <string name="account_information">Account Information</string>
-    <string name="admin_portal">Admin Portal</string>
-    <string name="events_booked">Events Booked</string>
+    <string name="new_event">Add New Event</string>
+    <string name="fitness_hint">Fitness Class</string>
+    <string name="no_date">No Date Selected</string>
+    <string name="time_hint" translatable="false">6:00PM - 6:55PM</string>
+    <string name="create_event">Create Event</string>
+    <string name="create_news">Create News</string>
+    <string name="news_title_hint">News Title</string>
+    <string name="description">Description</string>
+    <string name="image_url_hint">Image URL</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_name_hint">Product Name</string>
+    <string name="product_price_hint">Product Price</string>
+    <string name="schedule">Schedule</string>
+    <string name="services">Services</string>
+    <string name="vod">Video On Demand</string>
+    <string name="news">News</string>
+    <string name="contact">Contact Us</string>
+    <string name="aboutus">About Us</string>
+    <string name="logout">Logout</string>
+    <string name="admin">Admin Tasks</string>
+    <string name="forgot">Forgot Password</string>
+    <string name="purchaseSummary">Purchase Summary</string>
+    <string name="amount">Amount:</string>
+    <string name="pay">Pay</string>
+    <string name="back">Go Back</string>
+    <string name="call">Call StudioX Ottawa</string>
+    <string name="add_service">Add Services</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_news">ADD NEWS</string>
+    <string name="report">Report</string>
+    <string name="total_price">Total Price</string>
+    <string name="cancel">cancel</string>
+    <string name="place_order">Place Order</string>
+    <string name="book_event">Book Event</string>
+    <string name="sa_cancel">Cancel</string>
+    <string name="sa_add">Add</string>
+    <string name="sa_toCart">to Cart?</string>
+    <string name="sa_dialog_add">Add </string>
+    <string name="EmptyCart">Cart is Empty</string>
+    <string name="onFailureError">Error: </string>
+    <string name="successful_product_adding">Product Successfully Added!</string>
+    <string name="invalid_input">Invalid inputs</string>
+<string name="sign_out">Sign out</string>
+<string name="about_us">About Us</string>
+<string name="products_purchased">Products Purchased</string>
+<string name="contact_us">Contact Us</string>
+<string name="account_information">Account Information</string>
+<string name="admin_portal">Admin Portal</string>
+<string name="events_booked">Events Booked</string>
+
+    <string name="AboutusTitle">
+        "     Welcome to Studio X Ottawa Inc."</string>
+
+    <string name="Aboutus0">
+        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
+    <string name="SoulNadege">"Our Main instructors!"
+                              "Soul and Nadège (Dancing since 1999)\n"</string>
+    <string name="choose_email_client">Choose one application</string>
+<!--    <string name="type_subject_here">Subject</string>-->
+    <string name="select_image_btn">select image..</string>
+<!--    <string name="sign_out">Sign out</string>-->
+<!--    <string name="about_us">About Us</string>-->
+<!--    <string name="products_purchased">Products Purchased</string>-->
+<!--    <string name="contact_us">Contact Us</string>-->
+<!--    <string name="account_information">Account Information</string>-->
+<!--    <string name="admin_portal">Admin Portal</string>-->
+<!--    <string name="events_booked">Events Booked</string>-->
     <string name="type_subject_here">Type Subject Here</string>
     <string name="book_now">Book Now</string>
     <string name="event_staff">Event Staff</string>

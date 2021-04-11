@@ -1,170 +1,201 @@
 package com.example.studioxottawa.services;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
-import com.example.studioxottawa.welcome.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-
-import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-public class ServicesActivity extends AppCompatActivity {
+/**
+ * ServiceActivity Class
+ * This class displays all the products available on the store and
+ * Allows user to add items to cart to be purchased later.
+ *
+ * Variables
+ *     private MyListAdapter adapter
+ *     private AlertDialog.Builder builder
+ *     private final NumberFormat formatter
+ *     private  Bitmap i1;
+ *     private  ArrayList<Product> productList
+ *     private  ListView servicesView
+ *     private ImageButton goToCart
+ *     private boolean hasItem
+ *     private String UID
+ *
+ */
+public class ServicesActivity extends Fragment {
 
     private MyListAdapter adapter;
     private AlertDialog.Builder builder;
-    private NumberFormat formatter = new DecimalFormat("#0.00");
-    private Bitmap i1;
+    private final NumberFormat formatter = new DecimalFormat("#0.00");
+    private   Bitmap i1;
+    private   ArrayList<Product> productList = new ArrayList<>();
+    private   ArrayList<String> stringList=new ArrayList<>();
+    private   ListView servicesView;
+    private   ImageButton goToCart;
+    private boolean hasItem;
+    private   String UID="";
+    FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
 
-    private ArrayList<Product> productList = new ArrayList<>();
-    private ArrayList<String> stringList=new ArrayList<>();
-   private ListView servicesView;
-    private ImageButton goToCart;
 
-
-//    private ArrayList<Product> productList = new ArrayList<>();
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_services);
-//        final DatabaseReference rootRef;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_services, container, false);
 
+        //Initializing the AlertDialogs,Adapter,and Cart button.
+        builder = new AlertDialog.Builder(root.getContext());
+        servicesView = root.findViewById(R.id.serviceContainer);
+        servicesView.setAdapter(adapter = new MyListAdapter());
+        goToCart = root.findViewById(R.id.cartButton);
+        //retrieving the user id of the current logged on user.
+        UID=getArguments().getString("UID");
+
+        i1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_logo);
+        //load products available to purchase
         loadServices();
-//        thumbnailView = (ImageView) view.findViewById(R.id.serviceImage);
-//        itemView = (TextView) view.findViewById(R.id.serviceTitle);
-//        priceView = (TextView) view.findViewById(R.id.servicePrice);
-        goToCart=findViewById(R.id.cartButton);
-        goToCart.setOnClickListener(btn->{
-            if(productList.isEmpty()) {
-                Toast.makeText(ServicesActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
-            }else {
+        //check if cart has item
+        checkCart();
 
-                Intent viewCart = new Intent(ServicesActivity.this, Cart.class);
 
-                viewCart.putStringArrayListExtra("List",stringList);
-                startActivityForResult(viewCart,1);
+        goToCart.setOnClickListener(btn -> {
+
+            // checking if the cart is empty. If it is it notifies the user that the cart is empty
+            // if the cart is not empty, it navigates the user to the cart fragment to view the item contained in the cart.
+            if (!hasItem) {
+                Toast.makeText(root.getContext(), getString(R.string.EmptyCart), Toast.LENGTH_SHORT).show();
+            }
+            else {
+                // getting the fragment to be navigated to.
+                Fragment selectedFragment= new Cart();
+                Bundle bundle= new Bundle();
+                bundle.putStringArrayList("List",stringList);
+                bundle.putString("UID",UID);
+                selectedFragment.setArguments(bundle);
+                // transitioning to the next fragment
+                getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
+
             }
         });
 
 
 
-        builder = new AlertDialog.Builder(this);
-        servicesView = findViewById(R.id.serviceContainer);
-        servicesView.setAdapter(adapter = new MyListAdapter());
 
-           servicesView.setOnItemClickListener((parent, view, position, id) -> {
+        // setting onCLickListener for list to give the user the option to add the item they clicked to their cart.
+        servicesView.setOnItemClickListener((parent, view, position, id) -> {
+            builder.setTitle(getString(R.string.sa_add )+" "+ productList.get(position).getItem() +" "+ getString(R.string.sa_toCart));
 
-               builder.setTitle("Add "+productList.get(position).getItem()+" to Cart?");
-               builder.setPositiveButton("Add",(dialogInterface, i) -> {
-                   stringList.add(productList.get(position).getItem());
-                   updateCartIcon();
-               });
-               builder.setNegativeButton("Cancel",(dialogInterface, i) -> dialogInterface.cancel()).create().show();
+            builder.setPositiveButton(getString(R.string.sa_dialog_add), (dialogInterface, i) -> {
 
-               adapter.notifyDataSetChanged();
+                //grabbing the specific item that the user clicked using the position variable of the Listener, setting the product quantity and adding it to the Carts on the database.
+                DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+                Product productInCart= productList.get(position);
+                productInCart.setQuantity(1);
 
-           });
+                ref.child(productInCart.getItem()).setValue(productInCart);
 
+                stringList.add(productList.get(position).getItem());
+                checkCart();
+                //notifies the adapter that there has been a change in the list to be displayed
+                adapter.notifyDataSetChanged();
+            });
+            //cancels adding the item to cart
+            builder.setNegativeButton(getString(R.string.sa_cancel), (dialogInterface, i) -> dialogInterface.cancel()).create().show();
+            //
+        });
+        return root;
+    }
 
-//                 myList = findViewById(R.id.ListyView);
-//            myList.setAdapter( myAdapter = new MyListAdapter());
-//            myList.setOnItemClickListener( (parent, view, pos, id) -> {
-//
-//                myAdapter.notifyDataSetChanged();
-//            }   );
-//
-//        } });
+    /**
+     * this method connects with the Firebase database to check if the current logged in user has any items in their cart.
+     * if they do it changes the cart to red icon and set hasItem boolean to true.
+     * if not it changes the cart icon to black and set hasItem boolean to false.
+     *
+     */
+    public void checkCart(){
 
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                // checking if the current user has nodes under the Cart label.
+                if(snapshot.exists()){
+                    goToCart.setImageResource(R.drawable.shopping_cart_with_item);
+                    hasItem=true;
+                }else{
 
+                    goToCart.setImageResource(R.drawable.shopping_cart_empty);
+                    hasItem=false;
+                }
 
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-          i1 = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo_studioxottawa);
+            }
 
-//
-//        Product p1 = new Product( "T-Shirt", 42.50);
-//        Product p2 = new Product("Towel", 10.00);
-//        Product p3 = new Product("Bottled Water", 3.50);
-//        Product p4 = new Product("Dance Shoes", 80.00);
-
-//        productList.add(p1);
-//        productList.add(p2);
-//        productList.add(p3);
-//        productList.add(p4);
-
-//        rootRef=FirebaseDatabase.getInstance().getReference().child("Products");
-//                for (Product p : productList) {
-//
-////                        rootRef.child("Products").child(p.getItem()).setValue(p);
-//
-//
-//
-//                }
-//            }
+        });
 
 
     }
 
 
-    public void updateCartIcon(){
-        if(!productList.isEmpty()){
-            goToCart.setImageResource(R.drawable.shopping_cart_with_item);
-        }else{
-            goToCart.setImageResource(R.drawable.shopping_cart_empty);
-        }
-    }
-
-
+    /**
+     * This method loads the products being sold from the Firebase realtime database  Products table, creates a Product object with the data
+     * and populates the array list of products called ProductList with each item.
+     */
     public void loadServices(){
+        // calling an instance of the database to grab all the nodes in the products table
         DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Products");
         referenceServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // grabbing the item, price, and quantity value for each node in the products table, storing them in a string object,
+
                 for(DataSnapshot ds: snapshot.getChildren()){
                     String item= String.valueOf(ds.child("item").getValue());
                     String price= String.valueOf(ds.child("price").getValue());
                     String quantity= String.valueOf(ds.child("quantity").getValue());
+                    String bitmap= String.valueOf(ds.child("bitmap").getValue());
+//                   creating a Product object, and storing those Product objects in an ArrayList of Products.
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                    //checking for an image associated with the product. If one exist set it the the product's bitmap;
+                    if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
+                        temp.setBitmap(bitmap);
+                    }
                     productList.add(temp);
                 }
+                // once all nodes are added to the ArrayList notifying MyListAdapter of changes.
                 adapter.notifyDataSetChanged();
             }
 
@@ -176,30 +207,54 @@ public class ServicesActivity extends AppCompatActivity {
         });
 
     }
+    private Bitmap decodeFromStringToImage(String input){
+        byte[] decodingBytes= Base64.decode(input,0);
+        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
+    }
+
+    /**
+     * The MyListAdapter private inner class extends BaseAdapter
+     * its purpose is to keep track of the items of the productlist as they scroll into and out of view on screen,
+     * inflate the layout xml file for ServiceActivity and populate the appropriate Textviews accordingly.
+     */
     private class MyListAdapter extends BaseAdapter {
 
+        // getting the number of items to be displayed in the list
         public int getCount() {
             return productList.size();
         }
 
+        // grabbing a specific item at a specific location on screen
         public Product getItem(int position) { return productList.get(position); }
+
 
         public long getItemId(int position) {
             return (long) position;
         }
-
+        // this method loops through items on screen and display each item appropriately
         public View getView(int position, View old, ViewGroup parent) {
-            Log.i("gycreport", " getview ");
             View newView = null;
+            //Initializing a LayoutInflater and inflating the service_layout xml
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.service_layout, parent, false);
-            Product u = getItem(position);
+
+            //populating the Textviews,and ImageViews with appropriate data.
+            Product product = getItem(position);
+            // Initialize Textview for the item title.
             TextView item = newView.findViewById(R.id.serviceTitle);
-            item.setText("  "+u.getItem());
+            // populating the item title Textview with the current items title.
+            item.setText(String.valueOf(product.getItem()));
+            // initializing the Price Textview.
             TextView price = newView.findViewById(R.id.servicePrice);
-            price.setText("  "+formatter.format(u.getPrice()));
+            // populating the Price Textview with the current item price.
+            price.setText(String.valueOf(formatter.format(product.getPrice())));
             ImageView thumbnail = newView.findViewById(R.id.serviceImage);
-            thumbnail.setImageBitmap(i1);
+            // if product bitmap is empty set thumbnail to the default i1. if not grab the product image and use it as the thumbnail
+            if(product.getBitmap().isEmpty()){
+                thumbnail.setImageBitmap(i1);
+            }else {
+                thumbnail.setImageBitmap(decodeFromStringToImage(product.getBitmap()));
+            }
             //return it to be put in the table
             return newView;
         }

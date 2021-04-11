@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/AddService"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     tools:context=".staff.AddService">
 
     <TextView
         android:id="@+id/add_Product_title"
-        android:text="Add Product"
-        android:textSize="40sp"
+        android:text="@string/add_product"
+        android:textSize="30sp"
         android:gravity="center"
         android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-light"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         />
@@ -20,17 +25,21 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/add_Product_title"
         android:id="@+id/new_product_name"
-        android:hint="Product Name"
+        android:hint="@string/product_name_hint"
         android:gravity="center"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-light"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         />
 
     <ImageView
         android:id="@+id/new_product_image"
-        android:src="@drawable/logo_studioxottawa"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:src="@drawable/big_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="fitXY"
         android:layout_centerHorizontal="true"
 
@@ -38,18 +47,36 @@
         />
 
 
+    <Button
+        android:id="@+id/imageSelectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_product_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="-3dp"
+        android:layout_toEndOf="@id/new_product_image"
+        android:outlineProvider="none"
+        android:backgroundTint="@color/Transparent"
+        android:text="@string/select_image_btn" />
+
     <EditText
         android:layout_below="@id/new_product_image"
         android:id="@+id/new_product_price"
-        android:hint="Product Price"
+        android:hint="@string/product_price_hint"
         android:gravity="center"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-light"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         />
 
     <Button
         android:id="@+id/AddProductBtn"
-        android:text="Add Product"
+        android:text="@string/add_product"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_price"
