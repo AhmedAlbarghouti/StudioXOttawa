@@ -23,6 +23,16 @@ public class Product implements Parcelable{
     private Double price;
     private String bitmap;
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
     public String getBitmap() {
         return bitmap;
     }
@@ -46,6 +56,7 @@ public class Product implements Parcelable{
         setQuantity(quantity);
         setBitmap("");
     }
+
 
     protected Product(Parcel in) {
         item = in.readString();

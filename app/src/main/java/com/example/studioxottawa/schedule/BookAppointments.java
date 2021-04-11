@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,7 +70,8 @@ public class BookAppointments extends AppCompatActivity {
         eventDate.setText(passedEvent.getString("EVENT_DATE"));
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
-        String itemName= name+" "+date+" "+time+" with "+staff;
+        String itemName= name+"-"+date+"-"+time+"-"+staff;
+        Log.i("FULL NAME",itemName);
         //Universally Unique Event ID
         String Uid = passedEvent.getString("EVENT_UID");
 

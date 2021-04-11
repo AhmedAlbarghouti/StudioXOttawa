@@ -56,10 +56,17 @@ import com.stripe.android.view.ShippingInfoWidget;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -130,7 +137,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
         );
 
-        startCheckout();
+        try {
+            startCheckout();
+        }catch (Exception | Error e){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
     }
     /**
      * This method loads the products that is in the current user's cart from the Firebase realtime database  and load it into an arraylist of products
@@ -302,14 +314,20 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 DatabaseReference prodRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Products Purchased");
                 DatabaseReference eventRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Events Purchased");
                 Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
                 for(Product p : products){
 
                     Matcher matcher=pattern.matcher(p.getItem());
                     isEvent=matcher.find();
                     if(isEvent){
-                        eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(p);
+                       String[] arr= p.getItem().split("-");
+                        Event event2= new Event(arr[0],arr[1],arr[2],arr[3]);
+                        eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(event2);
                     }else{
+                        p.setDate(cal.getTime().toString());
                         prodRef.child(p.getItem()).setValue(p);
+
                     }
 
 
