@@ -85,6 +85,7 @@ public class Report extends AppCompatActivity {
      * Used to load users from Firebase database
      */
     public static void loadUsers() {
+        allUsers.clear();
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Users");
 
         referenceEvents.addValueEventListener(new ValueEventListener() {
@@ -110,6 +111,7 @@ public class Report extends AppCompatActivity {
 
                     DataSnapshot productPurchasedSnapshot = ds.child("Products Purchased");
                     productsPurchasedList= new ArrayList();
+
                     for(DataSnapshot dsProduct : productPurchasedSnapshot.getChildren()){
                         String item = String.valueOf(dsProduct.child("item").getValue());
                         String pricelong = (dsProduct.child("price").getValue()).toString();

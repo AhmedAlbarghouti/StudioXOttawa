@@ -190,4 +190,11 @@
     <string name="account_details">Account Details</string>
     <string name="full_name">Full Name</string>
     <string name="email_minus_colon">Email</string>
+    <string name="administrator">Administrator</string>
+    <string name="add_service">Add Service</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_news">ADD NEWS</string>
+    <string name="report">Report</string>
+    <string name="clients">Clients:</string>
+    <string name="staff_report">Staff Report</string>
 </resources>

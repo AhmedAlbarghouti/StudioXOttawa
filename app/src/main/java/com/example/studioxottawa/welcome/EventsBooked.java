@@ -1,9 +1,11 @@
 package com.example.studioxottawa.welcome;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,21 @@ import android.widget.TextView;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.schedule.Event;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class EventsBooked extends AppCompatActivity {
     private ListView events;
-    private ArrayList<Event> eventsBookedList;
+    private static ArrayList<Event> eventsBookedList = new ArrayList<>();
     private BookedEventListAdapter listAdapter = new BookedEventListAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +38,38 @@ public class EventsBooked extends AppCompatActivity {
         setContentView(R.layout.activity_events_booked);
 
         events = findViewById(R.id.events_bookedLV);
-        loadBookedEvents();
+        events.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
     }
 
-    private void loadBookedEvents() {
+     void loadBookedEvents() {
+        eventsBookedList.clear();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
 
+        referenceEvents.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DataSnapshot eventsPurchasedSnapshot = snapshot.child("Events Purchased");
+                for(DataSnapshot dsEvent : eventsPurchasedSnapshot.getChildren()){
+                    String name = String.valueOf(dsEvent.child("name").getValue());
+                    String staff = String.valueOf(dsEvent.child("staff").getValue());
+                    String time = String.valueOf(dsEvent.child("time").getValue());
+                    String date = String.valueOf(dsEvent.child("date").getValue());
+                    String uid = String.valueOf(dsEvent.child("uid").getValue());
+                    eventsBookedList.add(new Event(name,date,time,staff,uid));
+                    Log.i("Event",name);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        listAdapter.notifyDataSetChanged();
     }
 
     class BookedEventListAdapter extends BaseAdapter{
@@ -91,12 +129,14 @@ public class EventsBooked extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             Event event = eventsBookedList.get(position);
-            @SuppressLint("ViewHolder") View eView = inflater.inflate(R.layout.event_row, parent, false);
+            @SuppressLint("ViewHolder") View eView = inflater.inflate(R.layout.booked_event_row, parent, false);
 
             ImageView img = eView.findViewById(R.id.eventImage);
             TextView nTxt = eView.findViewById(R.id.eventName);
+            TextView dTxt = eView.findViewById(R.id.eventDate);
             TextView tTxt = eView.findViewById(R.id.eventTime);
             nTxt.setText(event.getName());
+            dTxt.setText(event.getDate());
             tTxt.setText(event.getTime());
             return eView;
         }

@@ -40,12 +40,12 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         newEventDateButton = findViewById(R.id.new_product_image);
         createNewEventButton = findViewById(R.id.AddProductBtn);
         c = Calendar.getInstance();
-
+        newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
         newEventDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                DialogFragment datePicker = new DatePickerFragment();
+                DialogFragment datePicker = new NewEventDatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"Date Picker");
 
             }
@@ -53,14 +53,23 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         createNewEventButton.setOnClickListener(click -> {
             createNewEvent();
-            Toast.makeText(AddEvent.this, getString(R.string.EventCreated),Toast.LENGTH_LONG).show();
-            finish();
         });
     }
 
     private void createNewEvent() {
         String name = newEventNameET.getText().toString().trim();
         String time = newEventTimeET.getText().toString().trim();
+
+        if(name.isEmpty()){
+            newEventNameET.setError("Event name is required!");
+            newEventNameET.requestFocus();
+            return;
+        }
+        if(time.isEmpty()){
+            newEventTimeET.setError("Time is required!");
+            newEventTimeET.requestFocus();
+            return;
+        }
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -69,7 +78,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Events");
         Event newEvent = new Event(name,pickedDate,time,staff);
         eventsReference.child(newEvent.getUid()).setValue(newEvent);
-
+        Toast.makeText(AddEvent.this, getString(R.string.EventCreated),Toast.LENGTH_LONG).show();
+        finish();
     }
 
 
@@ -79,5 +89,6 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
+
     }
 }

@@ -48,7 +48,6 @@
         android:text="@string/no_date_selected"
         android:textSize="18sp"
         android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_toEndOf="@id/new_product_image"
         />
@@ -64,7 +63,7 @@
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:autofillHints=""
-        android:inputType="number" />
+        android:inputType="text" />
 
     <Button
         android:id="@+id/AddProductBtn"

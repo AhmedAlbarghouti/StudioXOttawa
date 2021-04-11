@@ -27,26 +27,28 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MoreFragment extends Fragment {
 
-    private Button accountInfoBtn,eventsBtn,productsBtn,contactBtn,aboutBtn,signOutBtn,adminBtn,websiteBtn;
-    private FirebaseUser user;
-    private DatabaseReference reference;
+    private Button adminBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_more_fragment,container,false);
 
-        accountInfoBtn = root.findViewById(R.id.account_info_button);
-        eventsBtn = root.findViewById(R.id.events_booked_button);
-        productsBtn = root.findViewById(R.id.products_purchased_button);
-        contactBtn = root.findViewById(R.id.contact_us_button);
-        aboutBtn = root.findViewById(R.id.about_us_button);
-        signOutBtn = root.findViewById(R.id.logout_button);
+        Button accountInfoBtn = root.findViewById(R.id.account_info_button);
+        Button eventsBtn = root.findViewById(R.id.events_booked_button);
+        Button productsBtn = root.findViewById(R.id.products_purchased_button);
+        Button contactBtn = root.findViewById(R.id.contact_us_button);
+        Button aboutBtn = root.findViewById(R.id.about_us_button);
+        Button signOutBtn = root.findViewById(R.id.logout_button);
         adminBtn = root.findViewById(R.id.admin_portal_button);
-        websiteBtn = root.findViewById(R.id.website_Button);
+        Button websiteBtn = root.findViewById(R.id.website_Button);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        EventsBooked obj = new EventsBooked();
+        obj.loadBookedEvents();
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         String userID = user.getUid();
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

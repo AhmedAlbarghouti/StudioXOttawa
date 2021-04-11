@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
@@ -11,61 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Client Weekly Report"
+        android:text="@string/staff_report"
         android:id="@+id/title"
         android:textAlignment="center"
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"/>
+        android:textSize="25sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Attendance Percentage:88%"
-        android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="normal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Hours:47.5"
-        android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="normal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Video Replays:20"
-        android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="normal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Earnings: 1500$"
-        android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="normal"/>
+
 
     <TextView
         android:id="@+id/user_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Client Information: "
+        android:text="@string/clients"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
@@ -77,7 +39,7 @@
         android:id="@+id/user_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "
+        android:text=""
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
         android:textColor="@color/white"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,8 @@
         android:id="@+id/topRow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/welcomeTV"
@@ -21,7 +21,6 @@
             android:textSize="30sp"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:textStyle="bold"
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
@@ -30,11 +29,11 @@
             android:id="@+id/userTV"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Administrator"
+            android:text="@string/administrator"
             android:textSize="25sp"
             android:layout_below="@id/welcomeTV"
             android:gravity="center"
-            android:textStyle="bold"
+
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
@@ -49,7 +48,7 @@
             android:layout_centerVertical="false"
             android:backgroundTint="@color/Transparent"
             android:fontFamily="sans-serif-light"
-            android:text="Add Service"
+            android:text="@string/add_service"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
@@ -61,7 +60,7 @@
             android:layout_centerVertical="false"
             android:backgroundTint="@color/Transparent"
             android:fontFamily="sans-serif-light"
-            android:text="Add Event"
+            android:text="@string/add_event"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
@@ -72,7 +71,7 @@
             android:layout_below="@id/addEventButton"
             android:backgroundTint="@color/Transparent"
             android:fontFamily="sans-serif-light"
-            android:text="ADD NEWS"
+            android:text="@string/add_news"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
@@ -82,7 +81,7 @@
             android:layout_height="83dp"
             android:layout_below="@id/addNews"
             android:backgroundTint="@color/Transparent"
-            android:text="Report"
+            android:text="@string/report"
             android:textColor="@color/white"
             android:fontFamily="sans-serif-light" />
 
