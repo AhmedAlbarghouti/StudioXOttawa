@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 else if(item.getItemId() == R.id.nav_vod) {
                     selectedFragment = new VODLibraryFragment();
                 }
+                if(item.getItemId() == R.id.nav_account){
+                    selectedFragment = new AccountFragment();
+                }
+
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
                 return true;
