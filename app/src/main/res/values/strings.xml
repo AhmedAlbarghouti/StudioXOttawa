@@ -170,10 +170,10 @@
     <string name="events_booked">Events Booked</string>
     <string name="type_subject_here">Type Subject Here</string>
     <string name="book_now">Book Now</string>
-    <string name="event_staff">Event Staff</string>
-    <string name="event_time">Event Time</string>
-    <string name="event_date">Event Date</string>
-    <string name="event_name">Event Name</string>
+    <string name="event_staff" translatable="false">Event Staff</string>
+    <string name="event_time" translatable="false">Event Time</string>
+    <string name="event_date" translatable="false">Event Date</string>
+    <string name="event_name" translatable="false">Event Name</string>
     <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
     <string name="new_event">Add New Event</string>
     <string name="fitness_hint">Fitness Class</string>
@@ -209,4 +209,11 @@
     <string name="cancel">cancel</string>
     <string name="place_order">Place Order</string>
     <string name="book_event">Book Event</string>
+    <string name="title_activity_add_videos" translatable="false">AddVideos</string>
+    <string name="update_library">Update Youtube Library</string>
+    <string name="add_video">Add New Video</string>
+    <string name="video_url_hint">Video File Name</string>
+    <string name="select_image_btn">Select Image...</string>
+    <string name="video_add_success">New Video Added</string>
+    <string name="invalid_input">Data missing, unable to add</string>
 </resources>

@@ -176,4 +176,22 @@
     <string name="cancel">Annuler</string>
     <string name="place_order">Acheter</string>
     <string name="book_event">Réserver un événement</string>
+    <string name="Aboutus0">VOTRE centre éclectique de danse, de fitness et de location d\'espace «one stop»!</string>
+    <string name="AboutusTitle">Bienvenue chez Studio X Ottawa Inc.</string>
+    <string name="sign_out">Déconnexion</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="products_purchased">Produits achetés</string>
+    <string name="contact_us">Nous contacter</string>
+    <string name="account_information">Information sur le compte</string>
+    <string name="admin_portal">Portail d\'administration</string>
+    <string name="events_booked">Événements réservés</string>
+    <string name="type_subject_here">Tapez le sujet ici</string>
+    <string name="book_now">Reserve maintenant</string>
+    <string name="call_studio_x_ottawa">appelez Studio X Ottawa</string>
+    <string name="update_library">Actualiser les vidéos Youtube</string>
+    <string name="add_video">Ajouter une nouvelle vidéo</string>
+    <string name="video_url_hint">Nom du fichier vidéo</string>
+    <string name="select_image_btn">Sélectionnez une image ...</string>
+    <string name="video_add_success">Nouvelle vidéo ajoutée</string>
+    <string name="invalid_input">Données manquantes, impossible d\'ajouter</string>
 </resources>

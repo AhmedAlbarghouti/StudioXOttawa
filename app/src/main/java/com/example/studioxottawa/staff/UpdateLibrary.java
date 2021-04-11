@@ -36,8 +36,8 @@ import java.util.concurrent.locks.ReentrantLock;
         private String nextPageToken = "";
         private Boolean exists = false, next = false;
         private static final String CHANNEL_ID = "UC4RbMe6c61zSWZ2kfvDVXaw"; //Channel ID for StudioX Ottawa youtube channel
-        private static final String API_KEY = "AIzaSyB5ITzudZxRCaveKEfE4XbZO6V0y2NWS-8"; //API key to access youtube search APIs.
-        //private static final String API_KEY = "AIzaSyBYFnzWHuWti9WT5SG3QJIfYxNtHKxIHic"; //Backup API key for testing in case of quota limit exceeding
+        //private static final String API_KEY = "AIzaSyB5ITzudZxRCaveKEfE4XbZO6V0y2NWS-8"; //API key to access youtube search APIs.
+        private static final String API_KEY = "AIzaSyBYFnzWHuWti9WT5SG3QJIfYxNtHKxIHic"; //Backup API key for testing in case of quota limit exceeding
         private static final String BASE_URL = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=";
         private static final String URL_MID = "&maxResults=50&order=date";
         private static final String TOKEN_URL = "&maxResults=50&order=date&pageToken=";
@@ -162,9 +162,6 @@ import java.util.concurrent.locks.ReentrantLock;
                     }
                         if (getNextPageToken().isEmpty())
                             finished = true;
-                        else
-                            tryAgain.await();
-
                 } while (!finished);
             }
             catch (Exception e) {

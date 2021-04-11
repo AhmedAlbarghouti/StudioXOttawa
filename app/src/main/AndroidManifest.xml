@@ -3,6 +3,7 @@
     package="com.example.studioxottawa">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -14,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioXOttawa"
         android:usesCleartextTraffic="true">
-        <activity android:name=".welcome.ViewAccountDetails"></activity>
+
+        <activity android:name=".staff.AddVideos" />
+        <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />

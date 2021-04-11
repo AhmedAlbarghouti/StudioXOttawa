@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/AddVideo"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
+    tools:context=".staff.AddVideos">
+
+    <TextView
+        android:id="@+id/add_Video_title"
+        android:text="@string/add_video"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/add_Video_title"
+        android:id="@+id/new_video_name"
+        android:hint="@string/product_name_hint"
+        android:gravity="center"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        />
+
+    <ImageView
+        android:id="@+id/new_video_image"
+        android:src="@drawable/big_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
+
+        android:layout_below="@id/new_video_name"
+        />
+
+
+    <Button
+        android:id="@+id/imageSelectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_video_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="-3dp"
+        android:layout_toEndOf="@id/new_video_image"
+        android:outlineProvider="none"
+        android:backgroundTint="@color/Transparent"
+        android:text="@string/select_image_btn" />
+
+    <EditText
+        android:layout_below="@id/new_video_image"
+        android:id="@+id/new_video_url"
+        android:hint="@string/video_url_hint"
+        android:gravity="center"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/typeSelector"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/new_video_url"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/freeType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/free_vids" />
+
+        <RadioButton
+            android:id="@+id/premiumType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/prem_vids" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/AddVideoBtn"
+        android:text="@string/add_video"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/typeSelector"
+        android:backgroundTint="@color/StudioXPink"
+        />
+
+    <Button
+        android:id="@+id/updateLibraryBtn"
+        android:text="@string/update_library"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/AddVideoBtn"
+        android:layout_alignBottom="@id/AddVideoBtn"
+        android:backgroundTint="@color/StudioXPink"
+        />
+</RelativeLayout>
