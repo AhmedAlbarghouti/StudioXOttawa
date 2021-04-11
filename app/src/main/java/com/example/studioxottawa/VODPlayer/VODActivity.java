@@ -1,9 +1,9 @@
 package com.example.studioxottawa.VODPlayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studioxottawa.R;
 import com.google.android.exoplayer2.MediaItem;
@@ -19,7 +19,6 @@ public class VODActivity extends AppCompatActivity {
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
-    private String playbackURI = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class VODActivity extends AppCompatActivity {
     }
 
     private void initializePlayer() {
-        playbackURI = getIntent().getExtras().getString("playbackURI");
+        String playbackURI = getIntent().getExtras().getString("playbackURI");
         player = new SimpleExoPlayer.Builder(this).build();
         MediaItem mediaItem = MediaItem.fromUri(playbackURI);
         player.setMediaItem(mediaItem);

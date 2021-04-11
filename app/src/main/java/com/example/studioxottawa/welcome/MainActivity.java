@@ -12,14 +12,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import android.widget.TextView;
 
@@ -28,13 +24,11 @@ import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 
 import com.example.studioxottawa.VODPlayer.VODLibraryFragment;
-import com.example.studioxottawa.news.News;
 
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.VODPlayer.VODActivity;
-import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
 import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.notification.notifActivity;
 
@@ -50,7 +44,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -122,18 +115,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,new NewsFragment()).commit();
     }
 
-
-
-
-
-    private void loadVodLibrary() {
-        Intent vodLibrary = new Intent(MainActivity.this, VODLibraryActivity.class);
-        //This utilizes API calls to the youtube Data v3 interface.
-        // Avoid unnecessary spamming in order to preserve api call quotas during testing.
-        //Use the included loadVodDebug below if testing Vod playback.
-        startActivity(vodLibrary);
-        //loadVodDebug();
-    }
 
     private void loadServices() {
         Intent services = new Intent(MainActivity.this, ServicesActivity.class);

@@ -20,7 +20,6 @@
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
         <activity android:name=".contact.contact" />
-        <activity android:name=".news.NewsActivity" />
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".aboutus.AboutusActivity" />
         <activity android:name=".schedule.BookAppointments" />
@@ -40,10 +39,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".VODPlayer.VODLibraryActivity" />
         <activity android:name=".VODPlayer.VODActivity"
             android:configChanges="orientation|screenSize|layoutDirection"/>
-        <activity android:name=".schedule.Schedule" />
         <activity android:name=".staff.Report" />
         <activity android:name=".welcome.MainActivity" />
         <activity android:name=".staff.StaffMenu" />
