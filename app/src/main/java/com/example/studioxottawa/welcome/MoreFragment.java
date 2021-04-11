@@ -46,6 +46,8 @@ public class MoreFragment extends Fragment {
         EventsBooked obj = new EventsBooked();
         obj.loadBookedEvents();
 
+        ProductsPurchased pobj = new ProductsPurchased();
+        pobj.loadPurchasedProducts();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -106,7 +108,7 @@ public class MoreFragment extends Fragment {
     }
 
     private void goToProductsPurchased() {
-        Intent products = new Intent(getActivity(), EventsBooked.class);
+        Intent products = new Intent(getActivity(), ProductsPurchased.class);
         startActivity(products);
     }
 

@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         EventsBooked obj = new EventsBooked();
         obj.loadBookedEvents();
 
+        ProductsPurchased pobj = new ProductsPurchased();
+        pobj.loadPurchasedProducts();
 
         user = FirebaseAuth.getInstance().getCurrentUser(); //gets the current logged in user
         reference = FirebaseDatabase.getInstance().getReference("Users");

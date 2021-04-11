@@ -22,8 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.Calendar;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose persisting new event to Firebase using user input.
+ */
 public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    //declaring global elements
     private EditText newEventNameET, newEventTimeET;
     private TextView newEventDateTV;
     private ImageButton newEventDateButton;
@@ -33,14 +39,14 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-
+        // init elements
         newEventNameET = findViewById(R.id.new_product_name);
         newEventTimeET = findViewById(R.id.new_product_price);
         newEventDateTV = findViewById(R.id.newEventDateTV);
         newEventDateButton = findViewById(R.id.new_product_image);
         createNewEventButton = findViewById(R.id.AddProductBtn);
-        c = Calendar.getInstance();
-        newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
+        c = Calendar.getInstance(); // init c to current day
+        newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime())); //setting TV to formatted c
         newEventDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -56,6 +62,9 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
+    /**
+     * Creates new event using input from Edit texts and global C Calender
+     */
     private void createNewEvent() {
         String name = newEventNameET.getText().toString().trim();
         String time = newEventTimeET.getText().toString().trim();
@@ -83,6 +92,13 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
 
+    /**
+     *
+     * @param view  dialog view
+     * @param year the chosen year
+     * @param month the chosen month
+     * @param dayOfMonth the chosen day of month
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         c.set(Calendar.YEAR, year);

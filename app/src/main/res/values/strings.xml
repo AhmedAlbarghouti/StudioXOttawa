@@ -248,5 +248,7 @@
     <string name="email_minus_colon">Email</string>
     <string name="staff_report">Staff Report</string>
     <string name="clients">Clients</string>
+    <string name="date_of_purchase">Date of Purchase:</string>
+    <string name="product_image">Product Image</string>
 
 </resources>
