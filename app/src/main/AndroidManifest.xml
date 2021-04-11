@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true">
 <!--        <activity android:name=".welcome.MoreFragment"></activity>-->
         <activity android:name=".welcome.LoginActivity" />
-<!--        <activity android:name=".Checkout.Cart" />-->
+        <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
@@ -30,9 +30,9 @@
         <activity
             android:name=".notification.notifActivity"
             android:label="@string/title_activity_notif" />
-<!--        <activity-->
-<!--            android:name=".services.ServicesActivity"-->
-<!--            android:label="@string/title_activity_services" />-->
+        <activity
+            android:name=".services.ServicesActivity"
+            android:label="@string/title_activity_services" />
         <activity android:name=".welcome.WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

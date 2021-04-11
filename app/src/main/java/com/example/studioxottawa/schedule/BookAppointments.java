@@ -1,17 +1,23 @@
 package com.example.studioxottawa.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studioxottawa.Checkout.Cart;
+import com.example.studioxottawa.Checkout.CheckoutActivityJava;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.welcome.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class BookAppointments extends AppCompatActivity {
 
     /*
-    Needed TextViews & Buton
+    Needed TextViews & Button
      */
     TextView eventName;
     TextView eventDate;
@@ -58,23 +64,22 @@ public class BookAppointments extends AppCompatActivity {
         eventDate.setText(passedEvent.getString("EVENT_DATE"));
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
-
-
-
+        String itemName= eventName+" "+eventDate+" "+eventTime+" with "+eventStaff;
         //Universally Unique Event ID
         String Uid = passedEvent.getString("EVENT_UID");
-        String itemName= eventName+" "+eventDate+" "+eventTime+" with "+eventStaff;
-        Product productInCart = new Product(itemName,25.00,1);
-        DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        eventsReference.child(MainActivity.userID).child("Cart").child(productInCart.getItem()).setValue(productInCart);
+
+
+
+
         bookbtn.setOnClickListener(click-> {
             /**
              * If book is clicked, new intent will redirect user to checkout to pay for the selected event
              */
-            Intent bookingIntent = new Intent(BookAppointments.this, Cart.class);
+            Intent bookingIntent = new Intent(this, MainActivity.class);
             bookingIntent.putExtra("UID",Uid);
             bookingIntent.putExtra("isService",true);
             startActivity(bookingIntent);
+
         });
 
     }

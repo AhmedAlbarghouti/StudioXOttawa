@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 
+import com.example.studioxottawa.VODPlayer.VODLibraryFragment;
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
 import com.example.studioxottawa.services.ServicesActivity;
@@ -79,11 +80,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
 
+
+
                 if (item.getItemId() == R.id.nav_news){
                     selectedFragment = new NewsFragment();
                 }
                 else if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
+
                 }if (item.getItemId()==R.id.nav_store){
                     selectedFragment= new ServicesActivity();
                     Bundle bundle = new Bundle();

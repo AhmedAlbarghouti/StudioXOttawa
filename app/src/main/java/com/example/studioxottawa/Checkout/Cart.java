@@ -77,6 +77,7 @@ public class Cart extends Fragment {
             products.clear();
         }
 
+
         priceTv = root.findViewById(R.id.amountText);
         myList = root.findViewById(R.id.ItemPurchView);
         Button placeOrder = root.findViewById(R.id.checkoutButton);
