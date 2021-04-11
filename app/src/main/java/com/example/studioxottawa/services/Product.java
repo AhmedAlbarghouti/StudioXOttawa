@@ -55,6 +55,7 @@ public class Product implements Parcelable{
         setPrice(price);
         setQuantity(quantity);
         setBitmap("");
+        setDate("");
     }
 
 

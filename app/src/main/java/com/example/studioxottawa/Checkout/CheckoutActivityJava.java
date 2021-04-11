@@ -139,7 +139,10 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
         try {
             startCheckout();
-        }catch (Exception | Error e){
+        }catch (Exception e){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }catch (Error e){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }
@@ -321,7 +324,11 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     Matcher matcher=pattern.matcher(p.getItem());
                     isEvent=matcher.find();
                     if(isEvent){
-                       String[] arr= p.getItem().split("-");
+
+                       String[] arr= p.getItem().split("--");
+                       for(String pp: arr){
+                           Log.i("SSSS",pp);
+                        }
                         Event event2= new Event(arr[0],arr[1],arr[2],arr[3]);
                         eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(event2);
                     }else{
@@ -334,6 +341,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 }
                 DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
                 ref.removeValue();
+
                 // creating intent to send user back to main page once payment is successful
 //                Intent intent = new Intent(activity,  MainActivity.class);
 //                // grabbing the current logged on user from the database

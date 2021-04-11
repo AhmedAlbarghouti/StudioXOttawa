@@ -39,6 +39,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /***
  * Cart  class
@@ -70,10 +72,10 @@ public class Cart extends Fragment {
 
     ListView myList;
 
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_cart, container, false);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_cart, container, false);
         fragmentActivity=this.getActivity();
         i1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_logo);
 
@@ -103,7 +105,7 @@ public class Cart extends Fragment {
             myAdapter.notifyDataSetChanged();
             return true;
         });
-            load();
+        load();
 
         placeOrder.setOnClickListener(btn -> {
 
@@ -122,39 +124,40 @@ public class Cart extends Fragment {
     public void load(){
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
 
-                    ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            products.clear();
-                            for(DataSnapshot ds: snapshot.getChildren()){
-                                String item= String.valueOf(ds.child("item").getValue());
-                                String price= String.valueOf(ds.child("price").getValue());
-                                String quantity= String.valueOf(ds.child("quantity").getValue());
-                                String bitmap= String.valueOf(ds.child("bitmap").getValue());
-                                if(item.contains("\\d+\\/\\d+\\/\\d+")){
-                                    isEvent=true;
-                                }
-                                Log.e("Item",item);
-                                Log.e("price",price);
-                                Log.e("quantity",quantity);
-                                Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
-                                if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
-                                    temp.setBitmap(bitmap);
-                                }
-                                products.add(temp);
-                            }
-                            calculatePrice();
-                        }
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                products.clear();
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    String item= String.valueOf(ds.child("item").getValue());
+                    String price= String.valueOf(ds.child("price").getValue());
+                    String quantity= String.valueOf(ds.child("quantity").getValue());
+                    String bitmap= String.valueOf(ds.child("bitmap").getValue());
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
-
-                    });
-                    myAdapter.notifyDataSetChanged();
+                    Log.e("Item",item);
+                    Log.e("price",price);
+                    Log.e("quantity",quantity);
+                    if(price.equals("null")){
+                        price="15";
+                    }
+                    Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
+                    if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
+                        temp.setBitmap(bitmap);
+                    }
+                    products.add(temp);
                 }
+                calculatePrice();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
+        myAdapter.notifyDataSetChanged();
+    }
     public void  calculatePrice(){
         price=0;
         for (Product p: products){
@@ -215,7 +218,16 @@ public class Cart extends Fragment {
 
 
             Product product = (Product)getItem(i);
-
+            Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
+            Matcher matcher=pattern.matcher(product.getItem());
+            isEvent=matcher.find();
+            if(isEvent){
+                holder.btn_plus.setVisibility(View.INVISIBLE);
+                holder.btn_minus.setVisibility(View.INVISIBLE);
+            }else{
+                holder.btn_plus.setVisibility(View.VISIBLE);
+                holder.btn_minus.setVisibility(View.VISIBLE);
+            }
             holder.item.setText(product.getItem());
             if(product.getBitmap().isEmpty()){
                 holder.thumbnail.setImageBitmap(i1);

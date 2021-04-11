@@ -70,7 +70,8 @@ public class BookAppointments extends AppCompatActivity {
         eventDate.setText(passedEvent.getString("EVENT_DATE"));
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
-        String itemName= name+"-"+date+"-"+time+"-"+staff;
+        String itemName= name+"--"+date+"--"+time+"--"+staff;
+
         Log.i("FULL NAME",itemName);
         //Universally Unique Event ID
         String Uid = passedEvent.getString("EVENT_UID");
@@ -81,9 +82,8 @@ public class BookAppointments extends AppCompatActivity {
              */
             FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid()).child(Uid);
-            Product p= new Product(itemName,15.00,1);
-            p.compress(BitmapFactory.decodeResource(getResources(),R.drawable.big_logo));
-            ref.setValue(p);
+            Product temp2 = new Product(itemName,15.00,1);
+            ref.setValue(temp2);
 
             Intent bookingIntent = new Intent(this, MainActivity.class);
             bookingIntent.putExtra("UID",Uid);
