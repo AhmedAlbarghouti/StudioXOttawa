@@ -44,7 +44,6 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_news,container,false);
 
-        Log.i("gycreport", "MyList Ready");
         ListView myList = (ListView) root.findViewById(R.id.newsListView);
 
         myList.setAdapter( myAdapter );
@@ -52,6 +51,7 @@ public class NewsFragment extends Fragment {
         myList.setOnItemClickListener( (list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
+            // Retrieve news from the list based on the index
             int index = allNews.size()-position-1;
             dataToPass.putString(NEWS_TITLE, allNews.get(index).getTitle() );
             dataToPass.putString(NEWS_DESCRIPTION, allNews.get(index).getDescription() );
@@ -61,15 +61,12 @@ public class NewsFragment extends Fragment {
             dataToPass.putInt(NEWS_POSITION, position);
             dataToPass.putLong(NEWS_ID, id);
 
-
             Intent nextActivity = new Intent(getActivity(), EmptyActivity.class);
             nextActivity.putExtras(dataToPass); //send data to next activity
             startActivity(nextActivity); //make the transition
 
-
             myAdapter.notifyDataSetChanged();
         }   );
-
 
         return root;
     }
