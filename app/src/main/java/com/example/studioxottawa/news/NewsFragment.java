@@ -2,12 +2,16 @@ package com.example.studioxottawa.news;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -38,6 +42,7 @@ public class NewsFragment extends Fragment {
     public static final String NEWS_POSITION = "POSITION";
     public static final String NEWS_ID = "ID";
     private static final String TAG = "GetData";
+    public static Bitmap bitImage;
 
     @Nullable
     @Override
@@ -55,7 +60,14 @@ public class NewsFragment extends Fragment {
             int index = allNews.size()-position-1;
             dataToPass.putString(NEWS_TITLE, allNews.get(index).getTitle() );
             dataToPass.putString(NEWS_DESCRIPTION, allNews.get(index).getDescription() );
-            dataToPass.putString(NEWS_LINK, allNews.get(index).getLink() );
+
+            bitImage = null;
+            if(allNews.get(index).getLink().length()<200){
+                dataToPass.putString(NEWS_LINK, allNews.get(index).getLink() );
+            }else{
+                dataToPass.putString(NEWS_LINK, "get image directly" );
+                bitImage = decodeFromStringToImage(allNews.get(index).getLink());
+            }
             dataToPass.putString(NEWS_DATE, allNews.get(index).getDate() );
 
             dataToPass.putInt(NEWS_POSITION, position);
@@ -104,6 +116,11 @@ public class NewsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private Bitmap decodeFromStringToImage(String input){
+        byte[] decodingBytes= Base64.decode(input,0);
+        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
     }
 
     /**

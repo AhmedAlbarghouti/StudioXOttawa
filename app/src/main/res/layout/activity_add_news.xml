@@ -4,60 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".staff.AddEvent">
+    tools:context=".staff.AddEvent"
+    android:background="@drawable/gradient1">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/title"
             android:text="Create News"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:gravity="center"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="50dp"
-            />
+            android:layout_marginTop="40dp"
+            android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/add_news_title"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_below="@id/title"
             android:hint="News Title"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal"/>
+
+        <ImageView
+            android:id="@+id/add_image"
+            android:layout_below="@id/add_news_title"
+            android:hint="Please select photo"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/studioxottawa3"/>
+
+        <Button
+            android:id="@+id/add_image_btn"
+            android:text="Add Image"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/add_image"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/StudioXPink"
             />
 
         <EditText
             android:id="@+id/news_description"
-            android:layout_below="@id/add_news_title"
+            android:layout_below="@id/add_image_btn"
             android:hint="Description"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            />
-
-        <EditText
-            android:id="@+id/add_image_url"
-            android:layout_below="@id/news_description"
-            android:hint="image url"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            />
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal"/>
 
         <Button
             android:id="@+id/add_news_button"
             android:text="Create News"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_below="@id/add_image_url"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/news_description"
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/StudioXPink"
             />
+
+        </RelativeLayout>
 
     </ScrollView>
 
