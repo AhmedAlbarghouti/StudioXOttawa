@@ -28,6 +28,8 @@ import com.example.studioxottawa.schedule.Event;
 import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.services.ServicesActivity;
 import com.example.studioxottawa.welcome.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +66,8 @@ public class Cart extends Fragment {
     private Event event;
     private Bitmap i1;
     private FragmentActivity fragmentActivity;
+    FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
+
     ListView myList;
 
         @Nullable
@@ -116,9 +120,9 @@ public class Cart extends Fragment {
      * This method loads the products that is in the current user's cart from the Firebase realtime database  and load it into an arraylist of products
      */
     public void load(){
-        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
 
-                    referenceServices.addValueEventListener(new ValueEventListener() {
+                    ref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             products.clear();
@@ -209,13 +213,6 @@ public class Cart extends Fragment {
                 holder =(ViewHolder)view.getTag();
             }
 
-            if(isEvent){
-
-                holder.btn_minus.setVisibility(view.INVISIBLE);
-                holder.btn_plus.setVisibility(View.INVISIBLE);
-                holder.quantity.setVisibility(View.INVISIBLE);
-
-            }
 
             Product product = (Product)getItem(i);
 
@@ -235,10 +232,9 @@ public class Cart extends Fragment {
                 int qty = Integer.parseInt(holder.quantity.getText().toString())+1;
                 product.setQuantity(qty);
                 holder.quantity.setText(String.valueOf(product.getQuantity()));
-                DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
 
-
-                eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).setValue(product);
+                ref.child(product.getItem()).setValue(product);
                 calculatePrice();
             });
 
@@ -250,17 +246,17 @@ public class Cart extends Fragment {
 
                     product.setQuantity(qty);
                     holder.quantity.setText(String.valueOf(product.getQuantity()));
-                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
 
 
-                    eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).setValue(product);
+                    ref.child(product.getItem()).setValue(product);
                     calculatePrice();
                 }
                 // removing Item from cart
                 if(qty==0){
 //
-                    DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    eventsReference.child(MainActivity.userID).child("Cart").child(product.getItem()).removeValue();
+                    DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+                    ref.child(product.getItem()).removeValue();
                     products.remove(product); //new
                     myAdapter.notifyDataSetChanged();
 

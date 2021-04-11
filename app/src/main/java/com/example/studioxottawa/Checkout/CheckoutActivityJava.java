@@ -66,6 +66,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -106,6 +109,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private ListView checkoutListView;
     private Bitmap i1;
+    FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
+
 
 
     @Override
@@ -131,8 +136,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
      * This method loads the products that is in the current user's cart from the Firebase realtime database  and load it into an arraylist of products
      */
     public void load(){
-        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.userID).child("Cart");
-        referenceServices.addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 products.clear();
@@ -155,7 +160,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-                    adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     private Bitmap decodeFromStringToImage(String input){
@@ -294,24 +299,41 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 );
 
 
-                      // creating intent to send user back to main page once payment is successful
-                     Intent intent = new Intent(activity,  MainActivity.class);
-                     // grabbing the current logged on user from the database
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    //grabbing database reference to nodes in Users table
-                    DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                DatabaseReference prodRef= FirebaseDatabase.getInstance().getReference().child("Products Purchased").child(user.getUid());
+                DatabaseReference eventRef= FirebaseDatabase.getInstance().getReference().child("Events Purchased").child(user.getUid());
+                Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
+                for(Product p : products){
 
-                    // saving each product and events that the current user purchased under 'Products Purchased' and 'Events Purchased' section of the Users table.
-                    for(Product p: products) {
-                        productReference.child(Objects.requireNonNull(user).getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
-                        if(p.getItem().contains("\\d+\\/\\d+\\/\\d+")){
-                            productReference.child(user.getUid()).child("Events Purchased").setValue(p);
-                        }
+                    Matcher matcher=pattern.matcher(p.getItem());
+                    isEvent=matcher.find();
+                    if(isEvent){
+                        eventRef.child(p.getItem()).setValue(p);
+                    }else{
+                        prodRef.child(p.getItem()).setValue(p);
                     }
-                    // removing purchased items from the cart
-                    productReference.child(MainActivity.userID).child("Cart").removeValue();
 
-                    startActivity(intent);
+
+                }
+                DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+                ref.removeValue();
+                // creating intent to send user back to main page once payment is successful
+//                Intent intent = new Intent(activity,  MainActivity.class);
+//                // grabbing the current logged on user from the database
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                //grabbing database reference to nodes in Users table
+//                DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Users");
+//
+//                // saving each product and events that the current user purchased under 'Products Purchased' and 'Events Purchased' section of the Users table.
+//                for(Product p: products) {
+//                    productReference.child(Objects.requireNonNull(user).getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
+//                    if(p.getItem().contains("\\d+\\/\\d+\\/\\d+")){
+//                        productReference.child(user.getUid()).child("Events Purchased").setValue(p);
+//                    }
+//                }
+//                // removing purchased items from the cart
+//                productReference.child(MainActivity.userID).child("Cart").removeValue();
+//
+//                startActivity(intent);
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method

@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,6 +63,7 @@ public class ServicesActivity extends Fragment {
     private   ImageButton goToCart;
     private boolean hasItem;
     private   String UID="";
+    FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
 
 
     @Nullable
@@ -113,11 +116,11 @@ public class ServicesActivity extends Fragment {
             builder.setPositiveButton(getString(R.string.sa_dialog_add), (dialogInterface, i) -> {
 
                 //grabbing the specific item that the user clicked using the position variable of the Listener, setting the product quantity and adding it to the Carts on the database.
-                DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
                 Product productInCart= productList.get(position);
                 productInCart.setQuantity(1);
 
-                eventsReference.child(UID).child("Cart").child(productInCart.getItem()).setValue(productInCart);
+                ref.child(productInCart.getItem()).setValue(productInCart);
 
                 stringList.add(productList.get(position).getItem());
                 checkCart();
@@ -139,8 +142,8 @@ public class ServicesActivity extends Fragment {
      */
     public void checkCart(){
 
-        DatabaseReference referenceServices=FirebaseDatabase.getInstance().getReference().child("Users").child(UID).child("Cart");
-        referenceServices.addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

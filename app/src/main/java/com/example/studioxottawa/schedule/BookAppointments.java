@@ -60,21 +60,29 @@ public class BookAppointments extends AppCompatActivity {
          */
         Intent in = getIntent();
         Bundle passedEvent = in.getExtras();
+        String name = passedEvent.getString("EVENT_NAME");
+        String date = passedEvent.getString("EVENT_DATE");
+        String time = passedEvent.getString("EVENT_TIME");
+        String staff = passedEvent.getString("EVENT_STAFF");
+
         eventName.setText(passedEvent.getString("EVENT_NAME"));
         eventDate.setText(passedEvent.getString("EVENT_DATE"));
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
-        String itemName= eventName+" "+eventDate+" "+eventTime+" with "+eventStaff;
+        String itemName= name+" "+date+" "+time+" with "+staff;
         //Universally Unique Event ID
         String Uid = passedEvent.getString("EVENT_UID");
-
-
-
 
         bookbtn.setOnClickListener(click-> {
             /**
              * If book is clicked, new intent will redirect user to checkout to pay for the selected event
              */
+            FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid()).child(Uid);
+            Product p= new Product(itemName,15.00,1);
+            p.compress(BitmapFactory.decodeResource(getResources(),R.drawable.big_logo));
+            ref.setValue(p);
+
             Intent bookingIntent = new Intent(this, MainActivity.class);
             bookingIntent.putExtra("UID",Uid);
             bookingIntent.putExtra("isService",true);
