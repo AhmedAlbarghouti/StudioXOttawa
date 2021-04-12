@@ -103,15 +103,11 @@ public class Cart extends Fragment {
 
         myList.setAdapter(myAdapter = new CartAdapter(root.getContext()));
         myList.setOnItemLongClickListener((parent, view, position, id) -> {
-            Matcher matcher=pattern.matcher(products.get(position).getItem());
-            if(matcher.find()) {
-                String[] prod = products.get(position).getItem().split("--");
-                /**
-                 * removing a specific event Item from the carts
-                 */
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
-                ref.child(prod[0]).removeValue();
-            }
+            String[] prod =  products.get(position).getItem().split("--");
+
+
+            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+            ref.child(prod[0]).removeValue();
             products.remove(position);
             myAdapter.notifyDataSetChanged();
             return true;
