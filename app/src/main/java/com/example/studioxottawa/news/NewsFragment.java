@@ -44,6 +44,12 @@ public class NewsFragment extends Fragment {
     private static final String TAG = "GetData";
     public static Bitmap bitImage;
 
+    /**
+     * @param inflater - instantiates layout XML file into its corresponding view object
+     * @param container - contains other views, describes the layout of the Views in the group
+     * @param savedInstanceState - reference to a Bundle object passed into the onCreateView method
+     * @return the view created inflated by the method
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class NewsFragment extends Fragment {
 
         myList.setAdapter( myAdapter );
 
+        // Pass data to fragment
         myList.setOnItemClickListener( (list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
@@ -83,6 +90,9 @@ public class NewsFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Load news from firebase database
+     */
     public static void loadNews() {
         // Connect with Firebase database
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("News");
@@ -109,7 +119,6 @@ public class NewsFragment extends Fragment {
                     Log.i("link", "link is empty?"+(link.isEmpty()));
                     allNews.add(new News(title, description, link, date, id));
                     Log.i("gycreport", title+" "+description+" "+link+" "+ allNews.size());
-
                 }
             }
             @Override
@@ -118,6 +127,9 @@ public class NewsFragment extends Fragment {
         });
     }
 
+    /**
+     *  Used to decode String value to Bitmap
+     */
     private Bitmap decodeFromStringToImage(String input){
         byte[] decodingBytes= Base64.decode(input,0);
         return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);

@@ -38,6 +38,9 @@ public class AddNews extends AppCompatActivity{
     private Bitmap imageBitmap;
     private static final int GO_TO_GALLERY=1;
 
+    /**
+     * @param savedInstanceState - the Bundle object that is passed into the onCreate method
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,9 @@ public class AddNews extends AppCompatActivity{
         });
     }
 
+    /**
+     * Create news to be stored in firebase database
+     */
     private void createNews() {
         String newsTitle = title.getText().toString().trim();
         String newsDescription = description.getText().toString().trim();

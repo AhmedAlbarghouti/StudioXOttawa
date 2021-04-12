@@ -36,6 +36,9 @@ public class Report extends AppCompatActivity {
     private static ArrayList<Product> productsPurchasedList;
     private TextView text;
 
+    /**
+     * @param savedInstanceState - the Bundle object that is passed into the onCreate method
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +136,9 @@ public class Report extends AppCompatActivity {
 
     }
 
+    /**
+     * Adaptor for report list view
+     */
     private class MyListAdapter extends BaseAdapter {
 
         public int getCount() {
