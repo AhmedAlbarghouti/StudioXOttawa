@@ -131,7 +131,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
         price = getIntent().getExtras().getDouble("Total Price");
         load();
-        // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
+        /** Configure the SDK with your Stripe publishable key so it can make requests to Stripe**/
         stripe = new Stripe(
                 getApplicationContext(),
                 Objects.requireNonNull("pk_test_51ILUoQJBRyYbLiOnhQMkiSrSTRnoRK6Py4gWV6rIXfPCWreERj4gb3B13wur8jzi3ZfL2mzGBPOItwABmqoAQLKk00vLxexHqx")
@@ -205,7 +205,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         itemMap.put("amount", amount);
         itemMap.put("email", "jamesRunnings@gmail.com");
         itemList.add(itemMap);
-//        sending the list of Map objects to the backend.
+/**        sending the list of Map objects to the backend.**/
         payMap.put("items", itemList);
 
         String json = new Gson().toJson(payMap);
@@ -216,7 +216,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 .build();
         httpClient.newCall(request)
                 .enqueue(new PayCallback(this));
-        // Hook up the pay button to the card widget and stripe instance
+        /** Hook up the pay button to the card widget and stripe instance**/
         Button payButton = findViewById(R.id.payButton);
         payButton.setOnClickListener((View view) -> {
 
@@ -238,7 +238,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Handle the result of stripe.confirmPayment
+        /** Handle the result of stripe.confirmPayment**/
         stripe.onPaymentResult(requestCode, data, new PaymentResultCallback(this));
     }
 
@@ -305,7 +305,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 // Payment completed successfully
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 Event event= getIntent().getParcelableExtra("EventObj");
-                Boolean isEvent =getIntent().getExtras().getBoolean("isService");
+                boolean isEvent =getIntent().getExtras().getBoolean("isService");
 
 
                 activity.displayAlert(
@@ -314,9 +314,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 );
 
 
+                /**Grabbing a reference to or creating (if it doesnt exits) the current user's Products and Events purchased tables to update new purchase*/
                 DatabaseReference prodRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Products Purchased");
                 DatabaseReference eventRef= FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Events Purchased");
+                /**Pattern to check which item belongs to what table*/
                 Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
+                /**Getting the current date and time to update the date purchased of the product*/
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Calendar cal = Calendar.getInstance();
                 for(Product p : products){
@@ -339,27 +342,12 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
 
                 }
+                /**Removing the items from the cart of the user once the items have been purchased*/
                 DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
                 ref.removeValue();
+                products.clear();
+                adapter.notifyDataSetChanged();
 
-                // creating intent to send user back to main page once payment is successful
-//                Intent intent = new Intent(activity,  MainActivity.class);
-//                // grabbing the current logged on user from the database
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                //grabbing database reference to nodes in Users table
-//                DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Users");
-//
-//                // saving each product and events that the current user purchased under 'Products Purchased' and 'Events Purchased' section of the Users table.
-//                for(Product p: products) {
-//                    productReference.child(Objects.requireNonNull(user).getUid()).child("Products Purchased").child(p.getItem()).setValue(p);
-//                    if(p.getItem().contains("\\d+\\/\\d+\\/\\d+")){
-//                        productReference.child(user.getUid()).child("Events Purchased").setValue(p);
-//                    }
-//                }
-//                // removing purchased items from the cart
-//                productReference.child(MainActivity.userID).child("Cart").removeValue();
-//
-//                startActivity(intent);
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method

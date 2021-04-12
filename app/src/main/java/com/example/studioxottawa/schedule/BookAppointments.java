@@ -70,6 +70,9 @@ public class BookAppointments extends AppCompatActivity {
         eventDate.setText(passedEvent.getString("EVENT_DATE"));
         eventTime.setText(passedEvent.getString("EVENT_TIME"));
         eventStaff.setText(passedEvent.getString("EVENT_STAFF"));
+        /**
+         * product name with event fields delimited with --
+         */
         String itemName= name+"--"+date+"--"+time+"--"+staff;
 
         Log.i("FULL NAME",itemName);
