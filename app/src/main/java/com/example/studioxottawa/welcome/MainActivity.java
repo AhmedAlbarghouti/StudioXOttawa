@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 else if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
 
-                }if (item.getItemId()==R.id.nav_store){
+                }else if (item.getItemId()==R.id.nav_store){
                     selectedFragment= new ServicesActivity();
                     Bundle bundle = new Bundle();
                     bundle.putString("UID",userID);
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 else if(item.getItemId() == R.id.nav_vod) {
                     selectedFragment = new VODLibraryFragment();
                 }
-                if(item.getItemId() == R.id.nav_more){
+                else if(item.getItemId() == R.id.nav_more){
                     selectedFragment = new MoreFragment();
                 }
 
