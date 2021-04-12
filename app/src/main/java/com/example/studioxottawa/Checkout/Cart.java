@@ -104,9 +104,11 @@ public class Cart extends Fragment {
 
         myList.setAdapter(myAdapter = new CartAdapter(root.getContext()));
         myList.setOnItemLongClickListener((parent, view, position, id) -> {
+            String[] prod =  products.get(position).getItem().split("--");
+
 
             DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
-            ref.child(products.get(position).getItem()).removeValue();
+            ref.child(prod[0]).removeValue();
             products.remove(position);
             myAdapter.notifyDataSetChanged();
             return true;

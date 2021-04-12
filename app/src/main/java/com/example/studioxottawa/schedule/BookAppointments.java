@@ -85,7 +85,7 @@ public class BookAppointments extends AppCompatActivity {
              * If book is clicked, new intent will redirect user to checkout to pay for the selected event
              */
             FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid()).child(Uid);
+            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid()).child(name);
             Product temp2 = new Product(itemName,15.00,1);
             ref.setValue(temp2);
 
