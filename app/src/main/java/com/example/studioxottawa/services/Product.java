@@ -9,16 +9,55 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Product Model Class
+ * used to set the information for the products being sold in the store.
+ *
+ * Variables
+ *     private String item
+ *     private Double price
+ *     private String bitmap
+ */
 public class Product implements Parcelable{
-    String item;
-    Double price;
+    private String item;
+    private Double price;
+    private String bitmap;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
+    public String getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(String bitmap) {
+        this.bitmap = bitmap;
+    }
+    public void compress(Bitmap image) {
+        ByteArrayOutputStream out=new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG,100,out);
+        byte[] bytes= out.toByteArray();
+        this.bitmap= Base64.encodeToString(bytes,Base64.DEFAULT);
+
+    }
+
     int quantity;
 
     public Product(String item, Double price, int quantity) {
-        this.item = item;
-        this.price = price;
-        this.quantity = quantity;
+        setItem(item);
+        setPrice(price);
+        setQuantity(quantity);
+        setBitmap("");
+        setDate("");
     }
+
 
     protected Product(Parcel in) {
         item = in.readString();

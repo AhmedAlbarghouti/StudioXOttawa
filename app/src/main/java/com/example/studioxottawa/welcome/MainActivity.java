@@ -24,7 +24,6 @@ import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 
 import com.example.studioxottawa.VODPlayer.VODLibraryFragment;
-
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
 import com.example.studioxottawa.services.ServicesActivity;
@@ -49,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID;
     public Context lv_ctxt ;
+    public static String userID;
+
+
 
 
 
@@ -83,11 +84,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(item.getItemId() == R.id.nav_schedule){
                     selectedFragment = new ScheduleFragment();
+
+                }if (item.getItemId()==R.id.nav_store){
+                    selectedFragment= new ServicesActivity();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("UID",userID);
+                    selectedFragment.setArguments(bundle);
                 }
                 else if(item.getItemId() == R.id.nav_vod) {
                     selectedFragment = new VODLibraryFragment();
                 }
-                else if(item.getItemId() == R.id.nav_more){
+                if(item.getItemId() == R.id.nav_more){
                     selectedFragment = new MoreFragment();
                 }
 
@@ -96,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
                 return true;
             }
+
         };
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -121,10 +129,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadServices() {
-        Intent services = new Intent(MainActivity.this, ServicesActivity.class);
-        startActivity(services);
-    }
 
 
 

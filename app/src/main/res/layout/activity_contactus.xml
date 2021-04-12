@@ -36,6 +36,7 @@
         android:layout_below="@+id/subjectLabel"
         android:inputType="textEmailSubject"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:fontFamily="sans-serif-light"
         android:hint="@string/type_subject_here"
         android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
         android:hint="@string/type_message_here"
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:inputType="textMultiLine"
         android:autofillHints="" />
 

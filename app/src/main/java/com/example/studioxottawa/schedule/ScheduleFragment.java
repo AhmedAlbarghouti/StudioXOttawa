@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.studioxottawa.Checkout.Cart;
 import com.example.studioxottawa.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -98,6 +99,8 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
             Intent bookingIntent = new Intent(getActivity(), BookAppointments.class);
             bookingIntent.putExtras(eventToPass);
             startActivity(bookingIntent);
+//            Fragment selectedFragment= new Cart();
+//            getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
         });
 
         return root;

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <Button
         android:text="@string/cancel"
         android:layout_width="wrap_content"
@@ -15,16 +14,19 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/StudioXPink"
         android:layout_alignParentBottom="true"/>
-    <Button
-        android:text="@string/place_order"
-        android:layout_width="100dp"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="@color/StudioXPink"
-        android:layout_height="wrap_content"
 
+    <Button
         android:id="@+id/checkoutButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
         android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-4dp"
+        android:backgroundTint="@color/StudioXPink"
+        android:text="@string/place_order" />
 
     <ListView
         android:layout_width="match_parent"
@@ -40,7 +42,7 @@
         android:layout_marginTop="20dp"
         android:id="@+id/ShoppingCartStudioXLogo"
         android:scaleType="fitXY"
-        android:src="@drawable/logo_studioxottawa"
+        android:src="@drawable/big_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"/>
     <TextView
@@ -49,7 +51,9 @@
         android:text="@string/total_price"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:layout_above="@id/checkoutButton"
         android:id="@+id/labelText"/>
     <TextView
@@ -60,7 +64,10 @@
         android:layout_alignParentEnd="true"
         android:textStyle="bold"
         android:textSize="26sp"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+
         android:text="0.00 "
         android:hint="$$$"
         />
@@ -72,7 +79,7 @@
         android:layout_toLeftOf="@+id/amountText"
         android:textStyle="bold"
         android:textSize="26sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_above="@id/checkoutButton"
         android:text="$"
         />
