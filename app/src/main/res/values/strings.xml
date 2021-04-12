@@ -216,39 +216,7 @@
     <string name="EmptyCart">Cart is Empty</string>
     <string name="onFailureError">Error: </string>
     <string name="successful_product_adding">Product Successfully Added!</string>
-    <string name="invalid_input">Invalid inputs</string>
-<string name="sign_out">Sign out</string>
-<string name="about_us">About Us</string>
-<string name="products_purchased">Products Purchased</string>
-<string name="contact_us">Contact Us</string>
-<string name="account_information">Account Information</string>
-<string name="admin_portal">Admin Portal</string>
-<string name="events_booked">Events Booked</string>
-
-    <string name="AboutusTitle">
-        "     Welcome to Studio X Ottawa Inc."</string>
-
-    <string name="Aboutus0">
-        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
-    <string name="SoulNadege">"Our Main instructors!"
-                              "Soul and Nadège (Dancing since 1999)\n"</string>
-    <string name="choose_email_client">Choose one application</string>
-<!--    <string name="type_subject_here">Subject</string>-->
-    <string name="select_image_btn">select image..</string>
-<!--    <string name="sign_out">Sign out</string>-->
-<!--    <string name="about_us">About Us</string>-->
-<!--    <string name="products_purchased">Products Purchased</string>-->
-<!--    <string name="contact_us">Contact Us</string>-->
-<!--    <string name="account_information">Account Information</string>-->
-<!--    <string name="admin_portal">Admin Portal</string>-->
-<!--    <string name="events_booked">Events Booked</string>-->
-    <string name="type_subject_here">Type Subject Here</string>
-    <string name="book_now">Book Now</string>
-    <string name="event_staff">Event Staff</string>
-    <string name="event_time">Event Time</string>
-    <string name="event_date">Event Date</string>
-    <string name="event_name">Event Name</string>
-    <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
+    <string name="choose_email_client">Choose an application</string>
     <string name="title_activity_add_videos" translatable="false">AddVideos</string>
     <string name="update_library">Update Youtube Library</string>
     <string name="add_video">Add New Video</string>
@@ -257,14 +225,13 @@
     <string name="video_add_success">New Video Added</string>
     <string name="invalid_input">Data missing, unable to add</string>
     <string name="updated_library">Youtube Library updated</string>
-    <string name="call_studio_x_ottawa">Contact Studio X Ottawa</string>
     <string name="EventCreated">Event Created Successfully!</string>
-    <string name="studioxlogo">StudioXLogo</string>
+    <string name="studioxlogo" translatable="false">StudioXLogo</string>
     <string name="create_new_event">Create Event</string>
     <string name="fitness_class">Fitness Class</string>
     <string name="button_that_starts_up_datepickerdialog">Calender Icon</string>
     <string name="no_date_selected">No Date Selected</string>
-    <string name="_6_00pm_6_55pm">6:00pm-6:55pm</string>
+    <string name="_6_00pm_6_55pm" translatable="false">6:00pm-6:55pm</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="website">Website</string>
     <string name="our_latest_news">Our Latest News!</string>

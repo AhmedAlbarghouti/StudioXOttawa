@@ -176,41 +176,6 @@
     <string name="cancel">Annuler</string>
     <string name="place_order">Acheter</string>
     <string name="book_event">Réserver un événement</string>
-
-    <string name="sa_cancel">Cancel</string>
-    <string name="sa_add">Add</string>
-    <string name="sa_toCart">to Cart?</string>
-    <string name="sa_dialog_add">Add </string>
-    <string name="EmptyCart">Cart is Empty</string>
-    <string name="onFailureError">Error: </string>
-    <string name="successful_product_adding">Product Successfully Added!</string>
-    <string name="invalid_input">Invalid inputs</string>
-
-    <string name="sign_out">Sign out</string>
-    <string name="about_us">About Us</string>
-    <string name="products_purchased">Products Purchased</string>
-    <string name="contact_us">Contact Us</string>
-    <string name="account_information">Account Information</string>
-    <string name="admin_portal">Admin Portal</string>
-    <string name="events_booked">Events Booked</string>
-
-    <string name="AboutusTitle">
-        "     Welcome to Studio X Ottawa Inc."</string>
-
-    <string name="Aboutus0">
-        "YOUR “one stop” eclectic dance, fitness and space rental Centre!\n"</string>
-    <string name="choose_email_client">Choose one application</string>
-    <string name="type_subject_here">Subject</string>
-    <string name="select_image_btn">select image..</string>
-
-
-
-    <string name="book_now">Book Now</string>
-    <string name="event_staff">Event Staff</string>
-    <string name="event_time">Event Time</string>
-    <string name="event_date">Event Date</string>
-    <string name="event_name">Event Name</string>
-    <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
     <string name="Aboutus0">VOTRE centre éclectique de danse, de fitness et de location d\'espace «one stop»!</string>
     <string name="AboutusTitle">Bienvenue chez Studio X Ottawa Inc.</string>
     <string name="sign_out">Déconnexion</string>
@@ -230,4 +195,29 @@
     <string name="video_add_success">Nouvelle vidéo ajoutée</string>
     <string name="invalid_input">Données manquantes, impossible d\'ajouter</string>
     <string name="updated_library">Vidéos Youtube actualisées</string>
+    <string name="sa_add">Ajouter</string>
+    <string name="sa_cancel">Annuler</string>
+    <string name="sa_toCart">au panier?</string>
+    <string name="sa_dialog_add">Ajouter</string>
+    <string name="onFailureError">Erreur:</string>
+    <string name="EmptyCart">Le panier est vide</string>
+    <string name="successful_product_adding">Produit ajouté avec succès!</string>
+    <string name="choose_email_client">Choisissez une application</string>
+    <string name="EventCreated">Événement créé avec succès!</string>
+    <string name="create_new_event">Créer un évènement</string>
+    <string name="fitness_class">Cours de fitness</string>
+    <string name="button_that_starts_up_datepickerdialog">Icône de calendrier</string>
+    <string name="no_date_selected">Aucune date sélectionnée</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="website">Site Internet</string>
+    <string name="our_latest_news">Nos dernières nouvelles!</string>
+    <string name="calender_icon">Icône de calendrier</string>
+    <string name="administrator">Administrateur</string>
+    <string name="account_details">Détails du compte</string>
+    <string name="full_name">Nom et prénom</string>
+    <string name="email_minus_colon">Email</string>
+    <string name="staff_report">Rapport du personnel</string>
+    <string name="clients">Clients</string>
+    <string name="date_of_purchase">Date d\'achat:</string>
+    <string name="product_image">Image du produit</string>
 </resources>

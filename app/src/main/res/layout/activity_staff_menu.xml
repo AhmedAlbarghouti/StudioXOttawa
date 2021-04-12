@@ -42,10 +42,10 @@
         <Button
             android:id="@+id/addServiceButton"
             android:layout_width="match_parent"
-            android:layout_below="@id/userTV"
             android:layout_height="83dp"
-            android:layout_marginTop="50dp"
+            android:layout_below="@id/userTV"
             android:layout_centerVertical="false"
+            android:layout_marginTop="30dp"
             android:backgroundTint="@color/Transparent"
             android:fontFamily="sans-serif-light"
             android:text="@string/add_service"
@@ -76,14 +76,24 @@
             android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/reportButton"
+            android:id="@+id/videoButton"
             android:layout_width="match_parent"
             android:layout_height="83dp"
             android:layout_below="@id/addNews"
             android:backgroundTint="@color/Transparent"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/add_video"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/reportButton"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:layout_below="@id/videoButton"
+            android:backgroundTint="@color/Transparent"
+            android:fontFamily="sans-serif-light"
             android:text="@string/report"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-light" />
+            android:textColor="@color/white" />
 
 
     </RelativeLayout>
