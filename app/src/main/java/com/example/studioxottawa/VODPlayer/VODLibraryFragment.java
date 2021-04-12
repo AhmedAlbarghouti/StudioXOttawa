@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
@@ -58,11 +59,11 @@ public class VODLibraryFragment extends Fragment {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         String userID = user.getUid();
 
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userID).child("Products Purchased").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()) {
-                    if (ds.child("Premium Video Access (1 month)").exists()) {
+                    if((ds.child("item").getValue()).toString().equals("Premium Video Access (1 month)")) {
                         premButton.setEnabled(true);
                     }
                 }

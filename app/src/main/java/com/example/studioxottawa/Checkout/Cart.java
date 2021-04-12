@@ -58,14 +58,12 @@ import java.util.regex.Pattern;
  */
 public class Cart extends Fragment {
     public static ArrayList<Product> products = new ArrayList<>();
-    public static ArrayList<String> forPay;
+
     private final NumberFormat formatter = new DecimalFormat("#0.00");
     private double price = 0;
     private CartAdapter myAdapter;
     private TextView priceTv;
     private Boolean isEvent = false;
-    private String eventName;
-    private Event event;
     private Bitmap i1;
     private FragmentActivity fragmentActivity;
     FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
@@ -119,9 +117,7 @@ public class Cart extends Fragment {
 
             Intent pay = new Intent(root.getContext(), CheckoutActivityJava.class);
             pay.putExtra("isService", isEvent);
-            pay.putExtra("EventObj", event);
             pay.putExtra("Total Price", price);
-            pay.putStringArrayListExtra("forPay", forPay);
             startActivityForResult(pay, 1);
         });
         return root;
