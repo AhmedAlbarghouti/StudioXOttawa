@@ -21,19 +21,19 @@ import com.example.studioxottawa.R;
 public class ContactUs extends AppCompatActivity {
 
 
-    private static String[] ADDRESS={"testemail@gmail.com"};//replace with Studioxottawa@gmail.com later
+    private static String[] ADDRESS={"studioxottawa@gmail.com"};//replace with Studioxottawa@gmail.com later
     private EditText subject ;
     private EditText message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contactus);
-        //initializing the Views the subject , message textfield.
+        /**initializing the Views the subject , message textfield.*/
         subject = findViewById(R.id.subjectEditText);
         message = findViewById(R.id.message_editText);
 
         Button send = findViewById(R.id.sendButton);
-        // setting send button onclick listener to run sendEmail method
+        /**setting send button onclick listener to run sendEmail method**/
         send.setOnClickListener(view -> sendEmail());
 
 

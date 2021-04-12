@@ -102,7 +102,7 @@ import okhttp3.Response;
  *     private AlertDialog.Builder builder
  *     private ListView checkoutListView
  *     private Bitmap i1
- * @Author: Stripe,Inc.
+ * @Author: Stripe,Inc, Hans Lubin
  */
 public class CheckoutActivityJava extends AppCompatActivity {
 
@@ -141,10 +141,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
         try {
             startCheckout();
-        }catch (Exception e){
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-        }catch (Error e){
+        }catch (Exception | Error e){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }
@@ -306,9 +303,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
             PaymentIntent.Status status = paymentIntent.getStatus();
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Event event= getIntent().getParcelableExtra("EventObj");
-                boolean isEvent =getIntent().getExtras().getBoolean("isService");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+                boolean isEvent ;
 
 
 

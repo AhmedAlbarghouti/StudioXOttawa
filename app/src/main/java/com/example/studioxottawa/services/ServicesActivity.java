@@ -48,7 +48,7 @@ import java.util.ArrayList;
  *     private  ListView servicesView
  *     private ImageButton goToCart
  *     private boolean hasItem
- *     private String UID
+ *
  *
  */
 public class ServicesActivity extends Fragment {
@@ -62,7 +62,6 @@ public class ServicesActivity extends Fragment {
     private   ListView servicesView;
     private   ImageButton goToCart;
     private boolean hasItem;
-    private   String UID="";
     FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
 
 
@@ -76,9 +75,6 @@ public class ServicesActivity extends Fragment {
         servicesView = root.findViewById(R.id.serviceContainer);
         servicesView.setAdapter(adapter = new MyListAdapter());
         goToCart = root.findViewById(R.id.cartButton);
-        /**retrieving the user id of the current logged on user.**/
-        UID=getArguments().getString("UID");
-
         i1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_logo);
         /**load products available to purchase**/
         loadServices();
@@ -96,10 +92,6 @@ public class ServicesActivity extends Fragment {
             else {
                 /** getting the fragment to be navigated to.**/
                 Fragment selectedFragment= new Cart();
-                Bundle bundle= new Bundle();
-                bundle.putStringArrayList("List",stringList);
-                bundle.putString("UID",UID);
-                selectedFragment.setArguments(bundle);
                 /**transitioning to the next fragment**/
                 getParentFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,selectedFragment).commit();
 
@@ -127,7 +119,7 @@ public class ServicesActivity extends Fragment {
                 /**notifies the adapter that there has been a change in the list to be displayed**/
                 adapter.notifyDataSetChanged();
             });
-            //cancels adding the item to cart
+            /**cancels adding the item to cart**/
             builder.setNegativeButton(getString(R.string.sa_cancel), (dialogInterface, i) -> dialogInterface.cancel()).create().show();
             //
         });
