@@ -19,7 +19,6 @@
         <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.ProductsPurchased" />
         <activity android:name=".welcome.EventsBooked" />
-        <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.LoginActivity" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />

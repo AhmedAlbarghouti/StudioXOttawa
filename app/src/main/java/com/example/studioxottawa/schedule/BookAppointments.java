@@ -16,6 +16,7 @@ import com.example.studioxottawa.Checkout.CheckoutActivityJava;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.services.ServicesActivity;
+import com.example.studioxottawa.staff.AddEvent;
 import com.example.studioxottawa.welcome.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,6 +90,7 @@ public class BookAppointments extends AppCompatActivity {
             ref.setValue(temp2);
 
             Intent bookingIntent = new Intent(this, MainActivity.class);
+            Toast.makeText(BookAppointments.this, getString(R.string.EventAdded),Toast.LENGTH_LONG).show();
             bookingIntent.putExtra("UID",Uid);
             bookingIntent.putExtra("isService",true);
             startActivity(bookingIntent);

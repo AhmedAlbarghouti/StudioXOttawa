@@ -28,8 +28,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="0dp"
-        android:layout_toRightOf="@id/ServiceStudioXLogo"
-        android:text="SHOP"
+        android:layout_toEndOf="@id/ServiceStudioXLogo"
+        android:text="@string/store"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold|italic" />

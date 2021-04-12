@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         ProductsPurchased pobj = new ProductsPurchased();
         pobj.loadPurchasedProducts(); //starts loading purchased products into app
 
+        NewsFragment.loadNews();
+
         user = FirebaseAuth.getInstance().getCurrentUser(); //gets the current logged in user
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();

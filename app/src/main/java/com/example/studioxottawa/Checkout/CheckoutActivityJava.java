@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.schedule.BookAppointments;
 import com.example.studioxottawa.schedule.Event;
 
 import com.example.studioxottawa.services.Product;
@@ -73,6 +74,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -248,6 +250,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }.getType();
         Map<String, String> responseMap = gson.fromJson(Objects.requireNonNull(response.body()).string(), type);
         paymentIntentClientSecret = responseMap.get("clientSecret");
+
     }
 
     private  final class PayCallback implements Callback {
@@ -308,10 +311,9 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 boolean isEvent =getIntent().getExtras().getBoolean("isService");
 
 
-                activity.displayAlert(
-                        "Payment completed", "Payment Successful! Thank you"
-//                        gson.toJson(paymentIntent)
-                );
+
+
+                Toast.makeText(CheckoutActivityJava.this, getString(R.string.PaymentSuccess),Toast.LENGTH_LONG).show();
 
 
                 /**Grabbing a reference to or creating (if it doesnt exits) the current user's Products and Events purchased tables to update new purchase*/
@@ -336,7 +338,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(event2);
                     }else{
                         p.setDate(cal.getTime().toString());
-                        prodRef.child(p.getItem()).setValue(p);
+                        prodRef.child(String.valueOf(UUID.randomUUID())).setValue(p);
 
                     }
 
@@ -347,6 +349,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 ref.removeValue();
                 products.clear();
                 adapter.notifyDataSetChanged();
+                startActivity(new Intent(CheckoutActivityJava.this,MainActivity.class));
+
 
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {

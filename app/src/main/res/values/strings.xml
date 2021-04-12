@@ -174,7 +174,7 @@
     <string name="event_time" translatable="false">Event Time</string>
     <string name="event_date" translatable="false">Event Date</string>
     <string name="event_name" translatable="false">Event Name</string>
-    <string name="call_studio_x_ottawa">call Studio X Ottawa</string>
+    <string name="call_studio_x_ottawa">Contact Studio X Ottawa</string>
     <string name="new_event">Add New Event</string>
     <string name="fitness_hint">Fitness Class</string>
     <string name="no_date">No Date Selected</string>
@@ -244,5 +244,8 @@
     <string name="clients">Clients</string>
     <string name="date_of_purchase">Date of Purchase:</string>
     <string name="product_image">Product Image</string>
+    <string name="EventAdded">Event Added To Cart</string>
+    <string name="store">Store</string>
+    <string name="PaymentSuccess">Payment Successful! Thank you</string>
 
 </resources>

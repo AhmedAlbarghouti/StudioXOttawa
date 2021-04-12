@@ -42,8 +42,8 @@ public class User {
         PhoneNumber = phoneNumber;
         this.email = email;
         this.staff = false;
-        this.eventsPurchased.addAll(eventsPurchased);
-        this.productsPurchased.addAll(productsPurchased);
+        if(eventsPurchased!=null){this.eventsPurchased.addAll(eventsPurchased);}
+        if(productsPurchased!=null){this.productsPurchased.addAll(productsPurchased);}
     }
 
     /**
