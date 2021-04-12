@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,7 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Receive data passed from other activity
         dataFromActivity = getArguments();
         index = dataFromActivity.getInt(NewsFragment.NEWS_POSITION );
 
@@ -61,8 +60,7 @@ public class DetailsFragment extends Fragment {
         TextView description = (TextView)result.findViewById(R.id.FragmentDescription);
         description.setText(dataFromActivity.getString(NewsFragment.NEWS_DESCRIPTION).replace("_b","\n"));
 
-
-
+        //Retrieve image based on URL
         url = dataFromActivity.getString(NewsFragment.NEWS_LINK);
         imageView = (ImageView)result.findViewById(R.id.FragmentImage);
         Log.i("gycimage", url);
@@ -87,12 +85,6 @@ public class DetailsFragment extends Fragment {
 
         return result;
     }
-
-    private Bitmap decodeFromStringToImage(String input){
-        byte[] decodingBytes= Base64.decode(input,0);
-        return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);
-    }
-
 
     /**
      * callback function, called when the fragment is added to the Activity
