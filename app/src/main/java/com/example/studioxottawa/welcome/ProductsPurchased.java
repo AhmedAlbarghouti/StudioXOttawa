@@ -32,8 +32,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose Displays current user's already purchased products
+ */
 public class ProductsPurchased extends AppCompatActivity {
-
+    // Declaring elements
     ListView products;
     private final NumberFormat formatter = new DecimalFormat("#0.00");
     private static ArrayList<Product> productPurchasedList = new ArrayList<>();
@@ -44,11 +49,14 @@ public class ProductsPurchased extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_purchased);
 
+        //init elements
         products = findViewById(R.id.products_purchasedLV);
         products.setAdapter(listAdapter);
 
     }
-
+    /**
+     * @Purpose Loads current user's already purchased products into purchasedProducts arraylist
+     */
     void loadPurchasedProducts(){
         productPurchasedList.clear();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -81,7 +89,11 @@ public class ProductsPurchased extends AppCompatActivity {
         listAdapter.notifyDataSetChanged();
     }
 
-
+    /**
+     *
+     * @param input byte array of soon to be bitmap
+     * @return bitmap decoded from Byte Array param
+     */
     private Bitmap decodeFromStringToImage(String input){
         byte[] decodingBytes= Base64.decode(input,0);
         return BitmapFactory.decodeByteArray(decodingBytes,0,decodingBytes.length);

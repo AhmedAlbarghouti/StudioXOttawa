@@ -28,8 +28,13 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose Displays current user's already booked events
+ */
 public class EventsBooked extends AppCompatActivity {
-    private ListView events;
+    // Declaring elements
     private static ArrayList<Event> eventsBookedList = new ArrayList<>();
     private BookedEventListAdapter listAdapter = new BookedEventListAdapter();
     @Override
@@ -37,11 +42,15 @@ public class EventsBooked extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_booked);
 
-        events = findViewById(R.id.events_bookedLV);
+        // init elements
+        ListView events = findViewById(R.id.events_bookedLV);
         events.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * @Purpose Loads current user's already booked events into bookedevents arraylist
+     */
      void loadBookedEvents() {
         eventsBookedList.clear();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -71,6 +80,7 @@ public class EventsBooked extends AppCompatActivity {
         });
         listAdapter.notifyDataSetChanged();
     }
+
 
     class BookedEventListAdapter extends BaseAdapter{
 

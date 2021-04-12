@@ -98,6 +98,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
      * @param year the chosen year
      * @param month the chosen month
      * @param dayOfMonth the chosen day of month
+     * sets c object's Year Month Day & TextView's value
      */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

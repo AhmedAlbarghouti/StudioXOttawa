@@ -25,6 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Purpose Fragment that contains less important options that are needed
+ * @Date April 2021
+ */
+
 public class MoreFragment extends Fragment {
 
     private Button adminBtn;
@@ -33,7 +39,7 @@ public class MoreFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_more_fragment,container,false);
-
+        // init elements
         Button accountInfoBtn = root.findViewById(R.id.account_info_button);
         Button eventsBtn = root.findViewById(R.id.events_booked_button);
         Button productsBtn = root.findViewById(R.id.products_purchased_button);
@@ -44,11 +50,15 @@ public class MoreFragment extends Fragment {
         Button websiteBtn = root.findViewById(R.id.website_Button);
 
         EventsBooked obj = new EventsBooked();
-        obj.loadBookedEvents();
+        obj.loadBookedEvents(); //starts loading booked events into app
 
         ProductsPurchased pobj = new ProductsPurchased();
-        pobj.loadPurchasedProducts();
+        pobj.loadPurchasedProducts(); //starts loading purchased products into app
 
+
+        // gets current logged in user's information and checks if they are a staff member
+        // Yes = reveal Admin Portal
+        // No = keep invisible
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         String userID = user.getUid();
@@ -67,6 +77,7 @@ public class MoreFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
 
         accountInfoBtn.setOnClickListener(click -> {
             goToAccountInfo();
@@ -107,37 +118,60 @@ public class MoreFragment extends Fragment {
         return root;
     }
 
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts purchased Products activity
+     */
     private void goToProductsPurchased() {
         Intent products = new Intent(getActivity(), ProductsPurchased.class);
         startActivity(products);
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts booked events activity
+     */
     private void goToEventsBooked() {
         Intent events = new Intent(getActivity(), EventsBooked.class);
         startActivity(events);
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts account details activity
+     */
     private void goToAccountInfo() {
         Intent account = new Intent(getActivity(), ViewAccountDetails.class);
         startActivity(account);
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts staff menu activity
+     */
     private void goToAdminPortal() {
         Intent admin = new Intent(getActivity(), StaffMenu.class);
         startActivity(admin);
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          signs current user out
+     *          starts login activity
+     */
     private void signOutUser() {
         FirebaseAuth.getInstance().signOut();
         LoginActivity.currentUser = null;
         startActivity(new Intent(getActivity(),LoginActivity.class));
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts Contact Us activity
+     */
     private void goToContactUs() {
         Intent contactus = new Intent(getActivity(), ContactUs.class);
         startActivity(contactus);
     }
-
+    /**
+     * @Purpose method is called if related button is clicked
+     *          starts About Us activity
+     */
     private void goToAboutUs() {
         Intent aboutus = new Intent(getActivity(), AboutusActivity.class);
         startActivity(aboutus);

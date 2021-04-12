@@ -17,19 +17,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import android.widget.TextView;
 
-
-import com.example.studioxottawa.DBHelper;
 import com.example.studioxottawa.R;
 
 import com.example.studioxottawa.VODPlayer.VODLibraryFragment;
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
 import com.example.studioxottawa.services.ServicesActivity;
-import com.example.studioxottawa.VODPlayer.VODActivity;
-import com.example.studioxottawa.VODPlayer.VODLibraryActivity;
-import com.example.studioxottawa.aboutus.AboutusActivity;
 import com.example.studioxottawa.notification.notifActivity;
 
 
@@ -52,6 +46,7 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
 
+    // declaring elements & firebase Objects
     private FirebaseUser user;
     private DatabaseReference reference;
     public Context lv_ctxt ;
@@ -72,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         EventsBooked obj = new EventsBooked();
-        obj.loadBookedEvents();
+        obj.loadBookedEvents(); //starts loading booked events into app
 
         ProductsPurchased pobj = new ProductsPurchased();
-        pobj.loadPurchasedProducts();
+        pobj.loadPurchasedProducts(); //starts loading purchased products into app
 
         user = FirebaseAuth.getInstance().getCurrentUser(); //gets the current logged in user
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -88,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
 
-
+                //conditions to switch between navigation bar fragments
                 if (item.getItemId() == R.id.nav_news){
                     selectedFragment = new NewsFragment();
                 }
@@ -115,25 +110,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
+        // setting action listener
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User signInUser = snapshot.getValue(User.class);
-                String username = signInUser.fullName;
-//                userTV.setText(username);
-//                loadnotifActivity(username);
-                Boolean isStaff = signInUser.staff;
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
         getSupportFragmentManager().beginTransaction().replace(R.id.menu_fragment_container,new NewsFragment()).commit();
         checkNotificationData();
     }
@@ -160,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                     String name = String.valueOf(ds.child("name").getValue());
                     String date = String.valueOf(ds.child("date").getValue());
                     String time = String.valueOf(ds.child("time").getValue());
-                    String staff = String.valueOf(ds.child("staff").getValue());
-                    String uid = String.valueOf(ds.child("uid").getValue());
 
                     String str = "";
                     str = name + "," + date+ "," + time;

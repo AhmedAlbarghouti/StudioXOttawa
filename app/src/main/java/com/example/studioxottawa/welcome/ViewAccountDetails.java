@@ -15,13 +15,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose Displays current user's Name,Email & Phone Number
+ */
 public class ViewAccountDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_account_details);
 
+        //init elements & objects
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         String userID = user.getUid();
@@ -29,7 +34,7 @@ public class ViewAccountDetails extends AppCompatActivity {
         TextView FNameTV = findViewById(R.id.UserFName);
         TextView emailTV = findViewById(R.id.UserEmail);
         TextView phoneTV = findViewById(R.id.UserPhone);
-
+        // getting current user's information
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -37,6 +42,7 @@ public class ViewAccountDetails extends AppCompatActivity {
                 String fullname = signInUser.fullName;
                 String email = signInUser.email;
                 String phone = signInUser.PhoneNumber;
+                // setting TextViews to current user's info
                 FNameTV.setText(fullname);
                 emailTV.setText(email);
                 phoneTV.setText(phone);
