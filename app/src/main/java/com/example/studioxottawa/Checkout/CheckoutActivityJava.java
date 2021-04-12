@@ -108,7 +108,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
     private static final String BACKEND_URL = "https://still-everglades-60303.herokuapp.com/";
     private OkHttpClient httpClient = new OkHttpClient();
-    // configure with stripe secret key
+
     private String paymentIntentClientSecret;
     private Stripe stripe;
     private double price = 0;
@@ -205,7 +205,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         double amount = price * 100;
         //adding the total amount to the itemMap
         itemMap.put("amount", amount);
-        itemMap.put("email", "jamesRunnings@gmail.com");
+//        itemMap.put("email", "jamesRunnings@gmail.com");
         itemList.add(itemMap);
 /**        sending the list of Map objects to the backend.**/
         payMap.put("items", itemList);
@@ -330,9 +330,9 @@ public class CheckoutActivityJava extends AppCompatActivity {
                     isEvent=matcher.find();
                     if(isEvent){
 
-                       String[] arr= p.getItem().split("--");
-                       for(String pp: arr){
-                           Log.i("SSSS",pp);
+                        String[] arr= p.getItem().split("--");
+                        for(String pp: arr){
+                            Log.i("SSSS",pp);
                         }
                         Event event2= new Event(arr[0],arr[1],arr[2],arr[3]);
                         eventRef.child(p.getItem().replaceAll("\\d+\\/\\d+\\/\\d+","")).setValue(event2);

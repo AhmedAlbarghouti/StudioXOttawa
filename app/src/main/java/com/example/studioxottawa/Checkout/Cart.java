@@ -54,21 +54,20 @@ import java.util.regex.Pattern;
  *     private Boolean isEvent = false
  *     private Bitmap i1
  *     private FragmentActivity fragmentActivity
+ *     private firebase user
  *     ListView myList
  */
 public class Cart extends Fragment {
     public static ArrayList<Product> products = new ArrayList<>();
-    public static ArrayList<String> forPay;
     private final NumberFormat formatter = new DecimalFormat("#0.00");
     private double price = 0;
     private CartAdapter myAdapter;
     private TextView priceTv;
     private Boolean isEvent = false;
-    private String eventName;
-    private Event event;
     private Bitmap i1;
+    Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
     private FragmentActivity fragmentActivity;
-    FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser user=  FirebaseAuth.getInstance().getCurrentUser();
 
     ListView myList;
 
@@ -104,11 +103,15 @@ public class Cart extends Fragment {
 
         myList.setAdapter(myAdapter = new CartAdapter(root.getContext()));
         myList.setOnItemLongClickListener((parent, view, position, id) -> {
-            String[] prod =  products.get(position).getItem().split("--");
-
-
-            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
-            ref.child(prod[0]).removeValue();
+            Matcher matcher=pattern.matcher(products.get(position).getItem());
+            if(matcher.find()) {
+                String[] prod = products.get(position).getItem().split("--");
+                /**
+                 * removing a specific event Item from the carts
+                 */
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart").child(user.getUid());
+                ref.child(prod[0]).removeValue();
+            }
             products.remove(position);
             myAdapter.notifyDataSetChanged();
             return true;
@@ -119,9 +122,7 @@ public class Cart extends Fragment {
 
             Intent pay = new Intent(root.getContext(), CheckoutActivityJava.class);
             pay.putExtra("isService", isEvent);
-            pay.putExtra("EventObj", event);
             pay.putExtra("Total Price", price);
-            pay.putStringArrayListExtra("forPay", forPay);
             startActivityForResult(pay, 1);
         });
         return root;
@@ -145,12 +146,9 @@ public class Cart extends Fragment {
                     String quantity= String.valueOf(ds.child("quantity").getValue());
                     String bitmap= String.valueOf(ds.child("bitmap").getValue());
 
-                    Log.e("Item",item);
-                    Log.e("price",price);
-                    Log.e("quantity",quantity);
-//                    if(price.equals("null")){
-//                        price="15";
-//                    }
+                    /**
+                     * placing all data that is in the Cart table  in the products array list.
+                     */
                     Product temp= new Product(item,Double.parseDouble(price),Integer.parseInt(quantity));
                     if(!bitmap.equals("null") && !(bitmap.isEmpty())) {
                         temp.setBitmap(bitmap);
@@ -191,7 +189,7 @@ public class Cart extends Fragment {
     private class CartAdapter extends BaseAdapter{
 
         private Context context;
-    /**To set the context of the cartAdapter**/
+        /**To set the context of the cartAdapter**/
         public CartAdapter(Context context){
             this.context=context;
         }
@@ -243,7 +241,6 @@ public class Cart extends Fragment {
             }
             Product product = (Product)getItem(i);
             /**Check for a specific pattern in the name of the item**/
-            Pattern pattern=Pattern.compile("\\d+\\/\\d+\\/\\d+", Pattern.CASE_INSENSITIVE);
             Matcher matcher=pattern.matcher(product.getItem());
             isEvent=matcher.find();
             /**If the item matches the pattern above, it is an Event and should not display plus minus btns*/

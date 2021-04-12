@@ -45,14 +45,14 @@ public class ContactUs extends AppCompatActivity {
      * entered by the user in the fields.
      */
     public void sendEmail(){
-        // initializing intent to open an email client.
+        /**initializing intent to open an email client.*/
         Intent intent=new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
-        //passing along the email address to be used.
+        /**passing along the email address to be used.*/
         intent.putExtra(Intent.EXTRA_EMAIL,ADDRESS);
-        // passing along the subject line of the email.
+        /** passing along the subject line of the email.*/
         intent.putExtra(Intent.EXTRA_SUBJECT,subject.getText().toString());
-        // passing along the message body of the email.
+        /** passing along the message body of the email.**/
         intent.putExtra(Intent.EXTRA_TEXT,message.getText().toString());
 
         startActivity(Intent.createChooser(intent,getString(R.string.choose_email_client)));

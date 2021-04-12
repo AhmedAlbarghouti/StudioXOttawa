@@ -43,7 +43,7 @@ public class AddService extends AppCompatActivity {
     private ImageView productImage;
     private Bitmap imageBitmap;
     private static final int GO_TO_GALLERY=1;
-    SharedPreferences preferences=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

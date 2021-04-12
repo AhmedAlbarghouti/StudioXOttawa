@@ -14,32 +14,54 @@ import java.io.ByteArrayOutputStream;
  * used to set the information for the products being sold in the store.
  *
  * Variables
- *     private String item
- *     private Double price
- *     private String bitmap
+ *     private String item:  the product name
+ *     private Double price: the price associated with the product
+ *     private String bitmap: the image associated with the product
+ *     private string date : returns the date the product was purchased.
  */
 public class Product implements Parcelable{
     private String item;
     private Double price;
     private String bitmap;
+    private String date;
+    private int quantity;
 
+    /**
+     * the retrieve the private variable for the date of purchase
+     * @return date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * sets the purchases date of the product
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
-    private String date;
-
+    /**
+     * returns the based 64 bitmap string of the item
+     * @return bitmap
+     */
     public String getBitmap() {
         return bitmap;
     }
 
+    /**
+     * Sets the bitmap param of the object
+     * @param bitmap
+     */
     public void setBitmap(String bitmap) {
         this.bitmap = bitmap;
     }
+
+    /**
+     * converts a bitmap image passed through its parameter to a string based 64 text.
+     * @param image
+     */
     public void compress(Bitmap image) {
         ByteArrayOutputStream out=new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG,100,out);
@@ -48,8 +70,14 @@ public class Product implements Parcelable{
 
     }
 
-    int quantity;
 
+
+    /**
+     * Product constructior method used the initialize the private variables of the class
+     * @param item
+     * @param price
+     * @param quantity
+     */
     public Product(String item, Double price, int quantity) {
         setItem(item);
         setPrice(price);
@@ -81,25 +109,48 @@ public class Product implements Parcelable{
         }
     };
 
+    /**
+     * retrieve the value of the item variable
+     * @return
+     */
     public String getItem() {
         return item;
     }
 
+    /**
+     * sets the value of the item variable
+     * @param item
+     */
     public void setItem(String item) {
         this.item = item;
     }
-
+    /**
+     *retrieve the value price variable
+     * @return price
+     */
     public Double getPrice() {
         return price;
     }
 
+    /**
+     *sets the value price variable
+     * @param price
+     */
     public void setPrice(Double price) {
         this.price = price;
     }
-
+    /**
+     * Retrieve the value of quantity variable
+     * @return quantity
+     */
     public int getQuantity() {
         return quantity;
     }
+
+    /**
+     * sets the value of the quantity variable
+     * @param quantity
+     */
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
