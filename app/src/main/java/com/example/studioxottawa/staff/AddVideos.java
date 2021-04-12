@@ -34,7 +34,7 @@ public class AddVideos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
-
+        //Gets all the references to elements on screen that will be used
         videoName=(EditText)findViewById(R.id.new_video_name);
         videoID=(EditText)findViewById(R.id.new_video_url);
         thumbnail=(ImageView)findViewById(R.id.new_video_image);
@@ -45,26 +45,30 @@ public class AddVideos extends AppCompatActivity {
         Button img= findViewById(R.id.imageSelectBtn);
         img.setOnClickListener(click-> openGallery());
 
+        //Sets the radio buttons to toggle eachother so only one can be active at a time
         free.setOnClickListener(click->{free.setChecked(true); prem.setChecked(false);});
         prem.setOnClickListener(click->{prem.setChecked(true); free.setChecked(false);});
 
+        //Adds listeners to each button to run their respective scripts
         add_video.setOnClickListener(click->{addVideo();});
         update.setOnClickListener(click->{updateLibrary();});
 
     }
 
+    //Method to create a new video object from user input.
     public void  addVideo(){
         String item= videoName.getText().toString();
         String url= videoID.getText().toString();
         Video newVid;
 
         if(!item.isEmpty()  && !(url.isEmpty())) {
-
+            //Generates either a free or premium video depending on the user's radio button selection
             if (free.isChecked())
                 newVid = new Video(item, url, imageBitmap, Video.FREE_MODIFIER);
             else
                 newVid = new Video(item, url, imageBitmap, Video.PREMIUM_MODIFIER);
 
+            //Gets a firebase reference to pass the new video to
             DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Videos");
             eventsReference.child(newVid.getUID()).setValue(newVid);
             Toast.makeText(this, getString(R.string.video_add_success),Toast.LENGTH_SHORT).show();
@@ -75,11 +79,13 @@ public class AddVideos extends AppCompatActivity {
         }
     }
 
+    //Passes the context to the library updater, and runs with the success message stored in the strings. Used to pull youtube API data to the database
     public void updateLibrary() {
         UpdateLibrary updater = new UpdateLibrary(getBaseContext());
         updater.run(getString(R.string.updated_library));
     }
 
+    //Method to open the user's image gallery to select a thumbnail for a video.
     private void openGallery() {
         Intent intent= new Intent();
         intent.setAction(Intent.ACTION_PICK);
@@ -87,6 +93,7 @@ public class AddVideos extends AppCompatActivity {
         startActivityForResult(intent,GO_TO_GALLERY);
     }
 
+    //Method to handle setting the thumbnail on screen and generating a bitmap for the video from the selected image.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
