@@ -17,12 +17,15 @@
 
         <activity android:name=".staff.AddVideos" />
         <activity android:name=".welcome.ViewAccountDetails" />
+        <activity android:name=".welcome.ProductsPurchased" />
+        <activity android:name=".welcome.EventsBooked" />
+        <activity android:name=".welcome.ViewAccountDetails" />
         <activity android:name=".welcome.LoginActivity" />
-        <activity android:name=".Checkout.Cart" />
         <activity android:name=".Checkout.CheckoutActivityJava" />
         <activity android:name=".welcome.ForgotPassword" />
         <activity android:name=".welcome.RegisterActivity" />
         <activity android:name=".contact.ContactUs" />
+        <activity android:name=".staff.ReportDetail" />
         <activity android:name=".news.EmptyActivity" />
         <activity android:name=".aboutus.AboutusActivity" />
         <activity android:name=".schedule.BookAppointments" />
@@ -31,9 +34,7 @@
         <activity
             android:name=".notification.notifActivity"
             android:label="@string/title_activity_notif" />
-        <activity
-            android:name=".services.ServicesActivity"
-            android:label="@string/title_activity_services" />
+
         <activity android:name=".welcome.WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

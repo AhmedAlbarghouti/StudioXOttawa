@@ -131,8 +131,8 @@ public class notifActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(View v) {
-                            Intent contact = new Intent(lv_ctxt2, com.example.studioxottawa.contact.ContactUs.class);
-                            startActivity(contact);
+                            Intent booked = new Intent(lv_ctxt2, com.example.studioxottawa.welcome.EventsBooked.class);
+                            startActivity(booked);
                         }
                     });
 

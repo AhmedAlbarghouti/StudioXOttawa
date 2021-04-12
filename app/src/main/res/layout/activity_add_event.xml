@@ -11,7 +11,7 @@
         android:id="@+id/add_Product_title"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/white"
-        android:text="@string/new_event"
+        android:text="@string/create_new_event"
         android:textSize="40sp"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_marginTop="100dp"
         android:layout_below="@id/add_Product_title"
         android:id="@+id/new_product_name"
-        android:hint="@string/fitness_hint"
+        android:hint="@string/fitness_class"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -38,17 +38,16 @@
         android:layout_height="80dp"
         android:layout_below="@id/new_product_name"
         android:background="@color/Transparent"
-        />
+        android:contentDescription="@string/button_that_starts_up_datepickerdialog" />
     <TextView
         android:id="@+id/newEventDateTV"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@id/new_product_name"
-        android:text="@string/no_date"
+        android:text="@string/no_date_selected"
         android:textSize="18sp"
         android:fontFamily="sans-serif-light"
-        android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_toEndOf="@id/new_product_image"
         />
@@ -56,14 +55,15 @@
     <EditText
         android:layout_below="@id/new_product_image"
         android:id="@+id/new_product_price"
-        android:hint="@string/time_hint"
+        android:hint="@string/_6_00pm_6_55pm"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:fontFamily="sans-serif-light"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        />
+        android:autofillHints=""
+        android:inputType="text" />
 
     <Button
         android:id="@+id/AddProductBtn"

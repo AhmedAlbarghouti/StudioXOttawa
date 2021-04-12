@@ -3,6 +3,7 @@ package com.example.studioxottawa.staff;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.studioxottawa.R;
+import com.example.studioxottawa.news.EmptyActivity;
 import com.example.studioxottawa.schedule.Event;
+import com.example.studioxottawa.services.Product;
 import com.example.studioxottawa.welcome.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +33,7 @@ public class Report extends AppCompatActivity {
     private ListView myList;
     private static ArrayList<User> allUsers = new ArrayList<User>();
     private static ArrayList<Event> eventsPurchasedList;
-    private static ArrayList productsPurchasedList= new ArrayList();
+    private static ArrayList<Product> productsPurchasedList;
     private TextView text;
 
     @Override
@@ -44,32 +47,45 @@ public class Report extends AppCompatActivity {
         Log.i("gycreport", "MyList Ready");
         myList = findViewById(R.id.ListyView);
         myList.setAdapter( myAdapter = new MyListAdapter());
-        myList.setOnItemClickListener( (parent, view, pos, id) -> {
+
+        myList.setOnItemClickListener( (list, item, position, id) -> {
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+
+            // Retrieve user from the list based on the index
+            User u = allUsers.get(position);
+            dataToPass.putString("FULL_NAME", u.fullName );
+            dataToPass.putString("EMAIL", u.email );
+            dataToPass.putString("PHONE", u.PhoneNumber );
+            String eventDetail = "";
+            int counter = 1;
+            for(Event event : u.getEventsPurchased()){
+                eventDetail = eventDetail+counter+". "+event.getName()+" by "+event.getStaff()+", at "+event.getTime()+", "+event.getDate()+"\n\n";
+                counter+=1;
+            }
+            dataToPass.putString("EVENT", eventDetail );
+            String productDetail = "";
+            int counter1 = 1;
+            for(Product product : u.getProductsPurchased()){
+                productDetail = productDetail+counter1+". "+product.getItem()+" x "+product.getQuantity()+", unit price: $ "+product.getPrice()+"\n\n";
+                counter1+=1;
+            }
+            dataToPass.putString("PRODUCT", productDetail );
+
+            Log.i("datatopass", u.fullName+u.email+eventDetail);
+            Intent nextActivity = new Intent(Report.this, ReportDetail.class);
+            nextActivity.putExtra("data", dataToPass); //send data to next activity
+            startActivity(nextActivity); //make the transition
+
             myAdapter.notifyDataSetChanged();
         }   );
-
-//        Button reportButton = (Button)findViewById(R.id.load_report);
-//        reportButton.setOnClickListener( new View.OnClickListener()
-//        {  public void onClick(View v){
-//
-//            text = (TextView)findViewById(R.id.user_num);
-//            text.setText("Total Users:  "+ allUsers.size());
-//
-//            Log.i("gycreport", "MyList Ready");
-//            myList = findViewById(R.id.ListyView);
-//            myList.setAdapter( myAdapter = new MyListAdapter());
-//            myList.setOnItemClickListener( (parent, view, pos, id) -> {
-//                myAdapter.notifyDataSetChanged();
-//            }   );
-//
-//        } });
-
     }
 
     /**
      * Used to load users from Firebase database
      */
     public static void loadUsers() {
+        allUsers.clear();
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Users");
 
         referenceEvents.addValueEventListener(new ValueEventListener() {
@@ -80,8 +96,8 @@ public class Report extends AppCompatActivity {
                     String fullName = String.valueOf(ds.child("fullName").getValue());
                     String phoneNumber = String.valueOf(ds.child("PhoneNumber").getValue());
                     String email = String.valueOf(ds.child("email").getValue());
-                    DataSnapshot eventsPurchasedSnapshot = ds.child("Events Purchased");
 
+                    DataSnapshot eventsPurchasedSnapshot = ds.child("Events Purchased");
                     eventsPurchasedList= new ArrayList();
                     for(DataSnapshot dsEvent : eventsPurchasedSnapshot.getChildren()){
                         String name = String.valueOf(dsEvent.child("name").getValue());
@@ -91,6 +107,19 @@ public class Report extends AppCompatActivity {
                         String uid = String.valueOf(dsEvent.child("uid").getValue());
                         Log.i("gycevent", name+staff+time+date+uid);
                         eventsPurchasedList.add(new Event(name, date, time, staff, uid));
+                    }
+
+                    DataSnapshot productPurchasedSnapshot = ds.child("Products Purchased");
+                    productsPurchasedList= new ArrayList();
+
+                    for(DataSnapshot dsProduct : productPurchasedSnapshot.getChildren()){
+                        String item = String.valueOf(dsProduct.child("item").getValue());
+                        String pricelong = (dsProduct.child("price").getValue()).toString();
+                        double price = Double.parseDouble(pricelong);
+                        String quantitylong = (dsProduct.child("quantity").getValue()).toString();
+                        int quantity = Integer.parseInt(quantitylong);
+
+                        productsPurchasedList.add(new Product(item, price, quantity));
                     }
 
                     allUsers.add(new User(fullName, email, phoneNumber, eventsPurchasedList, productsPurchasedList));
@@ -129,14 +158,6 @@ public class Report extends AppCompatActivity {
             TextView tViewPhone = newView.findViewById(R.id.phoneNumber);
             tViewPhone.setText(u.PhoneNumber);
 
-            String eventDetail = "";
-            int counter = 1;
-            for(Event event : u.getEventsPurchased()){
-                eventDetail = eventDetail+counter+". "+event.getName()+" by "+event.getStaff()+", at "+event.getTime()+", "+event.getDate()+"\n\n";
-                counter+=1;
-            }
-            TextView tViewEvents = newView.findViewById(R.id.event);
-            tViewEvents.setText("Event purchased:\n"+eventDetail);
             //return it to be put in the table
             return newView;
         }

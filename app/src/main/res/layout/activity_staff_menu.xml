@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".staff.StaffMenu">
+    tools:context=".staff.StaffMenu"
+    android:background="@drawable/gradient1">
 
     <RelativeLayout
         android:id="@+id/topRow"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/welcomeTV"
@@ -20,90 +21,72 @@
             android:textSize="30sp"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             />
         <TextView
             android:id="@+id/userTV"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Administrator"
+            android:text="@string/administrator"
             android:textSize="25sp"
             android:layout_below="@id/welcomeTV"
             android:gravity="center"
-            android:textStyle="bold"
+
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             />
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/firstRow"
-        android:layout_below="@id/topRow"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="100dp"
-        >
 
         <Button
-
-
             android:id="@+id/addServiceButton"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Add Service"
-            android:backgroundTint="@color/StudioXPink"
-            />
+            android:layout_below="@id/userTV"
+            android:layout_height="83dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerVertical="false"
+            android:backgroundTint="@color/Transparent"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/add_service"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/addEventButton"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_toRightOf="@id/addServiceButton"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="83dp"
+            android:layout_below="@id/addServiceButton"
+            android:layout_centerVertical="false"
+            android:backgroundTint="@color/Transparent"
+            android:fontFamily="sans-serif-light"
             android:text="@string/add_event"
-            android:backgroundTint="@color/StudioXPink"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/secondRow"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/firstRow"
-        android:orientation="horizontal">
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/addNews"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="83dp"
+            android:layout_below="@id/addEventButton"
+            android:backgroundTint="@color/Transparent"
+            android:fontFamily="sans-serif-light"
             android:text="@string/add_news"
-            android:backgroundTint="@color/StudioXPink"
-            />
-
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/reportButton"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="83dp"
+            android:layout_below="@id/addNews"
+            android:backgroundTint="@color/Transparent"
             android:text="@string/report"
-            android:backgroundTint="@color/StudioXPink"
-            />
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light" />
 
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

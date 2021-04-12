@@ -12,10 +12,22 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/admin_portal_button"
+            android:id="@+id/website_Button"
             android:layout_width="match_parent"
             android:layout_height="83dp"
             android:layout_below="@id/logout_button"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/website"
+            android:backgroundTint="@color/Transparent"
+            app:icon="@drawable/ic_baseline_web_24"
+            />
+        <Button
+            android:id="@+id/admin_portal_button"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:layout_below="@id/website_Button"
             android:layout_centerVertical="false"
             android:visibility="invisible"
             android:backgroundTint="@color/Transparent"

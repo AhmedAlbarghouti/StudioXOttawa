@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
+    tools:context=".welcome.EventsBooked">
+
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/events_booked_titleTV"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/events_booked"
+        android:fontFamily="sans-serif-light"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        />
+
+    <ListView
+        android:id="@+id/events_bookedLV"
+        android:layout_below="@id/events_booked_titleTV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</RelativeLayout>

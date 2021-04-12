@@ -22,8 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.Calendar;
 
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose persisting new event to Firebase using user input.
+ */
 public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    //declaring global elements
     private EditText newEventNameET, newEventTimeET;
     private TextView newEventDateTV;
     private ImageButton newEventDateButton;
@@ -33,19 +39,19 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-
+        // init elements
         newEventNameET = findViewById(R.id.new_product_name);
         newEventTimeET = findViewById(R.id.new_product_price);
         newEventDateTV = findViewById(R.id.newEventDateTV);
         newEventDateButton = findViewById(R.id.new_product_image);
         createNewEventButton = findViewById(R.id.AddProductBtn);
-        c = Calendar.getInstance();
-
+        c = Calendar.getInstance(); // init c to current day
+        newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime())); //setting TV to formatted c
         newEventDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                DialogFragment datePicker = new DatePickerFragment();
+                DialogFragment datePicker = new NewEventDatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"Date Picker");
 
             }
@@ -53,14 +59,26 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         createNewEventButton.setOnClickListener(click -> {
             createNewEvent();
-            Toast.makeText(AddEvent.this, "Event Created Successfully!",Toast.LENGTH_LONG).show();
-            finish();
         });
     }
 
+    /**
+     * Creates new event using input from Edit texts and global C Calender
+     */
     private void createNewEvent() {
         String name = newEventNameET.getText().toString().trim();
         String time = newEventTimeET.getText().toString().trim();
+
+        if(name.isEmpty()){
+            newEventNameET.setError("Event name is required!");
+            newEventNameET.requestFocus();
+            return;
+        }
+        if(time.isEmpty()){
+            newEventTimeET.setError("Time is required!");
+            newEventTimeET.requestFocus();
+            return;
+        }
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -69,15 +87,25 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         DatabaseReference eventsReference = FirebaseDatabase.getInstance().getReference().child("Events");
         Event newEvent = new Event(name,pickedDate,time,staff);
         eventsReference.child(newEvent.getUid()).setValue(newEvent);
-
+        Toast.makeText(AddEvent.this, getString(R.string.EventCreated),Toast.LENGTH_LONG).show();
+        finish();
     }
 
 
+    /**
+     *
+     * @param view  dialog view
+     * @param year the chosen year
+     * @param month the chosen month
+     * @param dayOfMonth the chosen day of month
+     * sets c object's Year Month Day & TextView's value
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         newEventDateTV.setText(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()));
+
     }
 }

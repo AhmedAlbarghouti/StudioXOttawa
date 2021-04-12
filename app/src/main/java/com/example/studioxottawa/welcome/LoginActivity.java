@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,11 +14,22 @@ import android.widget.Toast;
 
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.news.NewsFragment;
+import com.example.studioxottawa.schedule.Event;
+import com.example.studioxottawa.services.Product;
+import com.example.studioxottawa.staff.Report;
+import com.example.studioxottawa.staff.ReportDetail;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView lostPassword;
     TextView signUpTV;
     FirebaseAuth mAuth;
+
+    public static User currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if(user.isEmailVerified()){
+                        Log.i("gycuid", user.getUid());
+                        loadUserInfo(user.getUid());
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }else{
                         user.sendEmailVerification();
@@ -108,5 +124,51 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void loadUserInfo(String uid ){
+
+        DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+        referenceEvents.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot ds) {
+
+                    String fullName = String.valueOf(ds.child("fullName").getValue());
+                    String phoneNumber = String.valueOf(ds.child("PhoneNumber").getValue());
+                    String email = String.valueOf(ds.child("email").getValue());
+
+                    DataSnapshot eventsPurchasedSnapshot = ds.child("Events Purchased");
+                    ArrayList<Event> eventsPurchasedList= new ArrayList();
+                    for(DataSnapshot dsEvent : eventsPurchasedSnapshot.getChildren()){
+                        String name = String.valueOf(dsEvent.child("name").getValue());
+                        String staff = String.valueOf(dsEvent.child("staff").getValue());
+                        String time = String.valueOf(dsEvent.child("time").getValue());
+                        String date = String.valueOf(dsEvent.child("date").getValue());
+                        String uid = String.valueOf(dsEvent.child("uid").getValue());
+                        Log.i("gycevent", name+staff+time+date+uid);
+                        eventsPurchasedList.add(new Event(name, date, time, staff, uid));
+                    }
+
+                    DataSnapshot productPurchasedSnapshot = ds.child("Products Purchased");
+                    ArrayList<Product> productsPurchasedList= new ArrayList();
+                    for(DataSnapshot dsProduct : productPurchasedSnapshot.getChildren()){
+                        String item = String.valueOf(dsProduct.child("item").getValue());
+                        String pricelong = (dsProduct.child("price").getValue()).toString();
+                        double price = Double.parseDouble(pricelong);
+                        String quantitylong = (dsProduct.child("quantity").getValue()).toString();
+                        int quantity = Integer.parseInt(quantitylong);
+
+                        productsPurchasedList.add(new Product(item, price, quantity));
+                    }
+
+                    currentUser = new User(fullName, email, phoneNumber, eventsPurchasedList, productsPurchasedList);
+
+                    Log.i("gycCurrentUser", currentUser.fullName);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
 
 }

@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="300dp"
         android:layout_height="500dp"
-        >
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/registerTV"
@@ -38,7 +38,8 @@
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/phonenumberET"
@@ -52,7 +53,8 @@
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/emailET"
@@ -66,7 +68,8 @@
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/passET"
@@ -80,7 +83,8 @@
             android:fontFamily="sans-serif-light"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            android:autofillHints="" />
 
         <Button
             android:text="@string/createaccount"
@@ -108,7 +112,7 @@
             android:textStyle="normal"/>
 
 
-        />
+
     </RelativeLayout>
 
 

@@ -1,6 +1,7 @@
 package com.example.studioxottawa.schedule;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,8 +43,8 @@ import java.util.Calendar;
  */
 public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private ArrayList<Event> allEvents = new ArrayList<>();
-    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<Event> allEvents = new ArrayList<>(); // Arraylist that holds all Events no specifications
+    private ArrayList<Event> events = new ArrayList<>(); // Arraylist that holds Events that only match the user's request via Calender Date Picker
     TextView pickedDate;
     ImageButton dateButton;
     EventListAdapter listAdapter = new EventListAdapter();
@@ -51,7 +52,7 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
 
 
     private FirebaseUser user; // Firebase User Object
-    private Calendar c = Calendar.getInstance();
+    private Calendar c = Calendar.getInstance(); // calender obj with the current day set
 
     /**
      *
@@ -78,6 +79,7 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
           Set on click if user clicks schedule button to change the date of the displayed schedule
          */
         dateButton.setOnClickListener(new View.OnClickListener(){
+            // if dateButton is clicked then show the DatePicker Fragment
             @Override
             public void onClick(View v) {
 
@@ -87,7 +89,8 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
         });
 
 
-
+        // if any item in the listview is clicked then a new bundle is created containing the clicked event's info
+        //and passed to bookingAppointments
         eventList.setOnItemClickListener((list, item, position, id) -> {
             Bundle eventToPass = new Bundle();
             eventToPass.putString("EVENT_UID",events.get(position).getUid());
@@ -106,6 +109,8 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
         return root;
     }
 
+    //when a date is set and user clicks positive button
+    //calender object c is changed to the date picked then all events that have matching date will be added to the list
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         events.clear();
@@ -127,7 +132,7 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
     }
 
 
-
+    //fetches all Event objects from Firebase Events table and add its to the existing all events arraylist
     public void loadEvents() {
         DatabaseReference referenceEvents = FirebaseDatabase.getInstance().getReference().child("Events");
         int year = c.get(Calendar.YEAR);
@@ -171,31 +176,49 @@ public class ScheduleFragment extends Fragment implements DatePickerDialog.OnDat
         listAdapter.notifyDataSetChanged();
 
     }
-
+    /**
+     * the adapter inner class that provide data for the listView
+     */
     public class EventListAdapter extends BaseAdapter {
 
+        /**
+         * @return the number of items
+         */
         @Override
         public int getCount() {
             return events.size();
         }
 
+        /**
+         * @param position - the row position of a listView content
+         * @return the object to show at row position
+         */
         @Override
         public Object getItem(int position) {
             return events.get(position);
         }
 
+        /**
+         * @param position - the row position of a listView content
+         * @return database id of the item at the position
+         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
 
-
+        /**
+         * @param position - the row position of a listView content
+         * @param convertView - the previous view at the position
+         * @param parent   - contains other views, describes the layout of the Views in the group
+         * @return a View object to go in a row of the ListView
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             Event event = events.get(position);
-            View eView = inflater.inflate(R.layout.event_row, parent, false);
+            @SuppressLint("ViewHolder") View eView = inflater.inflate(R.layout.event_row, parent, false);
 
             ImageView img = eView.findViewById(R.id.eventImage);
             TextView nTxt = eView.findViewById(R.id.eventName);

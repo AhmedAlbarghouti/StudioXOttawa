@@ -39,7 +39,7 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:src="@drawable/big_logo"
-                    />
+                    android:contentDescription="@string/studioxlogo" />
 
                 <TextView
                     android:paddingTop="20dp"

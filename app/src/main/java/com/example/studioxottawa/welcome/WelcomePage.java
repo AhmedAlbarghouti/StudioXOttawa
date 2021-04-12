@@ -9,7 +9,11 @@ import android.os.Handler;
 import com.example.studioxottawa.R;
 import com.example.studioxottawa.news.NewsFragment;
 import com.example.studioxottawa.schedule.ScheduleFragment;
-
+/**
+ * @Author Ahmed Albarghouti
+ * @Date April 2021
+ * @Purpose Displays company logo & runs tasks that are required before app starts
+ */
 public class WelcomePage extends AppCompatActivity {
 
     @Override
